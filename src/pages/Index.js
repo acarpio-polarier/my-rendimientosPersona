@@ -11,11 +11,18 @@ const Index = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.navigationBar}>
-      <Text style={styles.headerText}>RENDIMIENTO</Text>
-      <GraficaDonut />
-      <GraficoAnual />
+    <View>
+      <View style={styles.navigationBar}>
+        <Text style={styles.headerText}>RENDIMIENTO</Text>
+      </View>
+      <View>
+        <GraficaDonut />
+      </View>
+      <View>
+       <GraficoAnual />
+      </View>
     </View>
+
   );
 };
 
