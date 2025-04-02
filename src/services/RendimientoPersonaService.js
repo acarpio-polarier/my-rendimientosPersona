@@ -9,7 +9,7 @@ export const rendimientoPersonasService = {
   getRendimientoPersonaMaquina,
 };
 
-function getRendimientoPersonaMaquina(fechaIni, fechaFin) {
+function getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin) {
   const fechaIni_ = new Date(fechaIni).toISOString();
   const fechaFin_ = new Date(fechaFin).toISOString();
 
@@ -17,7 +17,7 @@ function getRendimientoPersonaMaquina(fechaIni, fechaFin) {
     connectionConstants.ODATA_URL +
       "getRendimientoPersonaMaquina" +
       "?idPersona=" +
-      4901 +
+      idPersona +
       "&fechaIni=" +
       fechaIni_ +
       "&fechaFin=" +
@@ -30,7 +30,7 @@ function getRendimientoPersonaMaquina(fechaIni, fechaFin) {
       connectionConstants.ODATA_URL +
         "getRendimientoPersonaMaquina" +
         "?idPersona=" +
-        4901 +
+        idPersona +
         "&fechaIni=" +
         fechaIni_ +
         "&fechaFin=" +

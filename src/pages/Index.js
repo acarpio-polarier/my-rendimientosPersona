@@ -1,59 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import styles from "../../styles/rendimiento";
-import TarjetaRendimiento from "./components/TarjetaRendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import GraficoDonut from "./components/GraficoDonut";
+import GraficoAnual from "./components/GraficoAnual";
+
+const PERSONA_ID = 4096;
 
 const Index = () => {
   const insets = useSafeAreaInsets();
 
-  // Estado
-  const [datosRendimiento, setDatosRendimiento] = useState([]);
-  const [cargandoRendimiento, setCargandoRendimiento] = useState(false);
-  const [errorRendimiento, setErrorRendimiento] = useState(null);
-
-  // Cargar datos de rendimiento
-  useEffect(() => {
-    const cargarDatosRendimiento = async () => {
-      try {
-        setCargandoRendimiento(true);
-        setErrorRendimiento(null);
-
-        const hoy = new Date();
-        const fechaStr = hoy.toISOString().split("T")[0];
-
-        const resultado =
-          await rendimientoPersonasService.getRendimientoPersonaMaquina(
-            fechaStr,
-            fechaStr
-          );
-        setDatosRendimiento(resultado);
-      } catch (error) {
-        setErrorRendimiento(error.message);
-      } finally {
-        setCargandoRendimiento(false);
-      }
-    };
-
-    cargarDatosRendimiento();
-  }, []);
-
-  return (
-    <View
-      style={[
-        styles.page,
-        {
-          paddingTop: insets.top,
-        },
-      ]}
-    >
+    return (
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>RENDIMIENTO</Text>
+        <GraficoDonut/>
+        <GraficoAnual/>
       </View>
-
-      <TarjetaRendimiento titulo="A" />
-    </View>
   );
 };
+
+
 
 export default Index;
