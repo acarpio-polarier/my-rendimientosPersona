@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
-import { colors } from "../../../styles/base";
+import { colors } from "../../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const RangoFechas = ({ visible, onClose, onSelect }) => {

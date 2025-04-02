@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
+import { colors } from "../../../../styles/base";
 import DatePicker from "../elements/DatePicker";
 
 const SelectorDeFecha = ({ label = "Fecha", onDateChange }) => {

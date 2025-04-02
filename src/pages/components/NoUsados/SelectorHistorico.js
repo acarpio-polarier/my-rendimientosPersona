@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { colors } from "../../../styles/base";
+import { colors } from "../../../../styles/base";
 
 const SelectorHistorico = ({ onPeriodoCambiado }) => {
   const [selected, setSelected] = useState(0);
