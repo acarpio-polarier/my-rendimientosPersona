@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function DetalleRendimiento({ route, navigation }) {
@@ -42,32 +48,43 @@ export default function DetalleRendimiento({ route, navigation }) {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { paddingTop: insets.top }]}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Detalle de Rendimiento</Text>
-      </View>
-
-      {Object.keys(data).length > 0 ? (
-        <View style={styles.dataContainer}>
-          {Object.entries(data).map(([key, value]) =>
-            renderDataItem(key, value)
-          )}
+    <View style={styles.container}>
+      <ScrollView
+        style={{ paddingTop: insets.top }}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Detalle de Rendimiento</Text>
         </View>
-      ) : (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyStateText}>No hay datos disponibles</Text>
-        </View>
-      )}
 
-      <View style={styles.buttonContainer}>
-        <Text style={styles.backButton} onPress={() => navigation.goBack()}>
-          Volver
-        </Text>
-      </View>
-    </ScrollView>
+        {Object.keys(data).length > 0 ? (
+          <View style={styles.dataContainer}>
+            {Object.entries(data).map(([key, value]) =>
+              renderDataItem(key, value)
+            )}
+          </View>
+        ) : (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyStateText}>No hay datos disponibles</Text>
+          </View>
+        )}
+
+        <View style={styles.buttonContainer}>
+          <Text style={styles.backButton} onPress={() => navigation.goBack()}>
+            Volver
+          </Text>
+        </View>
+      </ScrollView>
+
+      {/* Floating Action Button (FAB) para volver */}
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => navigation.goBack()}
+        activeOpacity={0.7}
+      >
+        <Text style={styles.fabIcon}>←</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -154,5 +171,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 8,
     overflow: "hidden",
+  },
+  // Estilos para el FAB
+  fab: {
+    position: "absolute",
+    width: 56,
+    height: 56,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 20,
+    bottom: 20,
+    backgroundColor: "#3498db",
+    borderRadius: 28,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  fabIcon: {
+    fontSize: 24,
+    color: "white",
   },
 });
