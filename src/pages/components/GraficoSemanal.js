@@ -12,9 +12,19 @@ import { rendimientoPersonasService } from "../../services/RendimientoPersonaSer
 import BarraExpandible from "./BarraExpandible";
 import DetalleRendimiento from "./DetalleRendimiento";
 import { colors } from "../../../styles/base";
-
+import { useNavigation } from "@react-navigation/native";
 const PERSONA_ID = 4901;
 const GraficoSemanal = () => {
+  // Navegación
+  const navigation = useNavigation();
+
+  const navegarADetalle = () => {
+    console.log("aaaaaaaaaaaaaaaaapulsado");
+    navigation.navigate("DetalleHistoricoRendimientos", {
+      data: datosRendimiento,
+    });
+  };
+
   // Estado
   const [semanaSeleccionada, setSemanaSeleccionada] = useState(0);
   const [progreso, setProgreso] = useState(0);
@@ -198,7 +208,7 @@ const GraficoSemanal = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.infoButton}>
+        <TouchableOpacity style={styles.infoButton} onPress={navegarADetalle}>
           <MaterialCommunityIcons
             name="information-outline"
             size={22}

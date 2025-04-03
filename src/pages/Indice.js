@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
-import styles from "../../styles/rendimiento";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styles from "../../styles/rendimiento";
 import GraficoSemanal from "./components/GraficoSemanal";
 import GraficoAnual from "./components/GraficoAnual";
 
-export const PERSONA_ID = 4096;
-
-const Index = () => {
+const Indice = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ paddingTop: insets.top + 1 }}>
+    <View style={[localStyles.container, { paddingTop: insets.top }]}>
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>RENDIMIENTO</Text>
       </View>
@@ -25,4 +23,11 @@ const Index = () => {
   );
 };
 
-export default Index;
+const localStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+});
+
+export default Indice;
