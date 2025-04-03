@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { BarChart, Grid, XAxis } from "react-native-svg-charts";
+import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
+import { Line } from "react-native-svg";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -45,6 +46,49 @@ export class GraficoAnual extends React.PureComponent {
     );
   };
 
+  // Aqui se actualiza de forma dinamica en funcion de si tiene o no registros
+
+  // datosProcesados(data) {
+  //   const informacionMensual = {};
+  //   const meses = [
+  //     "Ene",
+  //     "Feb",
+  //     "Mar",
+  //     "Abr",
+  //     "May",
+  //     "Jun",
+  //     "Jul",
+  //     "Ago",
+  //     "Sep",
+  //     "Oct",
+  //     "Nov",
+  //     "Dic",
+  //   ];
+
+  //   data.forEach((item) => {
+  //     const indiceMes = moment(item.fechaIni).month();
+  //     if (!informacionMensual[indiceMes]) {
+  //       informacionMensual[indiceMes] = { total: 0, count: 0 };
+  //     }
+  //     informacionMensual[indiceMes].total += item.RendimientoGlobal;
+  //     informacionMensual[indiceMes].count += 1;
+  //   });
+
+  //   const labels = Object.keys(informacionMensual).map(
+  //     (indiceMes) => meses[parseInt(indiceMes, 10)]
+  //   );
+
+  //   const values = Object.keys(informacionMensual).map(
+  //     (indiceMes) =>
+  //       (informacionMensual[indiceMes].total /
+  //         informacionMensual[indiceMes].count * 100)
+  //   );
+
+  //   return { labels, values };
+  // }
+
+  // Aqui renderiza los 12 meses y sus registros
+
   datosProcesados(data) {
     const informacionMensual = {};
     const meses = [
@@ -71,15 +115,17 @@ export class GraficoAnual extends React.PureComponent {
       informacionMensual[indiceMes].count += 1;
     });
 
-    const labels = Object.keys(informacionMensual).map(
-      (indiceMes) => meses[parseInt(indiceMes, 10)]
-    );
-
-    const values = Object.keys(informacionMensual).map(
-      (indiceMes) =>
-        informacionMensual[indiceMes].total /
-        informacionMensual[indiceMes].count
-    );
+    const labels = meses;
+    const values = Array(12)
+      .fill(0)
+      .map((_, i) => {
+        if (informacionMensual[i]) {
+          return (
+            (informacionMensual[i].total / informacionMensual[i].count) * 100
+          );
+        }
+        return 0;
+      });
 
     return { labels, values };
   }
@@ -92,7 +138,7 @@ export class GraficoAnual extends React.PureComponent {
         <View style={styles.selectorAño}>
           <TouchableOpacity onPress={() => this.cambiarAño(-1)}>
             <MaterialCommunityIcons
-              style={styles.felchasSelectorAño}
+              style={styles.flechasSelectorAño}
               name="chevron-left"
               size={30}
             />
@@ -100,29 +146,49 @@ export class GraficoAnual extends React.PureComponent {
           <Text style={styles.año}>{añoActual}</Text>
           <TouchableOpacity onPress={() => this.cambiarAño(1)}>
             <MaterialCommunityIcons
-              style={styles.felchasSelectorAño}
+              style={styles.flechasSelectorAño}
               name="chevron-right"
               size={30}
             />
           </TouchableOpacity>
         </View>
 
-        <BarChart
-          style={styles.tabla}
-          data={data}
-          gridMin={0}
-          contentInset={{ top: 10, bottom: 10 }}
-          svg={{ fill: "rgb(237, 182, 55)" }}
-        >
-          <Grid />
-        </BarChart>
-        <XAxis
-          style={styles.labelMeses}
-          data={labels}
-          formatLabel={(index) => labels[index]}
-          contentInset={{ left: 10, right: 10 }}
-          svg={{ fontSize: 10, fill: "black" }}
-        />
+        <View style={{ flexDirection: "row", height: 220, padding: 20 }}>
+          <YAxis
+            data={data}
+            contentInset={{ top: 10, bottom: 10 }}
+            svg={{ fontSize: 10, fill: "black" }}
+            formatLabel={(value) => `${value.toFixed(1)}%`}
+          />
+
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <BarChart
+              style={styles.tabla}
+              data={data}
+              gridMin={0}
+              contentInset={{ top: 10, bottom: 10 }}
+              svg={{ fill: "rgb(237, 182, 55)" }}
+            >
+              <Grid />
+              <Line
+                x1="2%"
+                x2="98%"
+                y1={`${50}%`}
+                y2={`${50}%`}
+                stroke="grey"
+                strokeDasharray={[4, 7]}
+                strokeWidth={2}
+              />
+            </BarChart>
+
+            <XAxis
+              data={labels}
+              formatLabel={(index) => labels[index]}
+              contentInset={{ left: 10, right: 10 }}
+              svg={{ fontSize: 10, fill: "black" }}
+            />
+          </View>
+        </View>
       </View>
     );
   }
@@ -134,6 +200,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 10,
+    fontFamily: "Arial",
   },
   selectorAño: {
     flexDirection: "row",
@@ -141,23 +208,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  flecha: {
-    fontSize: 20,
-    paddingHorizontal: 15,
-  },
   año: {
     fontSize: 18,
     fontWeight: "bold",
-    marginLeft: 50,
-    marginRight: 50,
+    marginHorizontal: 20,
   },
   tabla: {
     flex: 1,
   },
-  labelMeses: {
-    padding: 10,
-  },
-  felchasSelectorAño: {
+  flechasSelectorAño: {
     color: "#edb637",
   },
 });
