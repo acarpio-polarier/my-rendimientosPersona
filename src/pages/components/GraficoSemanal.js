@@ -155,29 +155,27 @@ const GraficoSemanal = () => {
       );
     } else {
       return (
-        <>
-          <View style={styles.progressCircleContainer}>
-            <ProgressCircle
-              style={styles.progressCircle}
-              progress={progreso}
-              progressColor={colorProgreso}
-              backgroundColor={"#F0F0F0"}
-              strokeWidth={15}
-              cornerRadius={0}
-              startAngle={-Math.PI / 2}
-              endAngle={Math.PI / 2}
-              animate={true}
-            />
-            <View style={styles.percentageTextContainer}>
-              <Text style={[styles.percentageText, { color: colorProgreso }]}>
-                {`${porcentajeProgreso.toFixed(2)}%`}
-              </Text>
-              <Text style={[styles.estadoText, { color: colorProgreso }]}>
-                {textoEstado}
-              </Text>
-            </View>
+        <View style={styles.progressCircleContainer}>
+          <ProgressCircle
+            style={styles.progressCircle}
+            progress={progreso}
+            progressColor={colorProgreso}
+            backgroundColor={"#F0F0F0"}
+            strokeWidth={15}
+            cornerRadius={0}
+            startAngle={-Math.PI / 2}
+            endAngle={Math.PI / 2}
+            animate={true}
+          />
+          <View style={styles.percentageTextContainer}>
+            <Text style={[styles.percentageText, { color: colorProgreso }]}>
+              {`${porcentajeProgreso.toFixed(2)}%`}
+            </Text>
+            <Text style={[styles.estadoText, { color: colorProgreso }]}>
+              {textoEstado}
+            </Text>
           </View>
-        </>
+        </View>
       );
     }
   };

@@ -5,6 +5,7 @@ import { Line } from "react-native-svg";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "../../../styles/base";
 
 export class GraficoAnual extends React.PureComponent {
   state = {
@@ -135,6 +136,9 @@ export class GraficoAnual extends React.PureComponent {
 
     return (
       <View style={styles.contenedor}>
+        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+          <Text style={styles.headerTexto}>Rendimiento anual</Text>
+        </View>
         <View style={styles.selectorAño}>
           <TouchableOpacity onPress={() => this.cambiarAño(-1)}>
             <MaterialCommunityIcons
@@ -196,28 +200,48 @@ export class GraficoAnual extends React.PureComponent {
 
 const styles = StyleSheet.create({
   contenedor: {
-    height: 300,
-    padding: 10,
-    margin: 10,
+    width: "95%",
+    alignSelf: "center",
+    backgroundColor: "white",
     borderRadius: 10,
-    fontFamily: "Arial",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: "hidden",
+    marginVertical: 10,
+  },
+  header: {
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+  },
+  headerTexto: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   selectorAño: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
   },
   año: {
     fontSize: 18,
     fontWeight: "bold",
-    marginHorizontal: 20,
+    marginHorizontal: 40,
   },
   tabla: {
     flex: 1,
   },
   flechasSelectorAño: {
     color: "#edb637",
+    padding: 6,
   },
 });
 
