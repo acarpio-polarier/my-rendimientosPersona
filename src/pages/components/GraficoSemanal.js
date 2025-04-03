@@ -12,8 +12,8 @@ import { rendimientoPersonasService } from "../../services/RendimientoPersonaSer
 import BarraExpandible from "./BarraExpandible";
 import DetalleRendimiento from "./DetalleRendimiento";
 import { colors } from "../../../styles/base";
+import { PERSONA_ID } from "../Index";
 
-const PERSONA_ID = 4901;
 const GraficoSemanal = () => {
   // Estado
   const [semanaSeleccionada, setSemanaSeleccionada] = useState(0);

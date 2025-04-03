@@ -14,6 +14,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
 import BarraExpandible from "./BarraExpandible";
 import DetalleRendimiento from "./DetalleRendimiento";
+import { PERSONA_ID } from "../Index";
 
 const GraficoAnual = () => {
   const [data, setData] = useState([]);
@@ -28,7 +29,7 @@ const GraficoAnual = () => {
 
   const cargarDatos = () => {
     setCargando(true);
-    const idPersona = 1526;
+    const idPersona = PERSONA_ID;
     const fechaIni = `${añoActual}-01-01`;
     const fechaFin = `${añoActual}-12-31`;
 

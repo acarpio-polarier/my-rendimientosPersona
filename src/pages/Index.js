@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GraficoSemanal from "./components/GraficoSemanal";
 import GraficoAnual from "./components/GraficoAnual";
 
-export const PERSONA_ID = 4096;
+export const PERSONA_ID = 4901;
 
 const Index = () => {
   const insets = useSafeAreaInsets();
@@ -15,10 +15,10 @@ const Index = () => {
         <Text style={styles.headerText}>RENDIMIENTO</Text>
       </View>
       <View>
-        <GraficoSemanal />
+        <GraficoSemanal PERSONA_ID={PERSONA_ID} />
       </View>
       <View>
-        <GraficoAnual />
+        <GraficoAnual PERSONA_ID={PERSONA_ID} />
       </View>
     </ScrollView>
   );
