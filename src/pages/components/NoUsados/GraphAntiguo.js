@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import RNSpeedometer from "react-native-speedometer";
-import { colors } from "../../../styles/base";
+import { colors } from "../../../../styles/base";
 
 export const GraficoDonut = ({
   periodoSeleccionado = "DIA",
