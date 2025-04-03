@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import { Line } from "react-native-svg";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
@@ -13,12 +19,15 @@ const GraficoAnual = () => {
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [añoActual, setAñoActual] = useState(moment().year());
+  const [cargando, setCargando] = useState(true);
+  const [hayDatos, setHayDatos] = useState(true);
 
   useEffect(() => {
     cargarDatos();
   }, [añoActual]);
 
   const cargarDatos = () => {
+    setCargando(true);
     const idPersona = 1526;
     const fechaIni = `${añoActual}-01-01`;
     const fechaFin = `${añoActual}-12-31`;
@@ -30,10 +39,12 @@ const GraficoAnual = () => {
         const datosProcesados = procesarDatos(response);
         setData(datosProcesados.values);
         setLabels(datosProcesados.labels);
+        setHayDatos(datosProcesados.values.some((value) => value > 0));
       })
       .catch((error) => {
         console.error("Error obteniendo datos:", error);
-      });
+      })
+      .finally(() => setCargando(false));
   };
 
   const cambiarAño = (incremento) => {
@@ -80,6 +91,69 @@ const GraficoAnual = () => {
     return { labels: meses, values };
   };
 
+  const renderizarContindoGrafico = () => {
+    if (cargando) {
+      return (
+        <View style={styles.noDataContainer}>
+          <ActivityIndicator size="large" color="#00C3A0" />
+          <Text style={styles.noDataText}>Cargando datos...</Text>
+        </View>
+      );
+    } else if (!hayDatos) {
+      return (
+        <View style={styles.noDataContainer}>
+          <MaterialCommunityIcons
+            name="chart-line-variant"
+            size={50}
+            color="#999"
+          />
+          <Text style={styles.noDataText}>
+            No hay datos disponibles para este año.
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flexDirection: "row", height: 220, padding: 20 }}>
+          <YAxis
+            data={data}
+            contentInset={{ top: 10, bottom: 10 }}
+            svg={{ fontSize: 10, fill: "black" }}
+            formatLabel={(value) => `${value.toFixed(1)}%`}
+          />
+
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <BarChart
+              style={styles.tabla}
+              data={data}
+              gridMin={0}
+              contentInset={{ top: 10, bottom: 10 }}
+              svg={{ fill: "rgb(237, 182, 55)" }}
+            >
+              <Grid />
+              <Line
+                x1="2%"
+                x2="98%"
+                y1={`${50}%`}
+                y2={`${50}%`}
+                stroke="grey"
+                strokeDasharray={[4, 7]}
+                strokeWidth={2}
+              />
+            </BarChart>
+
+            <XAxis
+              data={labels}
+              formatLabel={(index) => labels[index]}
+              contentInset={{ left: 10, right: 10 }}
+              svg={{ fontSize: 10, fill: "black" }}
+            />
+          </View>
+        </View>
+      );
+    }
+  };
+
   return (
     <View style={styles.contenedor}>
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
@@ -103,44 +177,7 @@ const GraficoAnual = () => {
           />
         </TouchableOpacity>
       </View>
-
-      <View style={{ flexDirection: "row", height: 220, padding: 20 }}>
-        <YAxis
-          data={data}
-          contentInset={{ top: 10, bottom: 10 }}
-          svg={{ fontSize: 10, fill: "black" }}
-          formatLabel={(value) => `${value.toFixed(1)}%`}
-        />
-
-        <View style={{ flex: 1, marginLeft: 10 }}>
-          <BarChart
-            style={styles.tabla}
-            data={data}
-            gridMin={0}
-            contentInset={{ top: 10, bottom: 10 }}
-            svg={{ fill: "rgb(237, 182, 55)" }}
-          >
-            <Grid />
-            <Line
-              x1="2%"
-              x2="98%"
-              y1={`${50}%`}
-              y2={`${50}%`}
-              stroke="grey"
-              strokeDasharray={[4, 7]}
-              strokeWidth={2}
-            />
-          </BarChart>
-
-          <XAxis
-            data={labels}
-            formatLabel={(index) => labels[index]}
-            contentInset={{ left: 10, right: 10 }}
-            svg={{ fontSize: 10, fill: "black" }}
-          />
-        </View>
-      </View>
-
+      <View>{renderizarContindoGrafico()}</View>
       <BarraExpandible>
         <DetalleRendimiento />
       </BarraExpandible>
@@ -162,6 +199,16 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginVertical: 10,
     fontFamily: "Arial",
+  },
+  noDataContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 200,
+  },
+  noDataText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#999",
   },
   header: {
     paddingVertical: 5,
