@@ -7,6 +7,7 @@ import GraficoAnual from "./components/GraficoAnual";
 import { ScrollView } from "react-native-gesture-handler";
 export const PERSONA_ID = 4901;
 
+// a
 const Indice = () => {
   const insets = useSafeAreaInsets();
 
