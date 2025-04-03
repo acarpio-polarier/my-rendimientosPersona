@@ -143,7 +143,7 @@ const GraficoAnual = () => {
             </BarChart>
 
             <XAxis
-              data={labels}
+              data={labels.map((label, index) => index)}
               formatLabel={(index) => labels[index]}
               contentInset={{ left: 10, right: 10 }}
               svg={{ fontSize: 10, fill: "black" }}
