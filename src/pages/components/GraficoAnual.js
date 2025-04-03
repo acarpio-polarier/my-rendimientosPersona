@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   noDataContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: 200,
+    height: 220,
   },
   noDataText: {
     marginTop: 10,
