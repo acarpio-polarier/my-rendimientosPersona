@@ -6,6 +6,8 @@ import { rendimientoPersonasService } from "../../services/RendimientoPersonaSer
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
+import BarraExpandible from "./BarraExpandible";
+import DetalleRendimiento from "./DetalleRendimiento";
 
 export class GraficoAnual extends React.PureComponent {
   state = {
@@ -136,9 +138,12 @@ export class GraficoAnual extends React.PureComponent {
 
     return (
       <View style={styles.contenedor}>
+        {/* Cabecera */}
         <View style={[styles.header, { backgroundColor: colors.primary }]}>
           <Text style={styles.headerTexto}>Rendimiento anual</Text>
         </View>
+
+        {/* Selector de año ( numero del año + flechas ) */}
         <View style={styles.selectorAño}>
           <TouchableOpacity onPress={() => this.cambiarAño(-1)}>
             <MaterialCommunityIcons
@@ -157,7 +162,9 @@ export class GraficoAnual extends React.PureComponent {
           </TouchableOpacity>
         </View>
 
+        {/* Tabla + Info % + Texto meses */}
         <View style={{ flexDirection: "row", height: 220, padding: 20 }}>
+          {/* Numeros porcentaje lateral ( el % varia en funcion del rendimiento mas alto) */}
           <YAxis
             data={data}
             contentInset={{ top: 10, bottom: 10 }}
@@ -165,6 +172,7 @@ export class GraficoAnual extends React.PureComponent {
             formatLabel={(value) => `${value.toFixed(1)}%`}
           />
 
+          {/* Tabala de contenidos */}
           <View style={{ flex: 1, marginLeft: 10 }}>
             <BarChart
               style={styles.tabla}
@@ -174,6 +182,8 @@ export class GraficoAnual extends React.PureComponent {
               svg={{ fill: "rgb(237, 182, 55)" }}
             >
               <Grid />
+
+              {/* Linea gris de puntos para delimitar el porcentaje medio */}
               <Line
                 x1="2%"
                 x2="98%"
@@ -185,6 +195,7 @@ export class GraficoAnual extends React.PureComponent {
               />
             </BarChart>
 
+            {/* Texto de los meses */}
             <XAxis
               data={labels}
               formatLabel={(index) => labels[index]}
@@ -193,6 +204,11 @@ export class GraficoAnual extends React.PureComponent {
             />
           </View>
         </View>
+
+        {/* Barra expandible ( sin funcioanar ni se le pasan datos) */}
+        <BarraExpandible>
+          <DetalleRendimiento />
+        </BarraExpandible>
       </View>
     );
   }
@@ -211,6 +227,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     overflow: "hidden",
     marginVertical: 10,
+    fontFamily: "Arial",
   },
   header: {
     paddingVertical: 5,
