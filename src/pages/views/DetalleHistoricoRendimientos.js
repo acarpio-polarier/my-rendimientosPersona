@@ -25,15 +25,17 @@ export default function DetalleHistoricoRendimientos() {
   // Función para renderizar cada elemento en el Grid
   const renderItem = (item) => (
     <View style={styles.itemContainer}>
-      <View>
+      <View style={{}}>
         <Text style={styles.labelText}>ID Persona:</Text>
         <Text style={styles.valueText}>{item.idPersona}</Text>
 
         <Text style={styles.labelText}>ID Máquina:</Text>
         <Text style={styles.valueText}>{item.idMaquina}</Text>
       </View>
-      <Text style={styles.labelText}>Total Prendas:</Text>
-      <Text style={styles.valueText}>{item.totalPrendas}</Text>
+      <View>
+        <Text style={styles.labelText}>Total Prendas:</Text>
+        <Text style={styles.valueText}>{item.totalPrendas}</Text>
+      </View>
     </View>
   );
 

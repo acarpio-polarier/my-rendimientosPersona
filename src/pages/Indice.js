@@ -1,15 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styles from "../../styles/rendimiento";
 import GraficoSemanal from "./components/GraficoSemanal";
 import GraficoAnual from "./components/GraficoAnual";
+export const PERSONA_ID = 4901;
 
 const Indice = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[localStyles.container, { paddingTop: insets.top }]}>
+    <ScrollView style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>RENDIMIENTO</Text>
       </View>
@@ -19,7 +20,7 @@ const Indice = () => {
       <View>
         <GraficoAnual />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

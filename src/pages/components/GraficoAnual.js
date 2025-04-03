@@ -1,25 +1,35 @@
-import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import { Line } from "react-native-svg";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "../../../styles/base";
+import BarraExpandible from "./BarraExpandible";
+import DetalleRendimiento from "./DetalleRendimiento";
+import { PERSONA_ID } from "../Indice";
 
-export class GraficoAnual extends React.PureComponent {
-  state = {
-    data: [],
-    labels: [],
-    añoActual: moment().year(),
-  };
+const GraficoAnual = () => {
+  const [data, setData] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [añoActual, setAñoActual] = useState(moment().year());
+  const [cargando, setCargando] = useState(true);
+  const [hayDatos, setHayDatos] = useState(true);
 
-  componentDidMount() {
-    this.cargarDatos();
-  }
+  useEffect(() => {
+    cargarDatos();
+  }, [añoActual]);
 
-  cargarDatos = () => {
-    const { añoActual } = this.state;
-    const idPersona = 1526;
+  const cargarDatos = () => {
+    setCargando(true);
+    const idPersona = PERSONA_ID;
     const fechaIni = `${añoActual}-01-01`;
     const fechaFin = `${añoActual}-12-31`;
 
@@ -27,69 +37,22 @@ export class GraficoAnual extends React.PureComponent {
       .getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin)
       .then((response) => {
         console.log(`Datos recibidos para ${añoActual}:`, response);
-
-        const datosProcesados = this.datosProcesados(response);
-        this.setState({
-          data: datosProcesados.values,
-          labels: datosProcesados.labels,
-        });
+        const datosProcesados = procesarDatos(response);
+        setData(datosProcesados.values);
+        setLabels(datosProcesados.labels);
+        setHayDatos(datosProcesados.values.some((value) => value > 0));
       })
       .catch((error) => {
         console.error("Error obteniendo datos:", error);
-      });
+      })
+      .finally(() => setCargando(false));
   };
 
-  cambiarAño = (incremento) => {
-    this.setState(
-      (prevState) => ({ añoActual: prevState.añoActual + incremento }),
-      this.cargarDatos
-    );
+  const cambiarAño = (incremento) => {
+    setAñoActual((prevAño) => prevAño + incremento);
   };
 
-  // Aqui se actualiza de forma dinamica en funcion de si tiene o no registros
-
-  // datosProcesados(data) {
-  //   const informacionMensual = {};
-  //   const meses = [
-  //     "Ene",
-  //     "Feb",
-  //     "Mar",
-  //     "Abr",
-  //     "May",
-  //     "Jun",
-  //     "Jul",
-  //     "Ago",
-  //     "Sep",
-  //     "Oct",
-  //     "Nov",
-  //     "Dic",
-  //   ];
-
-  //   data.forEach((item) => {
-  //     const indiceMes = moment(item.fechaIni).month();
-  //     if (!informacionMensual[indiceMes]) {
-  //       informacionMensual[indiceMes] = { total: 0, count: 0 };
-  //     }
-  //     informacionMensual[indiceMes].total += item.RendimientoGlobal;
-  //     informacionMensual[indiceMes].count += 1;
-  //   });
-
-  //   const labels = Object.keys(informacionMensual).map(
-  //     (indiceMes) => meses[parseInt(indiceMes, 10)]
-  //   );
-
-  //   const values = Object.keys(informacionMensual).map(
-  //     (indiceMes) =>
-  //       (informacionMensual[indiceMes].total /
-  //         informacionMensual[indiceMes].count * 100)
-  //   );
-
-  //   return { labels, values };
-  // }
-
-  // Aqui renderiza los 12 meses y sus registros
-
-  datosProcesados(data) {
+  const procesarDatos = (data) => {
     const informacionMensual = {};
     const meses = [
       "Ene",
@@ -115,7 +78,6 @@ export class GraficoAnual extends React.PureComponent {
       informacionMensual[indiceMes].count += 1;
     });
 
-    const labels = meses;
     const values = Array(12)
       .fill(0)
       .map((_, i) => {
@@ -127,32 +89,32 @@ export class GraficoAnual extends React.PureComponent {
         return 0;
       });
 
-    return { labels, values };
-  }
+    return { labels: meses, values };
+  };
 
-  render() {
-    const { data, labels, añoActual } = this.state;
-
-    return (
-      <View style={styles.contenedor}>
-        <View style={styles.selectorAño}>
-          <TouchableOpacity onPress={() => this.cambiarAño(-1)}>
-            <MaterialCommunityIcons
-              style={styles.flechasSelectorAño}
-              name="chevron-left"
-              size={30}
-            />
-          </TouchableOpacity>
-          <Text style={styles.año}>{añoActual}</Text>
-          <TouchableOpacity onPress={() => this.cambiarAño(1)}>
-            <MaterialCommunityIcons
-              style={styles.flechasSelectorAño}
-              name="chevron-right"
-              size={30}
-            />
-          </TouchableOpacity>
+  const renderizarContindoGrafico = () => {
+    if (cargando) {
+      return (
+        <View style={styles.noDataContainer}>
+          <ActivityIndicator size="large" color="#00C3A0" />
+          <Text style={styles.noDataText}>Cargando datos...</Text>
         </View>
-
+      );
+    } else if (!hayDatos) {
+      return (
+        <View style={styles.noDataContainer}>
+          <MaterialCommunityIcons
+            name="chart-line-variant"
+            size={50}
+            color="#999"
+          />
+          <Text style={styles.noDataText}>
+            No hay datos disponibles para este año.
+          </Text>
+        </View>
+      );
+    } else {
+      return (
         <View style={{ flexDirection: "row", height: 220, padding: 20 }}>
           <YAxis
             data={data}
@@ -182,42 +144,103 @@ export class GraficoAnual extends React.PureComponent {
             </BarChart>
 
             <XAxis
-              data={labels}
+              data={labels.map((label, index) => index)}
               formatLabel={(index) => labels[index]}
               contentInset={{ left: 10, right: 10 }}
               svg={{ fontSize: 10, fill: "black" }}
             />
           </View>
         </View>
+      );
+    }
+  };
+
+  return (
+    <View style={styles.contenedor}>
+      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+        <Text style={styles.headerTexto}>Rendimiento anual</Text>
       </View>
-    );
-  }
-}
+
+      <View style={styles.selectorAño}>
+        <TouchableOpacity onPress={() => cambiarAño(-1)}>
+          <MaterialCommunityIcons
+            style={styles.flechasSelectorAño}
+            name="chevron-left"
+            size={30}
+          />
+        </TouchableOpacity>
+        <Text style={styles.año}>{añoActual}</Text>
+        <TouchableOpacity onPress={() => cambiarAño(1)}>
+          <MaterialCommunityIcons
+            style={styles.flechasSelectorAño}
+            name="chevron-right"
+            size={30}
+          />
+        </TouchableOpacity>
+      </View>
+      <View>{renderizarContindoGrafico()}</View>
+      <BarraExpandible>
+        <DetalleRendimiento />
+      </BarraExpandible>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   contenedor: {
-    height: 300,
-    padding: 10,
-    margin: 10,
+    width: "95%",
+    alignSelf: "center",
+    backgroundColor: "white",
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: "hidden",
+    marginVertical: 10,
     fontFamily: "Arial",
+  },
+  noDataContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 220,
+  },
+  noDataText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#999",
+  },
+  header: {
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+  },
+  headerTexto: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   selectorAño: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
   },
   año: {
     fontSize: 18,
     fontWeight: "bold",
-    marginHorizontal: 20,
+    marginHorizontal: 40,
   },
   tabla: {
     flex: 1,
   },
   flechasSelectorAño: {
     color: "#edb637",
+    padding: 6,
   },
 });
 

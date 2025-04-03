@@ -13,7 +13,8 @@ import BarraExpandible from "./BarraExpandible";
 import DetalleRendimiento from "./DetalleRendimiento";
 import { colors } from "../../../styles/base";
 import { useNavigation } from "@react-navigation/native";
-const PERSONA_ID = 4901;
+import { PERSONA_ID } from "../Indice";
+
 const GraficoSemanal = () => {
   // Navegación
   const navigation = useNavigation();
