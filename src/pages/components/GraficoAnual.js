@@ -15,8 +15,17 @@ import { colors } from "../../../styles/base";
 import BarraExpandible from "./BarraExpandible";
 import DetalleRendimiento from "./DetalleRendimiento";
 import { PERSONA_ID } from "../Index";
+import { useNavigation } from "@react-navigation/native";
 
 const GraficoAnual = () => {
+  const navigation = useNavigation();
+
+  const navegar = () => {
+    navigation.navigate("DetalleRendimiento", {
+      data: values,
+    });
+  };
+
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [añoActual, setAñoActual] = useState(moment().year());
@@ -96,7 +105,7 @@ const GraficoAnual = () => {
     if (cargando) {
       return (
         <View style={styles.noDataContainer}>
-          <ActivityIndicator size="large" color="#00C3A0" />
+          <ActivityIndicator size="large" color={colors.info} />
           <Text style={styles.noDataText}>Cargando datos...</Text>
         </View>
       );
@@ -157,10 +166,30 @@ const GraficoAnual = () => {
 
   return (
     <View style={styles.contenedor}>
+      {/* Cabecera */}
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
         <Text style={styles.headerTexto}>Rendimiento anual</Text>
       </View>
 
+      {/* Información justo debajo del header - Tokens e ícono de información */}
+      <View style={styles.infoSuperior}>
+        <View style={styles.datosContainer}>
+          <View style={styles.datoItem}>
+            <Text style={styles.datoLabel}>Tokens</Text>
+            <Text style={styles.datoValor}>666</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.infoButton} onPress={navegar}>
+          <MaterialCommunityIcons
+            name="information-outline"
+            size={22}
+            color={colors.primary}
+          />
+        </TouchableOpacity>
+      </View>
+
+      {/* Selector de año */}
       <View style={styles.selectorAño}>
         <TouchableOpacity onPress={() => cambiarAño(-1)}>
           <MaterialCommunityIcons
@@ -178,10 +207,9 @@ const GraficoAnual = () => {
           />
         </TouchableOpacity>
       </View>
+
+      {/* Gráfico  */}
       <View>{renderizarContindoGrafico()}</View>
-      <BarraExpandible>
-        <DetalleRendimiento />
-      </BarraExpandible>
     </View>
   );
 };
@@ -201,16 +229,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontFamily: "Arial",
   },
-  noDataContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: 220,
-  },
-  noDataText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: "#999",
-  },
   header: {
     paddingVertical: 5,
     paddingHorizontal: 7,
@@ -220,6 +238,39 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  infoSuperior: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  datosContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  datoItem: {
+    alignItems: "center",
+  },
+  datoLabel: {
+    color: "#666",
+    fontSize: 12,
+    textAlign: "center",
+  },
+  datoValor: {
+    color: "#333",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  infoButton: {
+    position: "absolute",
+    right: 12,
+    padding: 5,
   },
   selectorAño: {
     flexDirection: "row",
@@ -235,12 +286,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginHorizontal: 40,
   },
-  tabla: {
-    flex: 1,
-  },
   flechasSelectorAño: {
     color: "#edb637",
     padding: 6,
+  },
+  tabla: {
+    flex: 1,
+  },
+  noDataContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 120,
+    width: "100%",
+  },
+  noDataText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    maxWidth: 200,
   },
 });
 

@@ -1,5 +1,6 @@
-import { colors } from "./base";
+import { colors, fontFamily } from "./base";
 import { StyleSheet, Text } from "react-native";
+
 const styles = StyleSheet.create({
   page: {
     flex: 1,
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: colors.white,
-    fontFamily: "Roboto_SemiBold",
+    fontFamily: fontFamily.regular,
     fontSize: 18,
   },
   circleIcon: {

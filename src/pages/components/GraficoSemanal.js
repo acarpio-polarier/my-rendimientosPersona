@@ -147,7 +147,7 @@ const GraficoSemanal = () => {
     if (cargando) {
       return (
         <View style={styles.noDataContainer}>
-          <ActivityIndicator size="large" color="#00C3A0" />
+          <ActivityIndicator size="large" color={colors.info} />
           <Text style={styles.noDataText}>Cargando datos...</Text>
         </View>
       );
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   percentageText: {
-    fontSize: 36,
+    fontSize: 21,
     fontWeight: "bold",
   },
   estadoText: {

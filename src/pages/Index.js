@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <ScrollView style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
-        <Text style={styles.headerText}>RENDIMIENTO</Text>
+        <Text style={styles.headerText}>myRendimiento</Text>
       </View>
       <View>
         <GraficoSemanal PERSONA_ID={PERSONA_ID} />
