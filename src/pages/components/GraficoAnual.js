@@ -12,8 +12,6 @@ import { rendimientoPersonasService } from "../../services/RendimientoPersonaSer
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
-import BarraExpandible from "./BarraExpandible";
-import DetalleRendimiento from "./DetalleRendimiento";
 import { PERSONA_ID } from "../Index";
 import { useNavigation } from "@react-navigation/native";
 
@@ -62,7 +60,6 @@ const GraficoAnual = () => {
   };
 
   const procesarDatos = (data) => {
-    const informacionMensual = {};
     const meses = [
       "Ene",
       "Feb",
@@ -78,27 +75,34 @@ const GraficoAnual = () => {
       "Dic",
     ];
 
+    const infoPorMes = Array(12)
+      .fill(null)
+      .map((_, i) => ({
+        label: meses[i],
+        info: [],
+      }));
+
+    const sumas = Array(12).fill(0);
+    const conteos = Array(12).fill(0);
+
     data.forEach((item) => {
-      const indiceMes = moment(item.fechaIni).month();
-      if (!informacionMensual[indiceMes]) {
-        informacionMensual[indiceMes] = { total: 0, count: 0 };
-      }
-      informacionMensual[indiceMes].total += item.RendimientoGlobal;
-      informacionMensual[indiceMes].count += 1;
+      const mes = moment(item.fechaIni).month();
+      infoPorMes[mes].info.push(item);
+      sumas[mes] += item.RendimientoGlobal;
+      conteos[mes] += 1;
     });
 
-    const values = Array(12)
-      .fill(0)
-      .map((_, i) => {
-        if (informacionMensual[i]) {
-          return (
-            (informacionMensual[i].total / informacionMensual[i].count) * 100
-          );
-        }
-        return 0;
-      });
+    console.log("Informacion por mes:", infoPorMes);
 
-    return { labels: meses, values };
+    const values = sumas.map((total, i) =>
+      conteos[i] > 0 ? (total / conteos[i]) * 100 : 0
+    );
+
+    return {
+      values,
+      labels: meses,
+      infoPorMes,
+    };
   };
 
   const renderizarContindoGrafico = () => {
