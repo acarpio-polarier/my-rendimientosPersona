@@ -14,6 +14,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
 import { useNavigation } from "@react-navigation/native";
+import RendimientoUtils from "../../helpers//RendimientoUtils";
+import FechaUtils from "../../helpers//FechaUtils";
 
 const GraficoAnual = () => {
   const navigation = useNavigation();
@@ -37,14 +39,16 @@ const GraficoAnual = () => {
   const cargarDatos = () => {
     setCargando(true);
     const idPersona = PERSONA_ID;
-    const fechaIni = `${añoActual}-01-01`;
-    const fechaFin = `${añoActual}-12-31`;
+    const rangoAño = FechaUtils.obtenerRangoAño(añoActual);
+    const fechaIni = rangoAño.inicio;
+    const fechaFin = rangoAño.fin;
 
     rendimientoPersonasService
       .getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin)
       .then((response) => {
         console.log(`Datos recibidos para ${añoActual}:`, response);
-        const datosProcesados = procesarDatos(response);
+        const datosProcesados = FechaUtils.procesarDatosAnuales(response);
+
         setData(datosProcesados.values);
         setLabels(datosProcesados.labels);
         setHayDatos(datosProcesados.values.some((value) => value > 0));
@@ -57,52 +61,6 @@ const GraficoAnual = () => {
 
   const cambiarAño = (incremento) => {
     setAñoActual((prevAño) => prevAño + incremento);
-  };
-
-  const procesarDatos = (data) => {
-    const meses = [
-      "Ene",
-      "Feb",
-      "Mar",
-      "Abr",
-      "May",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dic",
-    ];
-
-    const infoPorMes = Array(12)
-      .fill(null)
-      .map((_, i) => ({
-        label: meses[i],
-        info: [],
-      }));
-
-    const sumas = Array(12).fill(0);
-    const conteos = Array(12).fill(0);
-
-    data.forEach((item) => {
-      const mes = moment(item.fechaIni).month();
-      infoPorMes[mes].info.push(item);
-      sumas[mes] += item.RendimientoGlobal;
-      conteos[mes] += 1;
-    });
-
-    console.log("Informacion por mes:", infoPorMes);
-
-    const values = sumas.map((total, i) =>
-      conteos[i] > 0 ? (total / conteos[i]) * 100 : 0
-    );
-
-    return {
-      values,
-      labels: meses,
-      infoPorMes,
-    };
   };
 
   const renderizarContindoGrafico = () => {

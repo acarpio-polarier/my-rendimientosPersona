@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Rendimiento from "./src/pages/Index";
 import DetalleRendimiento from "./src/pages/DetalleRendimiento";
+import DetalleRendimientoSelector from "./src/pages/components/DetalleRendimientoSelector";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +21,7 @@ export default function App() {
           <Stack.Screen name="Rendimiento" component={Rendimiento} />
           <Stack.Screen
             name="DetalleRendimiento"
-            component={DetalleRendimiento}
+            component={DetalleRendimientoSelector}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

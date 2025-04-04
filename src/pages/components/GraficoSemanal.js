@@ -14,6 +14,9 @@ import DetalleRendimiento from "./DetalleRendimiento";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
 import { useNavigation } from "@react-navigation/native";
+import RendimientoUtils from "../../helpers//RendimientoUtils";
+import FechaUtils from "../../helpers//FechaUtils";
+import DateUtils from "../../helpers//FechaUtils";
 
 const GraficoSemanal = () => {
   // Navegación
@@ -22,7 +25,12 @@ const GraficoSemanal = () => {
 
   const navegar = () => {
     navigation.navigate("DetalleRendimiento", {
-      data: datosRendimiento,
+      data: datosPorDia,
+      modoInicial: "semanal",
+      semanaInicial: semanaSeleccionada,
+      onSemanaChange: (nuevaSemana) => {
+        setSemanaSeleccionada(nuevaSemana);
+      },
     });
   };
 
@@ -37,23 +45,12 @@ const GraficoSemanal = () => {
   const [hayDatos, setHayDatos] = useState(true);
   const [datosRendimiento, setDatosRendimiento] = useState([]);
 
-  // Determinar color del progreso
-  const determinarColorProgreso = (porcentaje) => {
-    if (porcentaje < 70) return colors.danger;
-    if (porcentaje >= 70 && porcentaje <= 90) return colors.primary;
-    return colors.success;
-  };
-
-  // Determinar texto de estado
-  const determinarTextoEstado = (porcentaje) => {
-    if (porcentaje < 70) return "Bajo rendimiento";
-    if (porcentaje >= 70 && porcentaje <= 90) return "Rendimiento medio";
-    return "Alto rendimiento";
-  };
+  const [datosPorDia, setDatosPorDia] = useState([]);
+  const [diaSeleccionado, setDiaSeleccionado] = useState(null);
 
   // Efecto
   useEffect(() => {
-    const nuevoRango = obtenerRangoSemana(semanaSeleccionada);
+    const nuevoRango = DateUtils.obtenerRangoSemana(semanaSeleccionada);
     setRangoSemana(nuevoRango);
     setCargando(true);
 
@@ -79,10 +76,17 @@ const GraficoSemanal = () => {
         console.log(media);
         setProgreso(media / 100);
         setDatosRendimiento(datos);
+
+        const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
+
+        setDatosPorDia(datosAgrupados);
+        console.log("Datos por dia: ", datosAgrupados);
         setHayDatos(true);
       } else {
         setProgreso(0);
         setDatosRendimiento([]);
+        setDatosPorDia([]);
+
         setHayDatos(false);
       }
 
@@ -95,36 +99,6 @@ const GraficoSemanal = () => {
     } finally {
       setCargando(false);
     }
-  };
-
-  // Auxiliar
-  const obtenerTextoSemana = (semana) => (semana === 1 ? "semana" : "semanas");
-
-  // Obtener el rango de fechas de la semana seleccionada
-  const obtenerRangoSemana = (offsetSemanas) => {
-    const hoy = new Date();
-    const primerDiaSemana = new Date(hoy);
-    const dia = hoy.getDay();
-    const diff = hoy.getDate() - dia + (dia === 0 ? -6 : 1) - 7 * offsetSemanas;
-
-    primerDiaSemana.setDate(diff);
-
-    const ultimoDiaSemana = new Date(primerDiaSemana);
-    ultimoDiaSemana.setDate(primerDiaSemana.getDate() + 6);
-
-    return {
-      inicio: primerDiaSemana.toLocaleDateString("es-ES", {
-        day: "2-digit",
-        month: "2-digit",
-      }),
-
-      fin: ultimoDiaSemana.toLocaleDateString("es-ES", {
-        day: "2-digit",
-        month: "2-digit",
-      }),
-      inicioIso: primerDiaSemana.toISOString(),
-      finIso: ultimoDiaSemana.toISOString(),
-    };
   };
 
   // Función para seleccionar semana anterior
@@ -141,8 +115,10 @@ const GraficoSemanal = () => {
 
   const renderizarContenidoGrafico = () => {
     const porcentajeProgreso = progreso * 100;
-    const colorProgreso = determinarColorProgreso(porcentajeProgreso);
-    const textoEstado = determinarTextoEstado(porcentajeProgreso);
+    const colorProgreso =
+      RendimientoUtils.determinarColorProgreso(porcentajeProgreso);
+    const textoEstado =
+      RendimientoUtils.determinarTextoEstado(porcentajeProgreso);
 
     if (cargando) {
       return (
@@ -234,7 +210,7 @@ const GraficoSemanal = () => {
             <Text style={styles.weekInfo}>
               {semanaSeleccionada === 0
                 ? "Semana actual"
-                : `Hace ${semanaSeleccionada} ${obtenerTextoSemana(
+                : `Hace ${semanaSeleccionada} ${FechaUtils.obtenerTextoSemana(
                     semanaSeleccionada
                   )}`}
             </Text>
