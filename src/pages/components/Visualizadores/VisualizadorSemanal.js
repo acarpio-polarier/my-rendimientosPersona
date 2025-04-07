@@ -276,13 +276,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   diasListContainer: {
-    paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+    justifyContent: "center",
   },
   diaItem: {
-    width: 60,
+    width: 45,
     height: 80,
-    marginHorizontal: 5,
+    marginHorizontal: 2.5,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",

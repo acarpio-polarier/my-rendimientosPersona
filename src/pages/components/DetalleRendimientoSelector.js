@@ -164,10 +164,14 @@ export default function DetalleRendimientoSelector() {
             </Text>
             <Text style={styles.weekInfo}>
               {seleccionActual === 0
-                ? "Semana actual"
-                : `Hace ${seleccionActual} ${DateUtils.obtenerTextoSemana(
-                    seleccionActual
-                  )}`}
+                ? modo === "semanal"
+                  ? "Semana actual"
+                  : "Mes actual"
+                : `Hace ${seleccionActual} ${
+                    modo === "semanal"
+                      ? DateUtils.obtenerTextoSemana(seleccionActual)
+                      : DateUtils.obtenerTextoMes(seleccionActual)
+                  }`}
             </Text>
           </View>
 
