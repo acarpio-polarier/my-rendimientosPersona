@@ -323,14 +323,22 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
             color={colors.primary}
           />
 
-          {/* Tarjeta de Tokens (hardcodeado) */}
-          <TarjetaEstadistica
-            icono="ticket-confirmation"
-            titulo="Tokens"
-            valor={TOKENS_DISPONIBLES}
-            descripcion="Disponibles"
-            color="#2E7D32"
-          />
+          {/* Tarjeta de Tokens especial (hardcodeado) */}
+          {/* Tarjeta de Tokens con ribete amarillo */}
+          <View style={styles.tarjetaTokens}>
+            <View style={styles.tarjetaHeader}>
+              <MaterialCommunityIcons
+                name="ticket-confirmation"
+                size={20}
+                color="#F5B700"
+              />
+              <Text style={styles.tarjetaTitulo}>Tokens</Text>
+            </View>
+            <Text style={[styles.tarjetaValor, { color: "#F5B700" }]}>
+              {TOKENS_DISPONIBLES}
+            </Text>
+            <Text style={styles.tarjetaDescripcion}>Disponibles</Text>
+          </View>
         </View>
       </>
     );
@@ -496,6 +504,21 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#777",
     textAlign: "center",
+  },
+  // Estilos para tarjeta especial de tokens
+  tarjetaTokens: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 12,
+    width: "31%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#F5B700",
   },
   estadoTexto: {
     fontSize: 10,
