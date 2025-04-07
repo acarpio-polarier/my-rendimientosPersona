@@ -17,24 +17,30 @@ import { useNavigation } from "@react-navigation/native";
 import FechaUtils from "../../helpers//FechaUtils";
 
 const GraficoAnual = () => {
+  // Navegación
+
   const navigation = useNavigation();
 
   const navegar = () => {
     navigation.navigate("DetalleRendimiento", {
-      data: values,
+      data: datosProcesados,
     });
   };
 
+  // Estado
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [añoActual, setAñoActual] = useState(moment().year());
   const [cargando, setCargando] = useState(true);
   const [hayDatos, setHayDatos] = useState(true);
+  const [datosProcesados, setDatosProcesados] = useState([]);
 
+  // Efecto
   useEffect(() => {
     cargarDatos();
   }, [añoActual]);
 
+  // Llamada
   const cargarDatos = () => {
     setCargando(true);
     const idPersona = PERSONA_ID;
@@ -48,6 +54,7 @@ const GraficoAnual = () => {
         console.log(`Datos recibidos para ${añoActual}:`, response);
         const datosProcesados = FechaUtils.procesarDatosAnuales(response);
 
+        setDatosProcesados(datosProcesados);
         setData(datosProcesados.values);
         setLabels(datosProcesados.labels);
         setHayDatos(datosProcesados.values.some((value) => value > 0));
@@ -58,8 +65,10 @@ const GraficoAnual = () => {
       .finally(() => setCargando(false));
   };
 
+  // Cambio de año
   const cambiarAño = (incremento) => {
     setAñoActual((prevAño) => prevAño + incremento);
+    console.log("Informacion por mes:", datosProcesados);
   };
 
   const renderizarContindoGrafico = () => {

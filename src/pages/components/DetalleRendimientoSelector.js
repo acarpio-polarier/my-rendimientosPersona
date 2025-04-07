@@ -131,7 +131,14 @@ export default function DetalleRendimientoSelector() {
       return (
         <View style={styles.proximamenteContainer}>
           <Text style={styles.proximamenteTexto}>
-            Visualizador mensual en desarrollo
+            <VisualizadorSemanal
+              data={datosPorDia}
+              semanaActual={seleccionActual}
+              rangoPeriodo={{
+                fechaInicio: rangoPeriodo.inicioIso,
+                fechaFin: rangoPeriodo.finIso,
+              }}
+            />
           </Text>
         </View>
       );
