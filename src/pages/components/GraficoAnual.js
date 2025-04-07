@@ -14,7 +14,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
 import { useNavigation } from "@react-navigation/native";
-import RendimientoUtils from "../../helpers//RendimientoUtils";
 import FechaUtils from "../../helpers//FechaUtils";
 
 const GraficoAnual = () => {

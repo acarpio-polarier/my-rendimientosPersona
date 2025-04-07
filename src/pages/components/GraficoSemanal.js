@@ -28,9 +28,6 @@ const GraficoSemanal = () => {
       data: datosPorDia,
       modoInicial: "semanal",
       semanaInicial: semanaSeleccionada,
-      onSemanaChange: (nuevaSemana) => {
-        setSemanaSeleccionada(nuevaSemana);
-      },
     });
   };
 
