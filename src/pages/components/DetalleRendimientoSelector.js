@@ -20,52 +20,132 @@ export default function DetalleRendimientoSelector() {
   const route = useRoute();
 
   // Estado inicial (puede recibir datos iniciales para la primera carga)
-  const { datosPorDia: datosInicialesPorDia, modoInicial = "semanal" } =
-    route.params || {};
+  const {
+    datosPorDia: datosInicialesPorDia,
+    modoInicial = "semanal",
+    semanaInicial = 0, // Recibimos la semana inicial desde la navegación
+  } = route.params || {};
 
   // Estados
-  const [modo] = useState(modoInicial);
-  const [seleccionActual, setSeleccionActual] = useState(0);
+  const [modo, setModo] = useState(modoInicial);
+  const [seleccionActual, setSeleccionActual] = useState(semanaInicial || 0); // Usar semanaInicial si existe
+  const [mesSeleccionado, setMesSeleccionado] = useState(new Date().getMonth()); // Mes actual (0-11)
+  const [anioSeleccionado, setAnioSeleccionado] = useState(
+    new Date().getFullYear()
+  ); // Año actual
+
+  // Estado para almacenar datos mensuales que vienen del padre/navegación
+  const [datosMensualesCompletos, setDatosMensualesCompletos] = useState([]);
+
+  // En un useEffect inicial, podríamos recibir estos datos
+  useEffect(() => {
+    // Supongamos que estos datos vienen de route.params
+    const { datosMensuales } = route.params || {};
+    if (datosMensuales && datosMensuales.length > 0) {
+      setDatosMensualesCompletos(datosMensuales);
+    }
+  }, []);
+
   const [rangoPeriodo, setRangoPeriodo] = useState(
-    DateUtils.obtenerRangoSemana(0)
+    modo === "semanal"
+      ? DateUtils.obtenerRangoSemana(0)
+      : DateUtils.obtenerRangoMes(anioSeleccionado, mesSeleccionado)
   );
   const [datosPorDia, setDatosPorDia] = useState(datosInicialesPorDia || []);
+  const [datosPorMes, setDatosPorMes] = useState([]);
   const [cargando, setCargando] = useState(false);
 
-  // Efecto para cargar datos cuando cambia la selección
+  // Efecto para actualizar datos cuando cambia la selección o el modo
   useEffect(() => {
-    if (seleccionActual === 0 && datosInicialesPorDia) {
-      // Si estamos en la semana actual y tenemos datos iniciales, usarlos
-      setDatosPorDia(datosInicialesPorDia);
-    } else {
-      // En otro caso, cargar datos para la semana seleccionada
-      const nuevoRango = DateUtils.obtenerRangoSemana(seleccionActual);
-      setRangoPeriodo(nuevoRango);
-      cargarDatosSemana(nuevoRango.inicioIso, nuevoRango.finIso);
-    }
-  }, [seleccionActual, datosInicialesPorDia]);
+    let nuevoRango;
 
-  // Función para cargar datos desde la API
+    if (modo === "semanal") {
+      // Manejo de datos semanales
+      nuevoRango = DateUtils.obtenerRangoSemana(seleccionActual);
+      cargarDatosSemana(nuevoRango.inicioIso, nuevoRango.finIso);
+    } else {
+      // Manejo de datos mensuales
+      nuevoRango = DateUtils.obtenerRangoMes(anioSeleccionado, mesSeleccionado);
+      cargarDatosMes(nuevoRango.inicioIso, nuevoRango.finIso);
+    }
+
+    // Actualizamos el rango del periodo
+    setRangoPeriodo(nuevoRango);
+
+    // Para debug
+    console.log("Nuevo rango:", nuevoRango, "Modo:", modo);
+  }, [seleccionActual, modo, mesSeleccionado, anioSeleccionado]);
+
+  const obtenerMesDelPeriodo = () => {
+    // Definimos aquí también los nombres cortos de meses para la visualización
+    const nombresMesesCorto = [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ];
+
+    if (modo === "anual") {
+      // Usar formato de mes corto y año
+      return nombresMesesCorto[mesSeleccionado] + " " + anioSeleccionado;
+    }
+
+    if (!rangoPeriodo || !rangoPeriodo.inicioIso) {
+      return nombresMesesCorto[new Date().getMonth()];
+    }
+
+    try {
+      // Obtenemos el mes de la fecha en formato corto
+      const fechaObj = new Date(rangoPeriodo.inicioIso);
+      if (isNaN(fechaObj.getTime())) {
+        throw new Error("Fecha inválida");
+      }
+      return nombresMesesCorto[fechaObj.getMonth()];
+    } catch (error) {
+      console.error("Error al obtener mes del periodo:", error);
+      return nombresMesesCorto[new Date().getMonth()];
+    }
+  };
+
+  // Función para cargar datos desde la API (desde paste2)
   const cargarDatosSemana = async (fechaInicio, fechaFin) => {
     setCargando(true);
     try {
       console.log(`Cargando datos: ${fechaInicio} - ${fechaFin}`);
 
-      const datos =
-        await rendimientoPersonasService.getRendimientoPersonaMaquina(
-          PERSONA_ID,
-          fechaInicio,
-          fechaFin
-        );
-
-      if (datos && datos.length > 0) {
-        // Agrupar datos por día
-        const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
-        console.log("Datos agrupados:", datosAgrupados.length, "días");
-        setDatosPorDia(datosAgrupados);
+      // Si tenemos datos iniciales y estamos en la semana actual, los usamos
+      if (
+        seleccionActual === 0 &&
+        datosInicialesPorDia &&
+        datosInicialesPorDia.length > 0
+      ) {
+        setDatosPorDia(datosInicialesPorDia);
       } else {
-        console.log("No hay datos para esta semana");
-        setDatosPorDia([]);
+        // En otro caso, cargar datos para la semana seleccionada
+        const datos =
+          await rendimientoPersonasService.getRendimientoPersonaMaquina(
+            PERSONA_ID,
+            fechaInicio,
+            fechaFin
+          );
+
+        if (datos && datos.length > 0) {
+          // Agrupar datos por día
+          const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
+          console.log("Datos agrupados:", datosAgrupados.length, "días");
+          setDatosPorDia(datosAgrupados);
+        } else {
+          console.log("No hay datos para esta semana");
+          setDatosPorDia([]);
+        }
       }
     } catch (error) {
       console.error("Error al cargar datos:", error);
@@ -75,18 +155,113 @@ export default function DetalleRendimientoSelector() {
     }
   };
 
+  // Función simplificada para obtener datos por mes usando la estructura proporcionada
+  const obtenerDatosPorMes = (mes, anio) => {
+    // Nombres cortos de meses para buscar el correspondiente label
+    const nombresMesesCorto = FechaUtils.nombresMesesCorto;
+
+    const mesLabel = nombresMesesCorto[mes];
+    console.log(`Buscando datos para mes: ${mesLabel}`);
+
+    // Filtrar los datos por el label correspondiente y el año
+    const datosMes = datosMensualesCompletos.find(
+      (item) => item.label === mesLabel && item.anio === anio
+    );
+
+    // Si encontramos datos, los retornamos, sino retornamos null
+    if (datosMes && datosMes.data) {
+      console.log(`Datos encontrados para ${mesLabel} ${anio}`);
+      return datosMes.data;
+    }
+
+    console.log(`No se encontraron datos para ${mesLabel} ${anio}`);
+    return null;
+  };
+
   // Función para seleccionar periodo anterior
   const periodoAnterior = () => {
-    const nuevaSeleccion = seleccionActual + 1;
-    setSeleccionActual(nuevaSeleccion);
+    if (modo === "semanal") {
+      // En modo semanal, incrementamos el offset de semanas
+      const nuevaSeleccion = seleccionActual + 1;
+      setSeleccionActual(nuevaSeleccion);
+    } else {
+      // En modo anual, retrocedemos un mes
+      let nuevoMes = mesSeleccionado - 1;
+      let nuevoAnio = anioSeleccionado;
+
+      if (nuevoMes < 0) {
+        nuevoMes = 11; // Diciembre
+        nuevoAnio--;
+      }
+
+      setMesSeleccionado(nuevoMes);
+      setAnioSeleccionado(nuevoAnio);
+    }
   };
 
   // Función para seleccionar periodo siguiente (hasta la actual)
   const periodoSiguiente = () => {
-    if (seleccionActual > 0) {
-      const nuevaSeleccion = seleccionActual - 1;
-      setSeleccionActual(nuevaSeleccion);
+    if (modo === "semanal") {
+      if (seleccionActual > 0) {
+        const nuevaSeleccion = seleccionActual - 1;
+        setSeleccionActual(nuevaSeleccion);
+
+        // Si existe una función de callback para reportar el cambio de semana
+        if (route.params?.onSemanaChange) {
+          route.params.onSemanaChange(nuevaSeleccion);
+        }
+      }
+    } else {
+      // Verificamos si estamos en el mes y año actual
+      const fechaActual = new Date();
+      const mesActual = fechaActual.getMonth();
+      const anioActual = fechaActual.getFullYear();
+
+      // Solo permitimos avanzar si no estamos en el mes actual
+      if (
+        anioSeleccionado < anioActual ||
+        (anioSeleccionado === anioActual && mesSeleccionado < mesActual)
+      ) {
+        let nuevoMes = mesSeleccionado + 1;
+        let nuevoAnio = anioSeleccionado;
+
+        if (nuevoMes > 11) {
+          nuevoMes = 0; // Enero
+          nuevoAnio++;
+        }
+
+        setMesSeleccionado(nuevoMes);
+        setAnioSeleccionado(nuevoAnio);
+      }
     }
+  };
+
+  // Función para cambiar entre modo semanal y anual
+  const cambiarModo = () => {
+    const nuevoModo = modo === "semanal" ? "anual" : "semanal";
+    setModo(nuevoModo);
+
+    if (nuevoModo === "semanal") {
+      setSeleccionActual(0); // Resetear a semana actual
+    } else {
+      // Al cambiar a modo anual, establecer mes y año actuales
+      const fechaActual = new Date();
+      setMesSeleccionado(fechaActual.getMonth());
+      setAnioSeleccionado(fechaActual.getFullYear());
+    }
+  };
+
+  // Renderizar mensaje cuando no hay datos
+  const renderizarSinDatos = (periodo) => {
+    return (
+      <View style={styles.sinDatosContainer}>
+        <MaterialCommunityIcons name="calendar-blank" size={40} color="#999" />
+        <Text style={styles.sinDatosTexto}>
+          No hay datos disponibles para{" "}
+          {periodo === "semana" ? "esta semana" : "este mes"}.
+        </Text>
+      </View>
+    );
   };
 
   // Renderizar el visualizador adecuado según el modo
@@ -100,22 +275,11 @@ export default function DetalleRendimientoSelector() {
       );
     }
 
-    if (!datosPorDia || datosPorDia.length === 0) {
-      return (
-        <View style={styles.sinDatosContainer}>
-          <MaterialCommunityIcons
-            name="calendar-blank"
-            size={40}
-            color="#999"
-          />
-          <Text style={styles.sinDatosTexto}>
-            No hay datos disponibles para esta semana.
-          </Text>
-        </View>
-      );
-    }
-
     if (modo === "semanal") {
+      if (!datosPorDia || datosPorDia.length === 0) {
+        return renderizarSinDatos("semana");
+      }
+
       return (
         <VisualizadorSemanal
           data={datosPorDia}
@@ -127,13 +291,56 @@ export default function DetalleRendimientoSelector() {
         />
       );
     } else {
-      // Para el modo anual/mensual
+      // Modo anual (ahora por mes)
+      if (!datosPorMes || datosPorMes.length === 0) {
+        return renderizarSinDatos("mes");
+      }
+
+      // Nombres cortos de meses para referencias
+      const nombresMesesCorto = [
+        "Ene",
+        "Feb",
+        "Mar",
+        "Abr",
+        "May",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dic",
+      ];
+
+      // Obtener el label del mes actual
+      const mesLabel = nombresMesesCorto[mesSeleccionado];
+
       return (
-        <View style={styles.proximamenteContainer}>
-          <Text style={styles.proximamenteTexto}>
-            Visualizador mensual en desarrollo
+        <View style={styles.visualizadorContainer}>
+          <Text style={styles.tituloMes}>
+            {mesLabel} {anioSeleccionado}
           </Text>
+
+          {/* Visualizador de datos mensuales (placeholder) */}
+          <View style={styles.proximamenteContainer}>
+            <Text style={styles.proximamenteTexto}>
+              Visualizador mensual en desarrollo
+            </Text>
+          </View>
         </View>
+      );
+    }
+  };
+
+  // Verificar si estamos en el mes y año actual (para deshabilitar el botón siguiente)
+  const esMesActual = () => {
+    if (modo === "semanal") {
+      return seleccionActual === 0;
+    } else {
+      const fechaActual = new Date();
+      return (
+        mesSeleccionado === fechaActual.getMonth() &&
+        anioSeleccionado === fechaActual.getFullYear()
       );
     }
   };
@@ -145,6 +352,14 @@ export default function DetalleRendimientoSelector() {
         <Text style={styles.headerText}>
           Rendimiento {modo === "semanal" ? "semanal" : "mensual"}
         </Text>
+        {/* Botón para cambiar modo */}
+        <TouchableOpacity onPress={cambiarModo} style={styles.modeToggle}>
+          <MaterialCommunityIcons
+            name={modo === "semanal" ? "calendar-month" : "calendar-week"}
+            size={24}
+            color="white"
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Selector de periodo */}
@@ -160,33 +375,34 @@ export default function DetalleRendimientoSelector() {
 
           <View style={styles.dateRange}>
             <Text style={styles.dateText}>
-              {rangoPeriodo.inicio} - {rangoPeriodo.fin}
+              {
+                modo === "semanal"
+                  ? `${rangoPeriodo.inicio} - ${rangoPeriodo.fin}`
+                  : obtenerMesDelPeriodo() /* Nombre del mes y año */
+              }
             </Text>
             <Text style={styles.weekInfo}>
-              {seleccionActual === 0
+              {esMesActual()
                 ? modo === "semanal"
                   ? "Semana actual"
                   : "Mes actual"
-                : `Hace ${seleccionActual} ${
-                    modo === "semanal"
-                      ? DateUtils.obtenerTextoSemana(seleccionActual)
-                      : DateUtils.obtenerTextoMes(seleccionActual)
-                  }`}
+                : modo === "semanal"
+                ? `Hace ${seleccionActual} ${
+                    seleccionActual === 1 ? "semana" : "semanas"
+                  }`
+                : ""}
             </Text>
           </View>
 
           <TouchableOpacity
             onPress={periodoSiguiente}
-            disabled={seleccionActual === 0}
-            style={[
-              styles.button,
-              seleccionActual === 0 && styles.disabledButton,
-            ]}
+            disabled={esMesActual()}
+            style={[styles.button, esMesActual() && styles.disabledButton]}
           >
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}
-              color={seleccionActual === 0 ? "#ccc" : colors.primary}
+              color={esMesActual() ? "#ccc" : colors.primary}
             />
           </TouchableOpacity>
         </View>
@@ -217,12 +433,21 @@ const styles = StyleSheet.create({
   header: {
     paddingVertical: 5,
     paddingHorizontal: 7,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   headerText: {
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  modeToggle: {
+    position: "absolute",
+    right: 8,
+    padding: 4,
   },
   contenido: {
     padding: 10,
@@ -260,16 +485,6 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingBottom: 15,
   },
-  proximamenteContainer: {
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  proximamenteTexto: {
-    color: "#666",
-    fontSize: 14,
-    fontStyle: "italic",
-  },
   sinDatosContainer: {
     padding: 20,
     alignItems: "center",
@@ -292,5 +507,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     textAlign: "center",
+  },
+  // Estilos para el visualizador mensual
+  tituloMes: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
+    color: colors.primary,
+  },
+  proximamenteContainer: {
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  proximamenteTexto: {
+    color: "#666",
+    fontSize: 14,
+    fontStyle: "italic",
   },
 });

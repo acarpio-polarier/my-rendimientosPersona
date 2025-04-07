@@ -10,7 +10,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import BarraExpandible from "./BarraExpandible";
-import DetalleRendimiento from "./DetalleRendimiento";
+import DetalleRendimientoDesplegable from "./DetalleRendimientoDesplegable";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
 import { useNavigation } from "@react-navigation/native";
@@ -240,7 +240,7 @@ const GraficoSemanal = () => {
 
       {/* Barra expandible */}
       <BarraExpandible hayDatos={!cargando && hayDatos}>
-        <DetalleRendimiento datos={datosRendimiento} />
+        <DetalleRendimientoDesplegable datos={datosRendimiento} />
       </BarraExpandible>
     </View>
   );

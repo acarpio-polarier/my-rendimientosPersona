@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { colors } from "../../../styles/base";
 
-const DetalleRendimiento = ({ datos, cargando }) => {
+const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
   // Usar useMemo para memorizar los datos y evitar recálculos innecesarios
   const rendimientoMemoizado = useMemo(() => {
     // Si hay datos, usa el último conjunto
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetalleRendimiento;
+export default DetalleRendimientoDesplegable;
