@@ -262,6 +262,98 @@ const FechaUtils = {
     "Noviembre",
     "Diciembre",
   ],
+  nombresMesesCorto: [
+    "Ene",
+    "Feb",
+    "Mar",
+    "Abr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dic",
+  ],
+
+  /**
+   * Obtiene el rango de fechas para un año
+   * @param {number} offsetAnios - Número de años hacia atrás (0 = año actual)
+   * @returns {Object} Objeto con fechas formateadas e ISO
+   */
+  obtenerRangoAnual: (offsetAnios = 0) => {
+    const currentDate = new Date();
+    const anio = currentDate.getFullYear() - offsetAnios;
+
+    // Crear fecha de inicio (1 de enero) y fin (31 de diciembre)
+    const inicioAnio = new Date(anio, 0, 1); // Enero es 0
+    const finAnio = new Date(anio, 11, 31); // Diciembre es 11
+
+    // Formatear para display
+    const inicioFormatted = `01/01/${anio}`;
+    const finFormatted = `31/12/${anio}`;
+
+    // Formatear para API (ISO)
+    const inicioIso = `${anio}-01-01T00:00:00Z`; // Añadir hora para evitar problemas de zona horaria
+    const finIso = `${anio}-12-31T23:59:59Z`;
+
+    return {
+      inicio: inicioFormatted,
+      fin: finFormatted,
+      inicioIso,
+      finIso,
+      anio: anio.toString(),
+    };
+  },
+  /**
+   * Obtiene el nombre del mes actual basado en una fecha ISO o en la fecha actual
+   * @param {string} [fechaIso] - Fecha en formato ISO (YYYY-MM-DD) o ISO completo
+   * @returns {string} Nombre del mes
+   */
+  obtenerNombreMesActual: (fechaIso) => {
+    // Si no se proporciona fecha, usamos la fecha actual
+    if (!fechaIso) {
+      return FechaUtils.obtenerNombreMes(new Date().getMonth());
+    }
+
+    try {
+      // Extraer el mes del formato ISO de manera más flexible
+      const fechaObj = new Date(fechaIso);
+
+      if (isNaN(fechaObj.getTime())) {
+        return FechaUtils.obtenerNombreMes(new Date().getMonth());
+      }
+
+      return FechaUtils.obtenerNombreMes(fechaObj.getMonth());
+    } catch (error) {
+      console.warn("Error al obtener el nombre del mes:", error);
+      return FechaUtils.obtenerNombreMes(new Date().getMonth());
+    }
+  },
 };
+
+/**
+ * Función auxiliar para obtener el nombre del mes
+ * @param {number} index - Índice del mes (0-11)
+ * @returns {string} Nombre del mes
+ */
+function obtenerNombreMes(index) {
+  const nombresMeses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+  return nombresMeses[index] || "";
+}
 
 export default FechaUtils;
