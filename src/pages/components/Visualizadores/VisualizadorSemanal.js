@@ -33,14 +33,17 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   const [cargando, setCargando] = useState(true);
   const [datosPorDia, setDatosPorDia] = useState([]);
 
-  // Log para debug
-  useEffect(() => {
-    console.log("Datos recibidos:", data);
-    console.log("Rango de periodo:", rangoPeriodo);
-  }, [data, rangoPeriodo]);
-
   // Agrupar y procesar datos cuando cambian
   useEffect(() => {
+    console.log(
+      "useEffect disparado con datos:",
+      data,
+      "semanaActual:",
+      semanaActual,
+      "rangoPeriodo:",
+      rangoPeriodo
+    );
+
     if (!data || data.length === 0) {
       setDiasSemana([]);
       setDiaSeleccionado(null);
@@ -161,9 +164,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     );
     const fechaFin = new Date(rangoPeriodo.fechaFin || rangoPeriodo.finIso);
 
-    // Ajustar fechaFin para incluir 7 días (semana completa)
-    fechaFin.setDate(fechaInicio.getDate() + 6);
-
     // Crear array con los 7 días de la semana
     const dias = [];
     const fechaActual = new Date(fechaInicio);
@@ -244,7 +244,11 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
         {/* Estrella para el mejor día */}
         {item.mejorDia && item.tieneDatos && (
           <View style={styles.estrella}>
-            <MaterialCommunityIcons name="star" size={14} color="#FFD700" />
+            <MaterialCommunityIcons
+              name="star"
+              size={10}
+              color={colors.primary}
+            />
           </View>
         )}
         <Text style={[styles.nombreDia, { color: colorTexto }]}>
@@ -399,16 +403,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     paddingVertical: 2,
     justifyContent: "center",
+    alignSelf: "center",
+    width: "100%",
   },
   diaItem: {
-    width: 45,
+    width: 38,
     height: 80,
     marginHorizontal: 2.5,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     padding: 5,
-    position: "relative", // Para posicionar la estrella
+    position: "relative",
   },
   diaSeleccionado: {
     elevation: 3,

@@ -13,25 +13,19 @@ import BarraExpandible from "./BarraExpandible";
 import DetalleRendimientoDesplegable from "./DetalleRendimientoDesplegable";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
-import { useNavigation } from "@react-navigation/native";
 import RendimientoUtils from "../../helpers//RendimientoUtils";
 import FechaUtils from "../../helpers//FechaUtils";
-import DateUtils from "../../helpers//FechaUtils";
+import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
+import ModalRendimiento from "./ModalRendimiento";
 
 const GraficoSemanal = () => {
-  // Navegación
+  // Estado para el modal
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const navigation = useNavigation();
-
-  const navegar = () => {
-    navigation.navigate("DetalleRendimiento", {
-      data: datosPorDia,
-      modoInicial: "semanal",
-      semanaInicial: semanaSeleccionada,
-      onSemanaChange: (nuevaSemana) => {
-        setSemanaSeleccionada(nuevaSemana);
-      },
-    });
+  const mostrarDetalles = () => {
+    if (!cargando && hayDatos) {
+      setModalVisible(true);
+    }
   };
 
   // Estado
@@ -50,7 +44,7 @@ const GraficoSemanal = () => {
 
   // Efecto
   useEffect(() => {
-    const nuevoRango = DateUtils.obtenerRangoSemana(semanaSeleccionada);
+    const nuevoRango = FechaUtils.obtenerRangoSemana(semanaSeleccionada);
     setRangoSemana(nuevoRango);
     setCargando(true);
 
@@ -58,6 +52,11 @@ const GraficoSemanal = () => {
     console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
     console.log("Fecha fin ISO:", nuevoRango.finIso);
     getRendimientoMedio(PERSONA_ID, nuevoRango.inicioIso, nuevoRango.finIso);
+
+    // Si hay un cambio de semana, actualizar el estado del botón
+    if (datosRendimiento.length > 0) {
+      setHayDatos(true);
+    }
   }, [semanaSeleccionada]);
 
   // Llamada
@@ -73,24 +72,29 @@ const GraficoSemanal = () => {
       // Verificar si hay datos
       if (datos && datos.length > 0) {
         const media = datos[datos.length - 1].RendimientoAcumulado;
-        console.log(media);
+        console.log("Media de rendimiento:", media);
         setProgreso(media / 100);
         setDatosRendimiento(datos);
 
-        const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
+        const datosAgrupados = FechaUtils.agruparRegistrosPorDia(datos);
 
-        setDatosPorDia(datosAgrupados);
-        console.log("Datos por dia: ", datosAgrupados);
-        setHayDatos(true);
+        // Asegurarse de que hay datos por día antes de actualizar el estado
+        if (datosAgrupados && datosAgrupados.length > 0) {
+          console.log("Datos por día disponibles:", datosAgrupados.length);
+          setDatosPorDia(datosAgrupados);
+          setHayDatos(true);
+        } else {
+          console.log("No hay datos agrupados por día");
+          setDatosPorDia([]);
+          setHayDatos(false);
+        }
       } else {
+        console.log("No hay datos para esta semana");
         setProgreso(0);
         setDatosRendimiento([]);
         setDatosPorDia([]);
-
         setHayDatos(false);
       }
-
-      console.log("datoooooooooooos llamada: ", datos);
     } catch (error) {
       console.error("Error al obtener rendimiento:", error);
       setProgreso(0);
@@ -111,6 +115,12 @@ const GraficoSemanal = () => {
     if (semanaSeleccionada > 0) {
       setSemanaSeleccionada(semanaSeleccionada - 1);
     }
+  };
+
+  // Callback para cuando cambia la semana desde el modal
+  const handleSemanaChange = (nuevaSemana) => {
+    console.log("Semana cambiada desde el modal:", nuevaSemana);
+    setSemanaSeleccionada(nuevaSemana);
   };
 
   const renderizarContenidoGrafico = () => {
@@ -183,11 +193,15 @@ const GraficoSemanal = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.infoButton} onPress={navegar}>
+        <TouchableOpacity
+          style={styles.infoButton}
+          onPress={mostrarDetalles}
+          disabled={cargando || !hayDatos}
+        >
           <MaterialCommunityIcons
             name="information-outline"
             size={22}
-            color={colors.primary}
+            color={cargando || !hayDatos ? "#ccc" : colors.primary}
           />
         </TouchableOpacity>
       </View>
@@ -242,6 +256,21 @@ const GraficoSemanal = () => {
       <BarraExpandible hayDatos={!cargando && hayDatos}>
         <DetalleRendimientoDesplegable datos={datosRendimiento} />
       </BarraExpandible>
+
+      {/* Modal para DetalleRendimientoSelector */}
+      <ModalRendimiento
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        title={"Detalle de rendimiento semanal"}
+        heightPercentage={0.85}
+      >
+        <DetalleRendimientoSelector
+          datosPorDia={datosPorDia}
+          modoInicial="semanal"
+          semanaInicial={semanaSeleccionada}
+          onSemanaChange={handleSemanaChange}
+        />
+      </ModalRendimiento>
     </View>
   );
 };

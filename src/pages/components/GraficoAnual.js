@@ -13,24 +13,21 @@ import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
-import { useNavigation } from "@react-navigation/native";
 import RendimientoUtils from "../../helpers//RendimientoUtils";
 import FechaUtils from "../../helpers//FechaUtils";
+import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
+import ModalRendimiento from "./ModalRendimiento";
 
 const GraficoAnual = () => {
-  const navigation = useNavigation();
-
-  const navegar = () => {
-    navigation.navigate("DetalleRendimiento", {
-      data: values,
-    });
-  };
+  // Estado para controlar la visibilidad del modal
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [añoActual, setAñoActual] = useState(moment().year());
   const [cargando, setCargando] = useState(true);
   const [hayDatos, setHayDatos] = useState(true);
+  const [datosProcesados, setDatosProcesados] = useState([]);
 
   useEffect(() => {
     cargarDatos();
@@ -49,9 +46,14 @@ const GraficoAnual = () => {
         console.log(`Datos recibidos para ${añoActual}:`, response);
         const datosProcesados = FechaUtils.procesarDatosAnuales(response);
 
+        // Añadir el año a los datos procesados para referencia
+        datosProcesados.anio = añoActual;
+
+        setDatosProcesados(datosProcesados);
         setData(datosProcesados.values);
         setLabels(datosProcesados.labels);
         setHayDatos(datosProcesados.values.some((value) => value > 0));
+        console.log("Por mes: ", datosProcesados);
       })
       .catch((error) => {
         console.error("Error obteniendo datos:", error);
@@ -61,6 +63,13 @@ const GraficoAnual = () => {
 
   const cambiarAño = (incremento) => {
     setAñoActual((prevAño) => prevAño + incremento);
+  };
+
+  // Función modificada: en lugar de navegar, muestra el modal
+  const mostrarDetalles = () => {
+    if (!cargando && hayDatos) {
+      setModalVisible(true);
+    }
   };
 
   const renderizarContindoGrafico = () => {
@@ -142,11 +151,15 @@ const GraficoAnual = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.infoButton} onPress={navegar}>
+        <TouchableOpacity
+          style={styles.infoButton}
+          onPress={mostrarDetalles}
+          disabled={cargando || !hayDatos}
+        >
           <MaterialCommunityIcons
             name="information-outline"
             size={22}
-            color={colors.primary}
+            color={cargando || !hayDatos ? "#ccc" : colors.primary}
           />
         </TouchableOpacity>
       </View>
@@ -172,6 +185,22 @@ const GraficoAnual = () => {
 
       {/* Gráfico  */}
       <View>{renderizarContindoGrafico()}</View>
+
+      {/* Modal para DetalleRendimientoSelector */}
+      <ModalRendimiento
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        title={"Detalle de rendimiento anual"}
+        blurIntensity="light"
+      >
+        <DetalleRendimientoSelector
+          datosPorDia={[]}
+          modoInicial="anual"
+          datosAnuales={datosProcesados}
+          anioSeleccionado={añoActual}
+          mesSeleccionado={0} // Enero
+        />
+      </ModalRendimiento>
     </View>
   );
 };

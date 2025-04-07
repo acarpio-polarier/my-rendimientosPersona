@@ -7,44 +7,68 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { colors } from "../../../styles/base";
 import DateUtils from "../../helpers/FechaUtils";
 import VisualizadorSemanal from "./Visualizadores/VisualizadorSemanal";
+import VisualizadorAnual from "./Visualizadores/VisualizadorAnual";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import { PERSONA_ID } from "../Index";
+import FechaUtils from "../../helpers/FechaUtils";
 
-export default function DetalleRendimientoSelector() {
-  // Hooks
-  const navigation = useNavigation();
-  const route = useRoute();
-
-  // Estado inicial (puede recibir datos iniciales para la primera carga)
-  const {
-    datosPorDia: datosInicialesPorDia,
-    modoInicial = "semanal",
-    semanaInicial = 0, // Recibimos la semana inicial desde la navegación
-  } = route.params || {};
+// Recibir props directamente con destructuring
+export default function DetalleRendimientoSelector({
+  datosPorDia: datosInicialesPorDia = [],
+  modoInicial = "semanal",
+  semanaInicial = 0,
+  anioSeleccionado: anioInicial = new Date().getFullYear(),
+  mesSeleccionado: mesInicial = new Date().getMonth(),
+  datosAnuales: datosAnualesIniciales = null,
+  onSemanaChange = () => {},
+}) {
+  console.log("DetalleRendimientoSelector - Props recibidas:", {
+    modoInicial,
+    semanaInicial,
+    tieneDataDias: datosInicialesPorDia ? datosInicialesPorDia.length : 0,
+    tieneDataAnual: !!datosAnualesIniciales,
+  });
 
   // Estados
-  const [modo, setModo] = useState(modoInicial);
-  const [seleccionActual, setSeleccionActual] = useState(semanaInicial || 0); // Usar semanaInicial si existe
-  const [mesSeleccionado, setMesSeleccionado] = useState(new Date().getMonth()); // Mes actual (0-11)
-  const [anioSeleccionado, setAnioSeleccionado] = useState(
-    new Date().getFullYear()
-  ); // Año actual
+  const [modo, setModo] = useState(modoInicial || "semanal");
+  const [seleccionActual, setSeleccionActual] = useState(semanaInicial || 0);
+  const [mesSeleccionado, setMesSeleccionado] = useState(mesInicial);
+  const [anioSeleccionado, setAnioSeleccionado] = useState(anioInicial);
 
-  // Estado para almacenar datos mensuales que vienen del padre/navegación
-  const [datosMensualesCompletos, setDatosMensualesCompletos] = useState([]);
-
-  // En un useEffect inicial, podríamos recibir estos datos
+  // Asegurarse de que el modo y selecciones se inicialicen correctamente
   useEffect(() => {
-    // Supongamos que estos datos vienen de route.params
-    const { datosMensuales } = route.params || {};
-    if (datosMensuales && datosMensuales.length > 0) {
-      setDatosMensualesCompletos(datosMensuales);
+    console.log("Actualizando modo a:", modoInicial);
+    setModo(modoInicial || "semanal");
+  }, [modoInicial]);
+
+  // Actualizar semana cuando cambia desde fuera
+  useEffect(() => {
+    setSeleccionActual(semanaInicial || 0);
+  }, [semanaInicial]);
+
+  // Actualizar año/mes cuando cambian desde fuera
+  useEffect(() => {
+    setAnioSeleccionado(anioInicial);
+    setMesSeleccionado(mesInicial);
+  }, [anioInicial, mesInicial]);
+
+  // Caché para almacenar datos por año y evitar llamadas repetidas
+  const [datosCache, setDatosCache] = useState(() => {
+    const cache = {};
+    // Si tenemos datos iniciales, los añadimos a la caché
+    if (datosAnualesIniciales && datosAnualesIniciales.values) {
+      const anioActual = new Date().getFullYear();
+      cache[anioActual] = datosAnualesIniciales;
     }
-  }, []);
+    return cache;
+  });
+
+  const [datosMensualesCompletos, setDatosMensualesCompletos] = useState([]);
+  const [datosAnuales, setDatosAnuales] = useState(datosAnualesIniciales || []);
+  const [cargandoDatosAnuales, setCargandoDatosAnuales] = useState(false);
 
   const [rangoPeriodo, setRangoPeriodo] = useState(
     modo === "semanal"
@@ -55,67 +79,118 @@ export default function DetalleRendimientoSelector() {
   const [datosPorMes, setDatosPorMes] = useState([]);
   const [cargando, setCargando] = useState(false);
 
-  // Efecto para actualizar datos cuando cambia la selección o el modo
   useEffect(() => {
     let nuevoRango;
 
     if (modo === "semanal") {
-      // Manejo de datos semanales
       nuevoRango = DateUtils.obtenerRangoSemana(seleccionActual);
       cargarDatosSemana(nuevoRango.inicioIso, nuevoRango.finIso);
     } else {
-      // Manejo de datos mensuales
       nuevoRango = DateUtils.obtenerRangoMes(anioSeleccionado, mesSeleccionado);
-      cargarDatosMes(nuevoRango.inicioIso, nuevoRango.finIso);
+
+      // Caché medio fake para no hacer llamadas a la api cada dos por tres
+      if (datosCache[anioSeleccionado]) {
+        console.log(`Usando datos en caché para el año ${anioSeleccionado}`);
+        setDatosAnuales(datosCache[anioSeleccionado]);
+        setDatosPorMes(datosCache[anioSeleccionado]);
+      }
+      // Si no hay en caché pero tenemos datos anuales y el año seleccionado coincide, usarlos
+      else if (
+        datosAnuales &&
+        datosAnuales.labels &&
+        anioSeleccionado === (datosAnuales.anio || new Date().getFullYear())
+      ) {
+        setDatosPorMes(datosAnuales);
+      }
+      // Si no tenemos datos o cambió el año, cargar los datos del año seleccionado
+      else {
+        cargarDatosAnuales(anioSeleccionado);
+      }
     }
 
-    // Actualizamos el rango del periodo
     setRangoPeriodo(nuevoRango);
-
-    // Para debug
-    console.log("Nuevo rango:", nuevoRango, "Modo:", modo);
   }, [seleccionActual, modo, mesSeleccionado, anioSeleccionado]);
 
-  const obtenerMesDelPeriodo = () => {
-    // Definimos aquí también los nombres cortos de meses para la visualización
-    const nombresMesesCorto = [
-      "Ene",
-      "Feb",
-      "Mar",
-      "Abr",
-      "May",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dic",
-    ];
+  // Función para cargar datos anuales con cache
+  const cargarDatosAnuales = async (anio) => {
+    setCargandoDatosAnuales(true);
+    try {
+      console.log(`Cargando datos anuales para el año: ${anio}`);
 
+      const rangoAnio = FechaUtils.obtenerRangoAño(anio);
+      const fechaIni = rangoAnio.inicio;
+      const fechaFin = rangoAnio.fin;
+
+      const response =
+        await rendimientoPersonasService.getRendimientoPersonaMaquina(
+          PERSONA_ID,
+          fechaIni,
+          fechaFin
+        );
+
+      if (response && response.length > 0) {
+        const datosProcesados = FechaUtils.procesarDatosAnuales(response);
+        // Añadir el año a los datos procesados para saber a qué año corresponden
+        datosProcesados.anio = anio;
+
+        // Actualizar la caché con los nuevos datos
+        setDatosCache((prevCache) => ({
+          ...prevCache,
+          [anio]: datosProcesados,
+        }));
+
+        setDatosAnuales(datosProcesados);
+        setDatosPorMes(datosProcesados);
+        console.log(`Datos anuales cargados para ${anio}:`, datosProcesados);
+      } else {
+        console.log(`No hay datos para el año ${anio}`);
+        const datosVacios = { labels: [], values: [], anio: anio };
+
+        // Guardar también los datos vacíos en caché para no volver a hacer la llamada
+        setDatosCache((prevCache) => ({
+          ...prevCache,
+          [anio]: datosVacios,
+        }));
+
+        setDatosAnuales(datosVacios);
+        setDatosPorMes(datosVacios);
+      }
+    } catch (error) {
+      console.error(`Error al cargar datos anuales para ${anio}:`, error);
+      const datosVacios = { labels: [], values: [], anio: anio };
+
+      setDatosAnuales(datosVacios);
+      setDatosPorMes(datosVacios);
+    } finally {
+      setCargandoDatosAnuales(false);
+    }
+  };
+
+  const obtenerMesDelPeriodo = () => {
     if (modo === "anual") {
       // Usar formato de mes corto y año
-      return nombresMesesCorto[mesSeleccionado] + " " + anioSeleccionado;
+      return (
+        FechaUtils.nombresMesesCorto[mesSeleccionado] + " " + anioSeleccionado
+      );
     }
 
     if (!rangoPeriodo || !rangoPeriodo.inicioIso) {
-      return nombresMesesCorto[new Date().getMonth()];
+      return FechaUtils.nombresMesesCorto[new Date().getMonth()];
     }
 
     try {
-      // Obtenemos el mes de la fecha en formato corto
       const fechaObj = new Date(rangoPeriodo.inicioIso);
       if (isNaN(fechaObj.getTime())) {
         throw new Error("Fecha inválida");
       }
-      return nombresMesesCorto[fechaObj.getMonth()];
+      return FechaUtils.nombresMesesCorto[fechaObj.getMonth()];
     } catch (error) {
       console.error("Error al obtener mes del periodo:", error);
-      return nombresMesesCorto[new Date().getMonth()];
+      return FechaUtils.nombresMesesCorto[new Date().getMonth()];
     }
   };
 
-  // Función para cargar datos desde la API (desde paste2)
+  // Función para cargar datos desde la API
   const cargarDatosSemana = async (fechaInicio, fechaFin) => {
     setCargando(true);
     try {
@@ -155,42 +230,19 @@ export default function DetalleRendimientoSelector() {
     }
   };
 
-  // Función simplificada para obtener datos por mes usando la estructura proporcionada
-  const obtenerDatosPorMes = (mes, anio) => {
-    // Nombres cortos de meses para buscar el correspondiente label
-    const nombresMesesCorto = FechaUtils.nombresMesesCorto;
-
-    const mesLabel = nombresMesesCorto[mes];
-    console.log(`Buscando datos para mes: ${mesLabel}`);
-
-    // Filtrar los datos por el label correspondiente y el año
-    const datosMes = datosMensualesCompletos.find(
-      (item) => item.label === mesLabel && item.anio === anio
-    );
-
-    // Si encontramos datos, los retornamos, sino retornamos null
-    if (datosMes && datosMes.data) {
-      console.log(`Datos encontrados para ${mesLabel} ${anio}`);
-      return datosMes.data;
-    }
-
-    console.log(`No se encontraron datos para ${mesLabel} ${anio}`);
-    return null;
-  };
-
   // Función para seleccionar periodo anterior
   const periodoAnterior = () => {
     if (modo === "semanal") {
-      // En modo semanal, incrementamos el offset de semanas
       const nuevaSeleccion = seleccionActual + 1;
       setSeleccionActual(nuevaSeleccion);
+      // Notificar al componente padre del cambio
+      onSemanaChange(nuevaSeleccion);
     } else {
-      // En modo anual, retrocedemos un mes
       let nuevoMes = mesSeleccionado - 1;
       let nuevoAnio = anioSeleccionado;
 
       if (nuevoMes < 0) {
-        nuevoMes = 11; // Diciembre
+        nuevoMes = 11;
         nuevoAnio--;
       }
 
@@ -199,25 +251,19 @@ export default function DetalleRendimientoSelector() {
     }
   };
 
-  // Función para seleccionar periodo siguiente (hasta la actual)
   const periodoSiguiente = () => {
     if (modo === "semanal") {
       if (seleccionActual > 0) {
         const nuevaSeleccion = seleccionActual - 1;
         setSeleccionActual(nuevaSeleccion);
-
-        // Si existe una función de callback para reportar el cambio de semana
-        if (route.params?.onSemanaChange) {
-          route.params.onSemanaChange(nuevaSeleccion);
-        }
+        // Notificar al componente padre del cambio
+        onSemanaChange(nuevaSeleccion);
       }
     } else {
-      // Verificamos si estamos en el mes y año actual
       const fechaActual = new Date();
       const mesActual = fechaActual.getMonth();
       const anioActual = fechaActual.getFullYear();
 
-      // Solo permitimos avanzar si no estamos en el mes actual
       if (
         anioSeleccionado < anioActual ||
         (anioSeleccionado === anioActual && mesSeleccionado < mesActual)
@@ -236,21 +282,6 @@ export default function DetalleRendimientoSelector() {
     }
   };
 
-  // Función para cambiar entre modo semanal y anual
-  const cambiarModo = () => {
-    const nuevoModo = modo === "semanal" ? "anual" : "semanal";
-    setModo(nuevoModo);
-
-    if (nuevoModo === "semanal") {
-      setSeleccionActual(0); // Resetear a semana actual
-    } else {
-      // Al cambiar a modo anual, establecer mes y año actuales
-      const fechaActual = new Date();
-      setMesSeleccionado(fechaActual.getMonth());
-      setAnioSeleccionado(fechaActual.getFullYear());
-    }
-  };
-
   // Renderizar mensaje cuando no hay datos
   const renderizarSinDatos = (periodo) => {
     return (
@@ -258,7 +289,12 @@ export default function DetalleRendimientoSelector() {
         <MaterialCommunityIcons name="calendar-blank" size={40} color="#999" />
         <Text style={styles.sinDatosTexto}>
           No hay datos disponibles para{" "}
-          {periodo === "semana" ? "esta semana" : "este mes"}.
+          {periodo === "semana"
+            ? "esta semana"
+            : periodo === "mes"
+            ? "este mes"
+            : "este año"}
+          .
         </Text>
       </View>
     );
@@ -266,7 +302,7 @@ export default function DetalleRendimientoSelector() {
 
   // Renderizar el visualizador adecuado según el modo
   const renderizarVisualizador = () => {
-    if (cargando) {
+    if (cargando || (modo === "anual" && cargandoDatosAnuales)) {
       return (
         <View style={styles.cargandoContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
@@ -292,41 +328,20 @@ export default function DetalleRendimientoSelector() {
       );
     } else {
       // Modo anual (ahora por mes)
-      if (!datosPorMes || datosPorMes.length === 0) {
-        return renderizarSinDatos("mes");
+      if (
+        !datosPorMes ||
+        !datosPorMes.values ||
+        datosPorMes.values.length === 0
+      ) {
+        return renderizarSinDatos("año");
       }
-
-      // Nombres cortos de meses para referencias
-      const nombresMesesCorto = [
-        "Ene",
-        "Feb",
-        "Mar",
-        "Abr",
-        "May",
-        "Jun",
-        "Jul",
-        "Ago",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dic",
-      ];
-
-      // Obtener el label del mes actual
-      const mesLabel = nombresMesesCorto[mesSeleccionado];
 
       return (
         <View style={styles.visualizadorContainer}>
-          <Text style={styles.tituloMes}>
-            {mesLabel} {anioSeleccionado}
-          </Text>
-
-          {/* Visualizador de datos mensuales (placeholder) */}
-          <View style={styles.proximamenteContainer}>
-            <Text style={styles.proximamenteTexto}>
-              Visualizador mensual en desarrollo
-            </Text>
-          </View>
+          <VisualizadorAnual
+            data={datosPorMes}
+            mesSeleccionado={mesSeleccionado}
+          />
         </View>
       );
     }
@@ -347,21 +362,6 @@ export default function DetalleRendimientoSelector() {
 
   return (
     <View style={styles.contenedor}>
-      {/* Título del contenido */}
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
-        <Text style={styles.headerText}>
-          Rendimiento {modo === "semanal" ? "semanal" : "mensual"}
-        </Text>
-        {/* Botón para cambiar modo */}
-        <TouchableOpacity onPress={cambiarModo} style={styles.modeToggle}>
-          <MaterialCommunityIcons
-            name={modo === "semanal" ? "calendar-month" : "calendar-week"}
-            size={24}
-            color="white"
-          />
-        </TouchableOpacity>
-      </View>
-
       {/* Selector de periodo */}
       <View style={styles.contenido}>
         <View style={styles.selectorContainer}>
@@ -408,7 +408,7 @@ export default function DetalleRendimientoSelector() {
         </View>
       </View>
 
-      {/* Visualizador condicional */}
+      {/* Rendirizado condicional */}
       <View style={styles.visualizadorContainer}>
         {renderizarVisualizador()}
       </View>

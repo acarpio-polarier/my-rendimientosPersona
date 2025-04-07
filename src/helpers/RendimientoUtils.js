@@ -50,16 +50,13 @@ const RendimientoUtils = {
   /**
    * Calcula estadísticas básicas para un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento
-   * @param {string} campoRendimiento - Nombre del campo que contiene el valor de rendimiento
+   * @param {string} campoRendimiento - Nombre del campo que contiene el valor de rendimiento en el visualizador.
    * @returns {Object} Objeto con estadísticas
    */
   calcularEstadisticas: (datos, campoRendimiento = "Rendimiento") => {
     if (!datos || datos.length === 0) {
       return {
         promedio: 0,
-        maximo: 0,
-        minimo: 0,
-        total: 0,
         cantidad: 0,
       };
     }

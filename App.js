@@ -20,7 +20,7 @@ export default function App() {
         >
           <Stack.Screen name="Rendimiento" component={Rendimiento} />
           <Stack.Screen
-            name="DetalleRendimiento"
+            name="DetalleRendimientoSelector"
             component={DetalleRendimientoSelector}
             options={{ headerShown: false }}
           />
