@@ -262,7 +262,7 @@ const GraficoSemanal = () => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         title={"Detalle de rendimiento semanal"}
-        heightPercentage={0.85}
+        datos={datosRendimiento} // Pasamos los datos de rendimiento
       >
         <DetalleRendimientoSelector
           datosPorDia={datosPorDia}

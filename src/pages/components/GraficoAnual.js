@@ -201,19 +201,18 @@ const GraficoAnual = () => {
       {/* Gráfico  */}
       <View>{renderizarContindoGrafico()}</View>
 
-      {/* Modal para DetalleRendimientoSelector */}
       <ModalRendimiento
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         title={"Detalle de rendimiento anual"}
-        blurIntensity="light"
+        datos={data} // Pasamos los datos anuales
       >
         <DetalleRendimientoSelector
           datosPorDia={[]}
           modoInicial="anual"
           datosAnuales={datosProcesados}
           anioSeleccionado={añoActual}
-          mesSeleccionado={0} // Enero
+          mesSeleccionado={0}
         />
       </ModalRendimiento>
     </View>

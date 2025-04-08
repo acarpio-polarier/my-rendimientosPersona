@@ -1,100 +1,56 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  ScrollView,
-  StatusBar,
-  Platform,
-  PanResponder,
-  Animated,
 } from "react-native";
 import Modal from "react-native-modal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
-import { BlurView } from "expo-blur"; // Importación correcta de BlurView
+import Wizard from "../../components/Wizard";
+import DetalleRendimientoDesplegable from "./DetalleRendimientoDesplegable";
 
-const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
-/**
- * Modal personalizado reutilizable con blur, tamaño automático y gesto de swipe para cerrar
- * @param {boolean} isVisible - Controla la visibilidad del modal
- * @param {function} onClose - Función para cerrar el modal
- * @param {string} title - Título del modal (opcional)
- * @param {Object} children - Contenido del modal
- * @param {Object} containerStyle - Estilos adicionales para el contenedor del modal
- * @param {string} headerBackgroundColor - Color de fondo del encabezado
- * @param {string} headerTextColor - Color del texto del encabezado
- * @param {string} blurIntensity - Intensidad del efecto blur ('light', 'dark', o 'tint')
- */
 const ModalRendimiento = ({
   isVisible,
   onClose,
   title,
   children,
+  datos = [], // Recibir los datos para los componentes dentro del wizard
   containerStyle,
   headerBackgroundColor = colors.primary,
   headerTextColor = "white",
   blurIntensity = "light",
 }) => {
-  // Creamos un valor animado para el deslizamiento
-  const pan = useRef(new Animated.ValueXY()).current;
-  const opacity = useRef(new Animated.Value(1)).current;
+  // Referencia al componente Wizard
+  const wizardRef = useRef(null);
+  // Controlar en qué paso nos encontramos
+  const [currentStep, setCurrentStep] = useState(0);
 
-  // Umbral para considerar un swipe como suficiente para cerrar
-  const SWIPE_THRESHOLD = 50;
+  // Definir los pasos del wizard
+  const pasos = [
+    {
+      // Vista principal (el componente que se pasa como children)
+      content: <View style={styles.wizardStep}>{children}</View>,
+    },
+    {
+      // Vista de detalles (usando DetalleRendimientoDesplegable)
+      content: (
+        <View style={styles.wizardStep}>
+          <Text style={styles.stepTitle}>Detalles</Text>
+          <DetalleRendimientoDesplegable datos={datos} cargando={false} />
+        </View>
+      ),
+    },
+  ];
 
-  // Configuramos el PanResponder para manejar los gestos
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Solo responder si el movimiento es principalmente vertical
-        return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        // Solo permitir deslizar hacia abajo
-        if (gestureState.dy > 0) {
-          pan.setValue({ x: 0, y: gestureState.dy });
-          // Reducir la opacidad proporcionalmente al deslizamiento
-          opacity.setValue(1 - Math.min(gestureState.dy / 200, 0.5));
-        }
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dy > SWIPE_THRESHOLD) {
-          // Si se desliza lo suficiente, cerrar el modal
-          Animated.timing(opacity, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-          }).start(() => {
-            onClose();
-            // Reiniciar los valores animados después de cerrar
-            setTimeout(() => {
-              pan.setValue({ x: 0, y: 0 });
-              opacity.setValue(1);
-            }, 100);
-          });
-        } else {
-          // Si no se desliza lo suficiente, volver a la posición original
-          Animated.parallel([
-            Animated.spring(pan, {
-              toValue: { x: 0, y: 0 },
-              friction: 5,
-              useNativeDriver: true,
-            }),
-            Animated.spring(opacity, {
-              toValue: 1,
-              friction: 5,
-              useNativeDriver: true,
-            }),
-          ]).start();
-        }
-      },
-    })
-  ).current;
+  // Actualizar el paso actual cuando cambia
+  const handleStepChange = (step) => {
+    setCurrentStep(step);
+  };
 
   return (
     <Modal
@@ -110,35 +66,25 @@ const ModalRendimiento = ({
       avoidKeyboard={true}
       useNativeDriver={true}
     >
-      <Animated.View
-        style={[
-          styles.modalContent,
-          containerStyle,
-          {
-            transform: [{ translateY: pan.y }],
-            opacity: opacity,
-          },
-        ]}
-      >
-        {/* Encabezado del modal con área para swipe */}
+      <View style={[styles.modalContent, containerStyle]}>
+        {/* Encabezado del modal */}
         <View
           style={[
             styles.modalHeader,
             { backgroundColor: headerBackgroundColor },
           ]}
-          {...panResponder.panHandlers}
         >
-          {/* Línea de arrastre - Indicador de que el modal se puede arrastrar */}
+          {/* Línea de arrastre */}
           <View style={styles.dragIndicator} />
 
-          {/* Título (si existe) */}
+          {/* Título */}
           {title ? (
             <Text style={[styles.modalHeaderText, { color: headerTextColor }]}>
               {title}
             </Text>
           ) : null}
 
-          {/* Botón de cierre - Siempre visible independiente del título */}
+          {/* Botón de cierre */}
           <TouchableOpacity
             onPress={onClose}
             style={[styles.closeButton, !title && styles.closeButtonNoTitle]}
@@ -151,15 +97,81 @@ const ModalRendimiento = ({
           </TouchableOpacity>
         </View>
 
-        {/* Contenido del modal */}
-        <ScrollView
-          style={styles.modalBody}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.modalBodyContent}
-        >
-          {children}
-        </ScrollView>
-      </Animated.View>
+        {/* Contenido con Wizard */}
+        <View style={styles.wizardContainer}>
+          <Wizard
+            ref={wizardRef}
+            steps={pasos}
+            width={width * 0.95} // Ancho del wizard
+            currentStep={handleStepChange}
+            initialStep={0}
+            allowChangeHeight={true}
+          />
+        </View>
+
+        {/* Navegación del Wizard */}
+        <View style={styles.wizardNavigation}>
+          <TouchableOpacity
+            style={[
+              styles.navButton,
+              currentStep === 0 && styles.navButtonDisabled,
+            ]}
+            onPress={() => wizardRef.current?.prev()}
+            disabled={currentStep === 0}
+          >
+            <MaterialCommunityIcons
+              name="chevron-left"
+              size={24}
+              color={currentStep === 0 ? "#ccc" : colors.primary}
+            />
+            <Text
+              style={[
+                styles.navButtonText,
+                currentStep === 0 && styles.navButtonTextDisabled,
+              ]}
+            >
+              Anterior
+            </Text>
+          </TouchableOpacity>
+
+          {/* Indicadores de paso */}
+          <View style={styles.indicators}>
+            {pasos.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.indicator,
+                  currentStep === index && styles.indicatorActive,
+                ]}
+              />
+            ))}
+          </View>
+
+          <TouchableOpacity
+            style={[
+              styles.navButton,
+              currentStep === pasos.length - 1 && styles.navButtonDisabled,
+            ]}
+            onPress={() => wizardRef.current?.next()}
+            disabled={currentStep === pasos.length - 1}
+          >
+            <Text
+              style={[
+                styles.navButtonText,
+                currentStep === pasos.length - 1 &&
+                  styles.navButtonTextDisabled,
+              ]}
+            >
+              Siguiente
+            </Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={24}
+              color={currentStep === pasos.length - 1 ? "#ccc" : colors.primary}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     </Modal>
   );
 };
@@ -170,18 +182,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  blurContainer: {
-    width: SCREEN_WIDTH * 0.9,
-    borderRadius: 20,
-    overflow: "hidden",
-    maxHeight: SCREEN_HEIGHT * 0.85,
-  },
   modalContent: {
     backgroundColor: "rgba(245, 245, 245, 0.9)",
     borderRadius: 20,
     paddingTop: 0,
-    width: SCREEN_WIDTH * 0.95,
+    width: width * 0.95,
     overflow: "hidden",
+    maxHeight: height * 0.85,
   },
   modalHeader: {
     paddingVertical: 10,
@@ -202,7 +209,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 5, // Añadir margen inferior cuando hay título
+    marginBottom: 5,
   },
   closeButton: {
     position: "absolute",
@@ -211,14 +218,63 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   closeButtonNoTitle: {
-    top: 3, //
+    top: 3,
   },
-  modalBody: {
+  // Estilos para el wizard
+  wizardContainer: {
+    flex: 1,
+    minHeight: 300,
+  },
+  wizardStep: {
+    padding: 15,
     flex: 1,
   },
-  modalBodyContent: {
+  stepTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.primary,
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  wizardNavigation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+  },
+  navButton: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  navButtonDisabled: {
+    opacity: 0.5,
+  },
+  navButtonText: {
+    color: colors.primary,
+    fontWeight: "500",
+  },
+  navButtonTextDisabled: {
+    color: "#ccc",
+  },
+  indicators: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  indicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#ccc",
+    marginHorizontal: 4,
+  },
+  indicatorActive: {
+    backgroundColor: colors.primary,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
   },
 });
 
