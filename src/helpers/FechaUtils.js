@@ -149,6 +149,15 @@ const FechaUtils = {
       fechaFin: ultimoDiaAño,
     };
   },
+  obtenerRangoHora: (fecha) => {
+    const fechaObj = new Date(fecha);
+
+    const horas = fechaObj.getHours().toString().padStart(2, "0");
+    const minutos = fechaObj.getMinutes().toString().padStart(2, "0");
+    const segundos = fechaObj.getSeconds().toString().padStart(2, "0");
+
+    return `${horas}:${minutos}:${segundos}`;
+  },
 
   /**
    * Agrupa registros por día a partir de un array de datos

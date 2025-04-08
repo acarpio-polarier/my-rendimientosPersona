@@ -11,9 +11,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../../styles/base";
 import FechaUtils from "../../../helpers/FechaUtils";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
+import DetalleRegistros from "../DetalleRegistros";
 
 // Constantes
-const TOKENS_DISPONIBLES = 150;
+
+const TOKENS_DISPONIBLES = Math.floor(Math.random() * 100);
 const UMBRAL_DIFERENCIA_RENDIMIENTO = 0.01;
 
 /**
@@ -32,6 +34,8 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [datosPorDia, setDatosPorDia] = useState([]);
+  const [registrosDetallesVisible, setRegistrosDetallesVisible] =
+    useState(false);
 
   // Agrupar y procesar datos cuando cambian
   useEffect(() => {
@@ -288,12 +292,19 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     if (!dia || !dia.tieneDatos) {
       return <MensajeSinDatos mensaje="No hay datos para este día" />;
     }
-
+    console.log(
+      "DiaO",
+      diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
+        ?.datosOriginales
+    );
     const { estadisticas, fecha } = dia;
     const porcentaje = estadisticas.promedio;
     const colorProgreso = RendimientoUtils.determinarColorProgreso(porcentaje);
     const textoEstado = RendimientoUtils.determinarTextoEstado(porcentaje);
     const esMejorDia = dia.mejorDia;
+    const diaSeleccionadoData = diasSemana.find(
+      (dia) => dia.fechaFormateada === diaSeleccionado
+    );
 
     return (
       <>
@@ -319,13 +330,21 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
           />
 
           {/* Tarjeta de Registros */}
-          <TarjetaEstadistica
-            icono="clipboard-list"
-            titulo="Registros"
-            valor={estadisticas.cantidad}
-            descripcion="Total del día"
-            color={colors.primary}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              registrosDetallesVisible
+                ? setRegistrosDetallesVisible(false)
+                : setRegistrosDetallesVisible(true)
+            }
+          >
+            <TarjetaEstadistica
+              icono="clipboard-list"
+              titulo="Registros"
+              valor={estadisticas.cantidad}
+              descripcion="Total del día"
+              color={colors.primary}
+            />
+          </TouchableOpacity>
 
           {/* Tarjeta de Tokens especial (hardcodeado) */}
           {/* Tarjeta de Tokens con ribete amarillo */}
@@ -388,6 +407,17 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
           />
         ) : (
           <MensajeSinDatos mensaje="Selecciona un día para ver detalles" />
+        )}
+      </View>
+      {/* Detalle de registros */}
+      <View>
+        {registrosDetallesVisible && (
+          <DetalleRegistros
+            dia={
+              diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
+                ?.datosOriginales
+            }
+          />
         )}
       </View>
     </View>
