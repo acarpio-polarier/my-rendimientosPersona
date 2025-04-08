@@ -34,6 +34,21 @@ const GraficoAnual = () => {
   }, [añoActual]);
 
   const cargarDatos = () => {
+    // Si ya tenemos datos procesados para este año, no mostramos carga
+    if (
+      datosProcesados &&
+      datosProcesados.anio === añoActual &&
+      datosProcesados.values &&
+      datosProcesados.values.length > 0
+    ) {
+      // Usar directamente los datos que ya tenemos
+      setData(datosProcesados.values);
+      setLabels(datosProcesados.labels);
+      setHayDatos(datosProcesados.values.some((value) => value > 0));
+      return;
+    }
+
+    // Solo mostrar carga si realmente necesitamos cargar nuevos datos
     setCargando(true);
     const idPersona = PERSONA_ID;
     const rangoAño = FechaUtils.obtenerRangoAño(añoActual);

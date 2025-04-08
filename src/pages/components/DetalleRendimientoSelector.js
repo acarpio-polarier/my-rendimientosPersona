@@ -23,7 +23,6 @@ export default function DetalleRendimientoSelector({
   anioSeleccionado: anioInicial = new Date().getFullYear(),
   mesSeleccionado: mesInicial = new Date().getMonth(),
   datosAnuales: datosAnualesIniciales = null,
-  onSemanaChange = () => {},
 }) {
   console.log("DetalleRendimientoSelector - Props recibidas:", {
     modoInicial,

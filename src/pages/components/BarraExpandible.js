@@ -17,32 +17,36 @@ const BarraExpandible = ({
 
   return (
     <View style={styles.container}>
-      {/* Botón de Expansión */}
-      <TouchableOpacity
-        style={[
-          styles.barraExpansion,
-          // Si no está expandido, aplicamos bordes redondeados inferiores
-          !expandido && styles.barraExpansionRedondeada,
-        ]}
-        onPress={toggleExpansion}
-        activeOpacity={0.7}
-      >
-        <MaterialCommunityIcons
-          name={expandido ? "chevron-up" : "chevron-down"}
-          size={24}
-          color="#fff"
-        />
-      </TouchableOpacity>
+      {/* Cuando no está expandido, mostramos solo la barra superior */}
+      {!expandido && (
+        <TouchableOpacity
+          style={[styles.barraExpansion, styles.barraExpansionRedondeada]}
+          onPress={toggleExpansion}
+          activeOpacity={0.7}
+        >
+          <MaterialCommunityIcons name="chevron-down" size={24} color="#fff" />
+        </TouchableOpacity>
+      )}
 
-      {/* Contenido Expandible*/}
+      {/* Cuando está expandido, mostramos el contenido y luego la barra abajo */}
       {expandido && (
-        <View style={styles.contenidoExpandible}>
-          {hayDatos ? (
-            children
-          ) : (
-            <Text style={styles.mensajeSinDatos}>{mensajeSinDatos}</Text>
-          )}
-        </View>
+        <>
+          <View style={styles.contenidoExpandible}>
+            {hayDatos ? (
+              children
+            ) : (
+              <Text style={styles.mensajeSinDatos}>{mensajeSinDatos}</Text>
+            )}
+          </View>
+
+          <TouchableOpacity
+            style={[styles.barraExpansion, styles.barraExpansionRedondeada]}
+            onPress={toggleExpansion}
+            activeOpacity={0.7}
+          >
+            <MaterialCommunityIcons name="chevron-up" size={24} color="#fff" />
+          </TouchableOpacity>
+        </>
       )}
     </View>
   );
@@ -51,8 +55,6 @@ const BarraExpandible = ({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
     overflow: "hidden",
   },
   barraExpansion: {
