@@ -414,6 +414,7 @@ const GraficoAnual = () => {
               svg={{ fill: "rgb(237, 182, 55)" }}
             >
               <Grid />
+
               <Line
                 x1="2%"
                 x2="98%"

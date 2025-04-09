@@ -26,26 +26,28 @@ const DetalleRegistros = ({ dia = [], origen }) => {
   console.log("data", data);
 
   return (
-    <View>
-      <ScrollView>
-        <Table borderStyle={styles.tableBorder}>
-          <Row
-            data={["Hora Inicio", "Hora Final", "Rendimiento", "Tokens"]}
-            style={styles.head}
-            textStyle={styles.headText}
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ paddingVertical: 10 }}
+      showsVerticalScrollIndicator={true}
+    >
+      <Table borderStyle={styles.tableBorder}>
+        <Row
+          data={["Hora Inicio", "Hora Final", "Rendimiento", "Tokens"]}
+          style={styles.head}
+          textStyle={styles.headText}
+          widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
+        />
+        <TableWrapper style={styles.wrapper}>
+          <Rows
+            data={data}
+            style={styles.row}
+            textStyle={styles.text}
             widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
           />
-          <TableWrapper style={styles.wrapper}>
-            <Rows
-              data={data}
-              style={styles.row}
-              textStyle={styles.text}
-              widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
-            />
-          </TableWrapper>
-        </Table>
-      </ScrollView>
-    </View>
+        </TableWrapper>
+      </Table>
+    </ScrollView>
   );
 };
 

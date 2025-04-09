@@ -34,8 +34,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [datosPorDia, setDatosPorDia] = useState([]);
-  const [registrosDetallesVisible, setRegistrosDetallesVisible] =
-    useState(false);
 
   // Agrupar y procesar datos cuando cambian
   useEffect(() => {
@@ -330,21 +328,13 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
           />
 
           {/* Tarjeta de Registros */}
-          <TouchableOpacity
-            onPress={() =>
-              registrosDetallesVisible
-                ? setRegistrosDetallesVisible(false)
-                : setRegistrosDetallesVisible(true)
-            }
-          >
-            <TarjetaEstadistica
-              icono="clipboard-list"
-              titulo="Registros"
-              valor={estadisticas.cantidad}
-              descripcion="Total del día"
-              color={colors.primary}
-            />
-          </TouchableOpacity>
+          <TarjetaEstadistica
+            icono="clipboard-list"
+            titulo="Registros"
+            valor={estadisticas.cantidad}
+            descripcion="Total del día"
+            color={colors.primary}
+          />
 
           {/* Tarjeta de Tokens especial (hardcodeado) */}
           {/* Tarjeta de Tokens con ribete amarillo */}
@@ -411,14 +401,16 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       </View>
       {/* Detalle de registros */}
       <View>
-        {registrosDetallesVisible && (
+        {diaSeleccionado &&
+        diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado) ? (
           <DetalleRegistros
             dia={
               diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
                 ?.datosOriginales
             }
-            origen={"semanal"}
           />
+        ) : (
+          <View></View>
         )}
       </View>
     </View>
@@ -431,14 +423,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   diasListContainer: {
-    paddingHorizontal: 2,
-    paddingVertical: 2,
     justifyContent: "center",
     alignSelf: "center",
     width: "100%",
   },
   diaItem: {
-    width: 38,
+    width: 40,
     height: 80,
     marginHorizontal: 2.5,
     borderRadius: 8,

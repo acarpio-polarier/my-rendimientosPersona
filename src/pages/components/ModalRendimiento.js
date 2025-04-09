@@ -101,7 +101,7 @@ const ModalRendimiento = ({
       isVisible={isVisible}
       onBackdropPress={onClose}
       onBackButtonPress={onClose}
-      backdropOpacity={0.1}
+      backdropColor="white"
       animationIn="slideInUp"
       animationOut="slideOutDown"
       style={styles.modal}
@@ -152,13 +152,13 @@ const ModalRendimiento = ({
         </View>
 
         {/* Contenido del modal */}
-        <ScrollView
+        <View
           style={styles.modalBody}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.modalBodyContent}
         >
           {children}
-        </ScrollView>
+        </View>
       </Animated.View>
     </Modal>
   );
@@ -166,22 +166,23 @@ const ModalRendimiento = ({
 
 const styles = StyleSheet.create({
   modal: {
+    flex: 1,
     margin: 0,
-    justifyContent: "center",
+    justifyContent: "end",
     alignItems: "center",
   },
   blurContainer: {
     width: SCREEN_WIDTH * 0.9,
     borderRadius: 20,
     overflow: "hidden",
-    maxHeight: SCREEN_HEIGHT * 0.85,
   },
   modalContent: {
-    backgroundColor: "rgba(245, 245, 245, 0.9)",
+    backgroundColor: "#f9f9f9",
     borderRadius: 20,
     paddingTop: 0,
     width: SCREEN_WIDTH * 0.95,
     overflow: "hidden",
+    height: SCREEN_HEIGHT * 0.85,
   },
   modalHeader: {
     paddingVertical: 10,
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 5, // Añadir margen inferior cuando hay título
+    marginBottom: 5,
   },
   closeButton: {
     position: "absolute",
