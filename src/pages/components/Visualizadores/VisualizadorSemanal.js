@@ -417,6 +417,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
               diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
                 ?.datosOriginales
             }
+            origen={"semanal"}
           />
         )}
       </View>

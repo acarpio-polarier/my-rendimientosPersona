@@ -27,6 +27,15 @@ const RendimientoUtils = {
   },
 
   /**
+   * Genera un número de tokens de forma aleatoria
+   * @returns {int} - Devuelve un numero aleatorio
+   */
+  generarTokensRandom: () => {
+    tokens = Math.floor(Math.random() * (150 - 50 + 1)) + 50;
+    return tokens;
+  },
+
+  /**
    * Calcula el rendimiento promedio de un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento
    * @param {string} campoRendimiento - Nombre del campo que contiene el valor de rendimiento

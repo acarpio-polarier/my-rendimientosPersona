@@ -14,6 +14,7 @@ import VisualizadorAnual from "./Visualizadores/VisualizadorAnual";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import { PERSONA_ID } from "../Index";
 import FechaUtils from "../../helpers/FechaUtils";
+import DetalleRegistros from "./DetalleRegistros";
 
 // Recibir props directamente con destructuring
 export default function DetalleRendimientoSelector({
@@ -36,6 +37,8 @@ export default function DetalleRendimientoSelector({
   const [seleccionActual, setSeleccionActual] = useState(semanaInicial || 0);
   const [mesSeleccionado, setMesSeleccionado] = useState(mesInicial);
   const [anioSeleccionado, setAnioSeleccionado] = useState(anioInicial);
+  const [detalleRegistrosVisible, setDetalleRegistrosVisible] = useState(false);
+  const [registroDia, setRegistroDia] = useState([]);
 
   // Asegurarse de que el modo y selecciones se inicialicen correctamente
   useEffect(() => {
@@ -280,6 +283,16 @@ export default function DetalleRendimientoSelector({
       }
     }
   };
+  const calcularRegistrosPorDia = () => {
+    fechaIni = "12:54:41";
+    fechaFin = "13:00:00";
+    rendimiento = "75%";
+    tokens = "43";
+    return [
+      { fechaIni, fechaFin, rendimiento, tokens },
+      { fechaIni, fechaFin, rendimiento, tokens },
+    ];
+  };
 
   // Renderizar mensaje cuando no hay datos
   const renderizarSinDatos = (periodo) => {
@@ -297,6 +310,18 @@ export default function DetalleRendimientoSelector({
         </Text>
       </View>
     );
+  };
+
+  // recibe los parametros del hijo (VisualizadorAnual)
+  const handleValueChanged = (dataVisualizadorAnual) => {
+    console.log(
+      "cambios",
+      dataVisualizadorAnual.visibilidad,
+      dataVisualizadorAnual.registroDiaFiltrado[0].dayEntries
+    );
+    setDetalleRegistrosVisible(dataVisualizadorAnual.visibilidad);
+    setRegistroDia(dataVisualizadorAnual.registroDiaFiltrado[0].dayEntries);
+    console.log("Datos Por dia", registroDia);
   };
 
   // Renderizar el visualizador adecuado según el modo
@@ -327,6 +352,10 @@ export default function DetalleRendimientoSelector({
       );
     } else {
       // Modo anual (ahora por mes)
+
+      if (detalleRegistrosVisible) {
+        return <DetalleRegistros dia={registroDia} />;
+      }
       if (
         !datosPorMes ||
         !datosPorMes.values ||
@@ -334,13 +363,21 @@ export default function DetalleRendimientoSelector({
       ) {
         return renderizarSinDatos("año");
       }
-
       return (
         <View style={styles.visualizadorContainer}>
-          <VisualizadorAnual
-            data={datosPorMes}
-            mesSeleccionado={mesSeleccionado}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              detalleRegistrosVisible
+                ? setDetalleRegistrosVisible(false)
+                : setDetalleRegistrosVisible(true);
+            }}
+          >
+            <VisualizadorAnual
+              data={datosPorMes}
+              mesSeleccionado={mesSeleccionado}
+              onValueChanged={handleValueChanged}
+            />
+          </TouchableOpacity>
         </View>
       );
     }
@@ -359,10 +396,26 @@ export default function DetalleRendimientoSelector({
     }
   };
 
-  return (
-    <View style={styles.contenedor}>
-      {/* Selector de periodo */}
-      <View style={styles.contenido}>
+  //renderizar la cabecera segun la vista
+  const renderizarCabecera = () => {
+    if (detalleRegistrosVisible) {
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => setDetalleRegistrosVisible(false)}
+            style={styles.button}
+          >
+            <MaterialCommunityIcons
+              name="chevron-left"
+              size={30}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+          <Text>{"Registros dia 2"}</Text>
+        </View>
+      );
+    } else {
+      return (
         <View style={styles.selectorContainer}>
           <TouchableOpacity onPress={periodoAnterior} style={styles.button}>
             <MaterialCommunityIcons
@@ -405,7 +458,14 @@ export default function DetalleRendimientoSelector({
             />
           </TouchableOpacity>
         </View>
-      </View>
+      );
+    }
+  };
+
+  return (
+    <View style={styles.contenedor}>
+      {/* Selector de periodo */}
+      <View style={styles.contenido}>{renderizarCabecera()}</View>
 
       {/* Rendirizado condicional */}
       <View style={styles.visualizadorContainer}>
@@ -419,7 +479,7 @@ const styles = StyleSheet.create({
   contenedor: {
     width: "95%",
     alignSelf: "center",
-    backgroundColor: "white",
+    backgroundColor: "red",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

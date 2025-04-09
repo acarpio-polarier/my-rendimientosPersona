@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -18,9 +18,10 @@ import FechaUtils from "../../../helpers/FechaUtils";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../../styles/base";
+
 const { width, height } = Dimensions.get("window");
 
-const VisualizadorAnual = ({ data, mesSeleccionado }) => {
+const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   const mesesAbreviados = FechaUtils.nombresMesesCorto;
 
   // Encuentra los datos del mes seleccionado
@@ -47,6 +48,22 @@ const VisualizadorAnual = ({ data, mesSeleccionado }) => {
     return acumulador;
   }, {});
 
+  const registroDia = Object.entries(groupedData).map(
+    ([diaCompleto, dayEntries]) => {
+      // Separar día y nombre del día
+      const [dia, diaSemana] = diaCompleto.split("-");
+
+      return {
+        dia: dia,
+        dayEntries: dayEntries.map((entry) => ({
+          fechaIni: entry.fechaIni,
+          fechaFin: entry.fechaFin,
+          RendimientoGlobal: entry.RendimientoGlobal,
+        })),
+      };
+    }
+  );
+
   // Convertir a tabla de datos
   const tableData = Object.entries(groupedData).map(
     ([diaCompleto, dayEntries]) => {
@@ -64,16 +81,11 @@ const VisualizadorAnual = ({ data, mesSeleccionado }) => {
 
       // Número de registros para el día
       const registros = dayEntries.length;
-
-      return [
-        `${primeraEnMayuscula(diaSemana)} ${dia}`,
-        registros,
-        `${rendimientoPromedio}%`,
-        tokens,
-      ];
+      console.log("registros por dia", dayEntries);
+      return [dia, registros, `${rendimientoPromedio}%`, tokens];
     }
   );
-  // Ordenar por día para que aparezcan en orden cronológico
+  const handleComparativa = () => {};
 
   // Calcular tokens totales
   const tokensTotal = tableData.reduce((total, entry) => total + entry[3], 0);
@@ -85,11 +97,21 @@ const VisualizadorAnual = ({ data, mesSeleccionado }) => {
         tableData.length
       : 0;
 
-  function primeraEnMayuscula(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+  // Crear objetos de datos de cada fila
+  const handleRowPress = (rowData) => {
+    console.log("Fila presionada", `Datos: ${rowData.join(", ")}`);
+    console.log("dataRow", rowData);
+    const registroDiaFiltrado = registroDia.filter(
+      (item) => item.dia === rowData[0]
+    );
 
-  const handleComparativa = () => {};
+    const visibilidad = true;
+    onValueChanged({
+      visibilidad: visibilidad,
+      registroDiaFiltrado: registroDiaFiltrado,
+    });
+    console.log("registrosFiltrados", registroDiaFiltrado);
+  };
 
   return (
     <View style={styles.contenedorPrincipal}>
@@ -129,19 +151,26 @@ const VisualizadorAnual = ({ data, mesSeleccionado }) => {
               textStyle={styles.headText}
               widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
             />
-            <TableWrapper style={styles.wrapper}>
-              <Rows
-                data={tableData}
-                style={styles.row}
-                textStyle={styles.text}
-                widthArr={[
-                  width * 0.2,
-                  width * 0.2,
-                  width * 0.26,
-                  width * 0.17,
-                ]}
-              />
-            </TableWrapper>
+            {tableData.map((rowData, index) => (
+              <TableWrapper key={index} style={styles.wrapper}>
+                <TouchableOpacity
+                  onPress={() => handleRowPress(rowData)}
+                  style={styles.touchableRow}
+                >
+                  <Rows
+                    data={[rowData]}
+                    style={styles.row}
+                    textStyle={styles.text}
+                    widthArr={[
+                      width * 0.2,
+                      width * 0.2,
+                      width * 0.26,
+                      width * 0.17,
+                    ]}
+                  />
+                </TouchableOpacity>
+              </TableWrapper>
+            ))}
           </Table>
         </ScrollView>
       </View>

@@ -1,50 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Table, Row, Rows, TableWrapper } from "react-native-table-component";
 import { ScrollView } from "react-native-web";
 import DateUtils from "../../helpers/FechaUtils";
+import RendimientoUtils from "../../helpers/RendimientoUtils";
 
 const width = "100%";
 
-const getRandomTokens = () => {
-  return Math.floor(Math.random() * (150 - 50 + 1)) + 50;
-};
-
-const DetalleRegistros = ({ dia = [] }) => {
+const DetalleRegistros = ({ dia = [], origen }) => {
   console.log("Datos recibidos:", dia);
-  // Añadir tokens aleatorios a cada registro
+  let data = [];
+
   const datosConTokens = dia.map((item) => ({
     ...item,
-    tokens: getRandomTokens(),
+    tokens: RendimientoUtils.generarTokensRandom(),
   }));
-  // Transforma el array de objetos a un formato adecuado para la tabla
-  const data = datosConTokens.map((item) => [
-    (fechaIni = DateUtils.obtenerRangoHora(item.fechaIni)),
-    (fechaFin = DateUtils.obtenerRangoHora(item.fechaFin)),
-    (rendimiento = item.RendimientoGlobal + "%"),
-    (tokens = item.tokens),
+
+  data = datosConTokens.map((item) => [
+    DateUtils.obtenerRangoHora(item.fechaIni),
+    DateUtils.obtenerRangoHora(item.fechaFin),
+    item.RendimientoGlobal + "%",
+    item.tokens,
   ]);
-  console.log("dia", dia);
+
+  console.log("data", data);
 
   return (
-    <ScrollView>
-      <Table borderStyle={styles.tableBorder}>
-        <Row
-          data={["Hora Inicio", "Hora Final", "Rendimiento", "Tokens"]}
-          style={styles.head}
-          textStyle={styles.headText}
-          widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
-        />
-        <TableWrapper style={styles.wrapper}>
-          <Rows
-            data={data}
-            style={styles.row}
-            textStyle={styles.text}
+    <View>
+      <ScrollView>
+        <Table borderStyle={styles.tableBorder}>
+          <Row
+            data={["Hora Inicio", "Hora Final", "Rendimiento", "Tokens"]}
+            style={styles.head}
+            textStyle={styles.headText}
             widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
           />
-        </TableWrapper>
-      </Table>
-    </ScrollView>
+          <TableWrapper style={styles.wrapper}>
+            <Rows
+              data={data}
+              style={styles.row}
+              textStyle={styles.text}
+              widthArr={[width * 0.2, width * 0.2, width * 0.26, width * 0.17]}
+            />
+          </TableWrapper>
+        </Table>
+      </ScrollView>
+    </View>
   );
 };
 
