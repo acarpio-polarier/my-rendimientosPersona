@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import {
-  Table,
-  Row,
-  Rows,
-  TableWrapper,
-  Cell,
-} from "react-native-table-component";
+import { DataTable } from "react-native-paper";
 
 import { ScrollView } from "react-native";
 import DateUtils from "../../helpers/FechaUtils";
 import RendimientoUtils from "../../helpers/RendimientoUtils";
 import { colors } from "../../../styles/base";
 
-const width = "100%";
-const screen_height = Dimensions.get("window").height;
 const baseFontSize = 16;
 
 const DetalleRegistros = ({ dia = [] }) => {
   console.log("Datos recibidos:", dia);
+
   let data = [];
   const datosConTokens = dia.map((item) => ({
     ...item,
@@ -48,69 +41,97 @@ const DetalleRegistros = ({ dia = [] }) => {
   console.log("data", data);
 
   return (
-    <View style={styles.roundedWrapper}>
-      <Table borderStyle={styles.tableBorder}>
-        <Row
-          data={["Hora Inicio", "Hora Final", "Rendimiento", "Tokens"]}
-          style={[styles.head, { backgroundColor: colors.primary }]}
-          textStyle={styles.headText}
-          widthArr={[width * 0.2, width * 0.19, width * 0.3, width * 0.16]}
-        />
-        <ScrollView
-          style={[{ maxHeight: screen_height * 0.2 }]}
-          contentContainerStyle={{ paddingVertical: 10 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.contenedorFlexible}>
-            <TableWrapper style={styles.wrapper}>
+    <View>
+      <View style={styles.contenedorPrincipal}>
+        <View style={styles.tableContainer}>
+          <DataTable style={{ height: "100%" }}>
+            <DataTable.Header style={styles.cabeceraTabla}>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Hora Inicio</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Hora Final</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Rendimiento</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Tokens</Text>
+              </DataTable.Title>
+            </DataTable.Header>
+
+            <ScrollView nestedScrollEnabled={true} style={{ height: "94%" }}>
               {data.map((row, rowIndex) => (
-                <Row
+                <DataTable.Row
                   key={rowIndex}
-                  data={row.map((cell, colIndex) => {
-                    if (colIndex === 2) {
-                      return (
-                        <Text
-                          style={[
-                            styles.text,
-                            { color: getColor(cell) },
-                            { backgroundColor: getBackgroundColor(rowIndex) },
-                          ]}
-                          key={colIndex}
-                        >
-                          {cell}
-                        </Text>
-                      );
-                    }
+                  style={{ backgroundColor: getBackgroundColor(rowIndex) }}
+                >
+                  {row.map((cell, colIndex) => {
+                    const cellStyle =
+                      colIndex === 2
+                        ? {
+                            color: getColor(cell),
+                            backgroundColor: getBackgroundColor(rowIndex),
+                          }
+                        : { backgroundColor: getBackgroundColor(rowIndex) };
+
                     return (
-                      <Text
-                        style={[
-                          styles.text,
-                          { backgroundColor: getBackgroundColor(rowIndex) },
-                        ]}
+                      <DataTable.Cell
                         key={colIndex}
+                        style={{ justifyContent: "center" }}
                       >
-                        {cell}
-                      </Text>
+                        <Text style={{ color: cellStyle.color }}>{cell}</Text>
+                      </DataTable.Cell>
                     );
                   })}
-                  widthArr={[
-                    width * 0.2,
-                    width * 0.19,
-                    width * 0.3,
-                    width * 0.16,
-                  ]}
-                  style={styles.row}
-                />
+                </DataTable.Row>
               ))}
-            </TableWrapper>
-          </View>
-        </ScrollView>
-      </Table>
+            </ScrollView>
+          </DataTable>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  contenedorPrincipal: {
+    width: "100%",
+    alignSelf: "center",
+    backgroundColor: colors.smokedWhite,
+    borderRadius: 10,
+    overflow: "hidden",
+    marginVertical: 10,
+    paddingBottom: 100,
+    maxHeight: "95%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  tableContainer: {
+    width: "100%",
+  },
+  headerTitle: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+  headerText: {
+    color: colors.white,
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  cabeceraTabla: {
+    backgroundColor: colors.primary,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   tableBorder: {
     borderWidth: 1,
     borderColor: "#E5E5E5",
@@ -143,10 +164,6 @@ const styles = StyleSheet.create({
     padding: 12,
     flex: 1,
     width: "100%",
-  },
-
-  contenedorFlexible: {
-    maxHeight: screen_height * 0.17,
   },
 });
 

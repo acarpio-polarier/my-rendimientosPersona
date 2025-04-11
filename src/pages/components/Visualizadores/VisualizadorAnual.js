@@ -7,13 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import {
-  Table,
-  Row,
-  Rows,
-  TableWrapper,
-  Col,
-} from "react-native-table-component";
+import { DataTable } from "react-native-paper";
 import FechaUtils from "../../../helpers/FechaUtils";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -132,74 +126,68 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
       <View style={styles.contenedorPrincipal}>
         {/* Tabla independiente */}
         <View style={styles.tableContainer}>
-          <ScrollView
-            nestedScrollEnabled={true}
-            contentContainerStyle={styles.scrollViewContent}
-            style={{ flex: 1 }}
-          >
-            <Table borderStyle={styles.tableBorder}>
-              {/* Encabezado de la tabla */}
-              <Row
-                data={["Día", "Registros", "Rendimiento", "Tokens"]}
-                style={styles.head}
-                textStyle={styles.headText}
-                widthArr={[
-                  width * 0.2,
-                  width * 0.2,
-                  width * 0.26,
-                  width * 0.17,
-                ]}
-              />
+          {/* Cabecera fija */}
+          <DataTable>
+            <DataTable.Header style={styles.cabeceraTabla}>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Día</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Registros</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Rendimiento</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.headerTitle}>
+                <Text style={styles.headerText}>Tokens</Text>
+              </DataTable.Title>
+            </DataTable.Header>
+          </DataTable>
 
-              {/* Filas de la tabla */}
+          {/* Scroll solo en las filas */}
+          <ScrollView nestedScrollEnabled={true} style={{ height: "94%" }}>
+            <DataTable>
               {tableData.map((rowData, rowIndex) => (
-                <TableWrapper key={rowIndex} style={styles.wrapper}>
-                  <TouchableOpacity
-                    onPress={() => handleRowPress(rowData)}
-                    style={styles.touchableRow}
+                <TouchableOpacity
+                  key={rowIndex}
+                  onPress={() => handleRowPress(rowData)}
+                >
+                  <DataTable.Row
+                    style={{
+                      backgroundColor: getBackgroundColor(rowIndex),
+                    }}
                   >
-                    <Row
-                      data={rowData.map((cell, colIndex) => {
-                        if (colIndex === 2) {
-                          return (
+                    {rowData.map((cell, colIndex) => {
+                      if (colIndex === 2) {
+                        return (
+                          <DataTable.Cell
+                            key={colIndex}
+                            style={{ justifyContent: "center" }}
+                          >
                             <Text
                               style={[
-                                styles.text,
+                                styles.cellText,
                                 { color: getColor(cell) },
-                                {
-                                  backgroundColor: getBackgroundColor(rowIndex),
-                                },
                               ]}
-                              key={colIndex}
                             >
                               {cell}
                             </Text>
-                          );
-                        }
-                        return (
-                          <Text
-                            style={[
-                              styles.text,
-                              { backgroundColor: getBackgroundColor(rowIndex) },
-                            ]}
-                            key={colIndex}
-                          >
-                            {cell}
-                          </Text>
+                          </DataTable.Cell>
                         );
-                      })}
-                      widthArr={[
-                        width * 0.2,
-                        width * 0.2,
-                        width * 0.26,
-                        width * 0.17,
-                      ]}
-                      style={styles.row}
-                    />
-                  </TouchableOpacity>
-                </TableWrapper>
+                      }
+                      return (
+                        <DataTable.Cell
+                          key={colIndex}
+                          style={{ justifyContent: "center" }}
+                        >
+                          <Text style={styles.cellText}>{cell}</Text>
+                        </DataTable.Cell>
+                      );
+                    })}
+                  </DataTable.Row>
+                </TouchableOpacity>
               ))}
-            </Table>
+            </DataTable>
           </ScrollView>
         </View>
       </View>
@@ -209,13 +197,45 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
 
 const styles = StyleSheet.create({
   contenedorPrincipal: {
-    width: "95%",
+    width: "100%",
     alignSelf: "center",
-    backgroundColor: "white",
+    backgroundColor: colors.smokedWhite,
     borderRadius: 10,
     overflow: "hidden",
     marginVertical: 10,
-    maxHeight: height * 0.7,
+    paddingBottom: 100,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  cabeceraTabla: {
+    backgroundColor: colors.primary,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cabeceraTexto: {
+    color: colors.white,
+  },
+  headerTitle: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+
+  headerText: {
+    color: colors.white,
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  cellText: {
+    textAlign: "center",
+    width: "100%",
   },
   wrapper: {
     flexDirection: "row",
@@ -262,7 +282,6 @@ const styles = StyleSheet.create({
   },
   tableContainer: {
     width: "100%",
-    flex: 1,
   },
   scrollViewContent: {
     alignItems: "center",

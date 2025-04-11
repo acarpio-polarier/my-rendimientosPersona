@@ -586,6 +586,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginVertical: 10,
     paddingBottom: 50,
+    height: "95%",
   },
   header: {
     paddingVertical: 5,
@@ -610,6 +611,8 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     justifyContent: "center",
+    minHeight: "15%",
+    maxHeight: "15%",
   },
   selectorContainer: {
     flexDirection: "row",

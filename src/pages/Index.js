@@ -10,17 +10,19 @@ const Index = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView style={{ paddingTop: insets.top + 1 }}>
+    <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>myRendimiento</Text>
       </View>
-      <View>
-        <GraficoSemanal PERSONA_ID={PERSONA_ID} />
-      </View>
-      <View>
-        <GraficoAnual PERSONA_ID={PERSONA_ID} />
-      </View>
-    </ScrollView>
+      <ScrollView style={{ height: "92%", paddingBottom: 100 }}>
+        <View>
+          <GraficoSemanal PERSONA_ID={PERSONA_ID} />
+        </View>
+        <View>
+          <GraficoAnual PERSONA_ID={PERSONA_ID} />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
