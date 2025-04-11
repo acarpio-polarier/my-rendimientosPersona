@@ -428,6 +428,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignSelf: "center",
     width: "99%",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
   },
   diaItem: {
     height: 80,
@@ -438,7 +440,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 5,
     position: "relative",
-    backgroundColor: "red",
   },
   diaSeleccionado: {
     elevation: 3,
@@ -582,7 +583,6 @@ const styles = StyleSheet.create({
   },
   contenedorFlexible: {
     maxHeight: screen_height * 0.17,
-    backgroundColor: "red",
   },
 });
 

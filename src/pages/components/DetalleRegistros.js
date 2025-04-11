@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { Table, Row, Rows, TableWrapper } from "react-native-table-component";
+import {
+  Table,
+  Row,
+  Rows,
+  TableWrapper,
+  Cell,
+} from "react-native-table-component";
+
 import { ScrollView } from "react-native";
 import DateUtils from "../../helpers/FechaUtils";
 import RendimientoUtils from "../../helpers/RendimientoUtils";
@@ -50,10 +57,7 @@ const DetalleRegistros = ({ dia = [] }) => {
           widthArr={[width * 0.2, width * 0.19, width * 0.3, width * 0.16]}
         />
         <ScrollView
-          style={[
-            { maxHeight: screen_height * 0.2 },
-            { backgroundColor: "red" },
-          ]}
+          style={[{ maxHeight: screen_height * 0.2 }]}
           contentContainerStyle={{ paddingVertical: 10 }}
           showsVerticalScrollIndicator={false}
         >
@@ -138,11 +142,11 @@ const styles = StyleSheet.create({
   roundedWrapper: {
     padding: 12,
     flex: 1,
+    width: "100%",
   },
 
   contenedorFlexible: {
     maxHeight: screen_height * 0.17,
-    backgroundColor: "red",
   },
 });
 

@@ -128,7 +128,7 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   };
 
   return (
-    <View style={{ backgroundColor: "orange" }}>
+    <View>
       <View style={styles.contenedorPrincipal}>
         {/* Tabla independiente */}
         <View style={styles.tableContainer}>

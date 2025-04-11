@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   modal: {
     flex: 1,
     margin: 0,
-    justifyContent: "end",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   blurContainer: {
@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "rgba(0,0,0,0.1)",
     position: "relative",
     alignItems: "center",
+    justifyContent: "center",
   },
   dragIndicator: {
     width: 40,
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
   closeButton: {
     position: "absolute",
     right: 15,
-    top: 10,
+    top: 20,
     padding: 5,
   },
   closeButtonNoTitle: {

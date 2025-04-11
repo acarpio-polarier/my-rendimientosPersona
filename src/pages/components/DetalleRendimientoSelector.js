@@ -240,8 +240,6 @@ export default function DetalleRendimientoSelector({
     if (modo === "semanal") {
       const nuevaSeleccion = seleccionActual + 1;
       setSeleccionActual(nuevaSeleccion);
-      // Notificar al componente padre del cambio
-      onSemanaChange(nuevaSeleccion);
     } else {
       let nuevoMes = mesSeleccionado - 1;
       let nuevoAnio = anioSeleccionado;
@@ -262,7 +260,6 @@ export default function DetalleRendimientoSelector({
         const nuevaSeleccion = seleccionActual - 1;
         setSeleccionActual(nuevaSeleccion);
         // Notificar al componente padre del cambio
-        onSemanaChange(nuevaSeleccion);
       }
     } else {
       const fechaActual = new Date();
@@ -475,7 +472,7 @@ export default function DetalleRendimientoSelector({
         infoPorMes?.[mesSeleccionado]?.info?.[mesLength - 1]
           ?.RendimientoAcumulado;
       if (rendimientoAcumuladoPorMes) return rendimientoAcumuladoPorMes;
-      return 100;
+      return 0;
     }
     const rendimientoPorRegistro = (
       registroDia.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
@@ -511,6 +508,13 @@ export default function DetalleRendimientoSelector({
   const textoEstado = RendimientoUtils.determinarTextoEstado(
     rendimientoAcumuladoPorMes()
   );
+  const getColor = (valor) => {
+    console.log("valor", valor);
+    if (valor > 70 && valor < 90) return colors.warning;
+    if (valor >= 90) return colors.success;
+    return colors.danger;
+  };
+  const rendimientoTargeta = rendimientoAcumuladoPorMes(intervalo);
 
   const renderizadoTargetasInfo = () => {
     console.log("intervalo", intervalo);
@@ -521,9 +525,9 @@ export default function DetalleRendimientoSelector({
           <TarjetaEstadistica
             icono="chart-line"
             titulo="Rendimiento"
-            valor={`${rendimientoAcumuladoPorMes(intervalo)}%`}
+            valor={`${rendimientoTargeta}%`}
             descripcion={textoEstado}
-            color={colorProgreso}
+            color={getColor(rendimientoTargeta)}
           />
 
           {/* Tarjeta de Registros */}
@@ -579,7 +583,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     borderRadius: 10,
-    elevation: 3,
     overflow: "hidden",
     marginVertical: 10,
     paddingBottom: 50,
@@ -725,7 +728,7 @@ const styles = StyleSheet.create({
     color: "#555",
   },
   tarjetaValor: {
-    fontSize: 16 *1.6,
+    fontSize: 16.6,
     fontWeight: "bold",
     marginVertical: 2,
   },
