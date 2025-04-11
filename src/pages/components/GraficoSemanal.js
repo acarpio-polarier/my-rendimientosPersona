@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
@@ -21,6 +22,7 @@ import ModalRendimiento from "./ModalRendimiento";
 const GraficoSemanal = () => {
   // Estado para el modal
   const [modalVisible, setModalVisible] = useState(false);
+  const { height: SCREEN_HEIGHT } = Dimensions.get("window").height;
 
   const mostrarDetalles = () => {
     if (!cargando && hayDatos) {
@@ -52,6 +54,7 @@ const GraficoSemanal = () => {
     console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
     console.log("Fecha fin ISO:", nuevoRango.finIso);
     getRendimientoMedio(PERSONA_ID, nuevoRango.inicioIso, nuevoRango.finIso);
+    // Llamada
 
     // Si hay un cambio de semana, actualizar el estado del botón
     if (datosRendimiento.length > 0) {
@@ -60,6 +63,7 @@ const GraficoSemanal = () => {
   }, [semanaSeleccionada]);
 
   // Llamada
+
   const getRendimientoMedio = async (idPersona, fechaInicio, fechaFin) => {
     try {
       const datos =
@@ -68,6 +72,7 @@ const GraficoSemanal = () => {
           fechaInicio,
           fechaFin
         );
+      console.log("Datos de la llamada", datos);
 
       // Verificar si hay datos
       if (datos && datos.length > 0) {
@@ -248,7 +253,13 @@ const GraficoSemanal = () => {
 
         {/* Contenedor del gráfico centrado */}
         <View style={styles.graficoContainer}>
-          {renderizarContenidoGrafico()}
+          <TouchableOpacity
+            style={styles.graficoContainer}
+            onPress={mostrarDetalles}
+            disabled={cargando || !hayDatos}
+          >
+            {renderizarContenidoGrafico()}
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -262,7 +273,7 @@ const GraficoSemanal = () => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         title={"Detalle de rendimiento semanal"}
-        heightPercentage={0.85}
+        heightPercentage={SCREEN_HEIGHT * 0.85}
       >
         <DetalleRendimientoSelector
           datosPorDia={datosPorDia}

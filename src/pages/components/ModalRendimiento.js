@@ -17,7 +17,7 @@ import { colors } from "../../../styles/base";
 import { BlurView } from "expo-blur"; // Importación correcta de BlurView
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
-
+const deviceWidth = Dimensions.get("window").width;
 /**
  * Modal personalizado reutilizable con blur, tamaño automático y gesto de swipe para cerrar
  * @param {boolean} isVisible - Controla la visibilidad del modal
@@ -109,6 +109,7 @@ const ModalRendimiento = ({
       propagateSwipe={true}
       avoidKeyboard={true}
       useNativeDriver={true}
+      deviceWidth={deviceWidth}
     >
       <Animated.View
         style={[
@@ -172,15 +173,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   blurContainer: {
-    width: SCREEN_WIDTH * 0.9,
+    width: SCREEN_WIDTH,
     borderRadius: 20,
     overflow: "hidden",
   },
   modalContent: {
-    backgroundColor: "#f9f9f9",
-    borderRadius: 20,
+    backgroundColor: colors.smokedWhite,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     paddingTop: 0,
-    width: SCREEN_WIDTH * 0.95,
+    width: SCREEN_WIDTH * 0.98,
     overflow: "hidden",
     height: SCREEN_HEIGHT * 0.85,
   },
@@ -216,6 +218,8 @@ const styles = StyleSheet.create({
   },
   modalBody: {
     flex: 1,
+    alignSelf: "center",
+    width: SCREEN_WIDTH * 0.95,
   },
   modalBodyContent: {
     paddingVertical: 10,

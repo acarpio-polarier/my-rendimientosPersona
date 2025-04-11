@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  Dimensions,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
@@ -17,6 +18,7 @@ import DetalleRegistros from "../DetalleRegistros";
 
 const TOKENS_DISPONIBLES = Math.floor(Math.random() * 100);
 const UMBRAL_DIFERENCIA_RENDIMIENTO = 0.01;
+const screen_height = Dimensions.get("window").height;
 
 /**
  * Componente que visualiza el rendimiento en una vista semanal
@@ -400,7 +402,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
         )}
       </View>
       {/* Detalle de registros */}
-      <View>
+      <View style={styles.tablaContainer}>
         {diaSeleccionado &&
         diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado) ? (
           <DetalleRegistros
@@ -423,19 +425,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   diasListContainer: {
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignSelf: "center",
-    width: "100%",
+    width: "99%",
   },
   diaItem: {
-    width: 40,
     height: 80,
-    marginHorizontal: 2.5,
-    borderRadius: 8,
+    width: 47,
+    marginHorizontal: 0,
+    borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
     padding: 5,
     position: "relative",
+    backgroundColor: "red",
   },
   diaSeleccionado: {
     elevation: 3,
@@ -471,10 +474,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   detalleContainer: {
-    padding: 15,
-    backgroundColor: "#f9f9f9",
+    paddingTop: 15,
+    paddingBottom: 15,
+    backgroundColor: colors.smokedWhite,
     borderRadius: 8,
-    marginHorizontal: 10,
+    width: "99%",
     marginTop: 10,
     alignItems: "center",
   },
@@ -500,7 +504,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   tarjeta: {
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     borderRadius: 8,
     padding: 12,
     width: "31%",
@@ -514,7 +518,7 @@ const styles = StyleSheet.create({
   tarjetaHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 2,
   },
   tarjetaTitulo: {
     fontSize: 12,
@@ -523,9 +527,9 @@ const styles = StyleSheet.create({
     color: "#555",
   },
   tarjetaValor: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
-    marginVertical: 4,
+    marginVertical: 2,
   },
   tarjetaDescripcion: {
     fontSize: 10,
@@ -572,6 +576,13 @@ const styles = StyleSheet.create({
     color: "#666",
     fontSize: 14,
     marginTop: 10,
+  },
+  tablaContainer: {
+    width: "99%",
+  },
+  contenedorFlexible: {
+    maxHeight: screen_height * 0.17,
+    backgroundColor: "red",
   },
 });
 

@@ -4,9 +4,11 @@ import {
   handleResponse,
   fetchWithTimeout,
 } from "../helpers/connection";
+import objetoPersona from "../helpers/objetoPersona.json";
 
 export const rendimientoPersonasService = {
   getRendimientoPersonaMaquina,
+  //Llamada
 };
 
 function getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin) {
@@ -39,7 +41,8 @@ function getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin) {
     )
       .then(handleResponse)
       .then((data) => {
-        resolve(data);
+        // resolve(data);
+        resolve(objetoPersona);
       })
       .catch((ex) => {
         reject(ex);

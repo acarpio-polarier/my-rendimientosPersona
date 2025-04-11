@@ -15,6 +15,7 @@ import { rendimientoPersonasService } from "../../services/RendimientoPersonaSer
 import { PERSONA_ID } from "../Index";
 import FechaUtils from "../../helpers/FechaUtils";
 import DetalleRegistros from "./DetalleRegistros";
+import RendimientoUtils from "../../helpers/RendimientoUtils";
 
 // Recibir props directamente con destructuring
 export default function DetalleRendimientoSelector({
@@ -39,6 +40,8 @@ export default function DetalleRendimientoSelector({
   const [anioSeleccionado, setAnioSeleccionado] = useState(anioInicial);
   const [detalleRegistrosVisible, setDetalleRegistrosVisible] = useState(false);
   const [registroDia, setRegistroDia] = useState([]);
+  const [selectedDia, setSelectedDia] = useState(0);
+  const [intervalo, setIntevalo] = useState("mensual");
 
   // Asegurarse de que el modo y selecciones se inicialicen correctamente
   useEffect(() => {
@@ -283,16 +286,6 @@ export default function DetalleRendimientoSelector({
       }
     }
   };
-  const calcularRegistrosPorDia = () => {
-    fechaIni = "12:54:41";
-    fechaFin = "13:00:00";
-    rendimiento = "75%";
-    tokens = "43";
-    return [
-      { fechaIni, fechaFin, rendimiento, tokens },
-      { fechaIni, fechaFin, rendimiento, tokens },
-    ];
-  };
 
   // Renderizar mensaje cuando no hay datos
   const renderizarSinDatos = (periodo) => {
@@ -321,6 +314,8 @@ export default function DetalleRendimientoSelector({
     );
     setDetalleRegistrosVisible(dataVisualizadorAnual.visibilidad);
     setRegistroDia(dataVisualizadorAnual.registroDiaFiltrado[0].dayEntries);
+    setSelectedDia(dataVisualizadorAnual.registroDiaFiltrado[0].dia);
+    setIntevalo(dataVisualizadorAnual.intervalo);
     console.log("Datos Por dia", registroDia);
   };
 
@@ -353,7 +348,7 @@ export default function DetalleRendimientoSelector({
     } else {
       // Modo anual (ahora por mes)
 
-      if (detalleRegistrosVisible) {
+      if (detalleRegistrosVisible && selectedDia) {
         return <DetalleRegistros dia={registroDia} />;
       }
       if (
@@ -365,19 +360,11 @@ export default function DetalleRendimientoSelector({
       }
       return (
         <View style={styles.visualizadorContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              detalleRegistrosVisible
-                ? setDetalleRegistrosVisible(false)
-                : setDetalleRegistrosVisible(true);
-            }}
-          >
-            <VisualizadorAnual
-              data={datosPorMes}
-              mesSeleccionado={mesSeleccionado}
-              onValueChanged={handleValueChanged}
-            />
-          </TouchableOpacity>
+          <VisualizadorAnual
+            data={datosPorMes}
+            mesSeleccionado={mesSeleccionado}
+            onValueChanged={handleValueChanged}
+          />
         </View>
       );
     }
@@ -398,11 +385,15 @@ export default function DetalleRendimientoSelector({
 
   //renderizar la cabecera segun la vista
   const renderizarCabecera = () => {
-    if (detalleRegistrosVisible) {
+    console.log("renderizarCabecera", mesSeleccionado);
+    if (detalleRegistrosVisible && selectedDia) {
       return (
-        <View>
+        <View style={styles.selectorContainerDia}>
           <TouchableOpacity
-            onPress={() => setDetalleRegistrosVisible(false)}
+            onPress={() => {
+              setDetalleRegistrosVisible(false);
+              setIntevalo("mensual");
+            }}
             style={styles.button}
           >
             <MaterialCommunityIcons
@@ -411,7 +402,9 @@ export default function DetalleRendimientoSelector({
               color={colors.primary}
             />
           </TouchableOpacity>
-          <Text>{"Registros dia 2"}</Text>
+          <View style={styles.diaText}>
+            <Text style={styles.dateText}>Registros dia {selectedDia}</Text>
+          </View>
         </View>
       );
     } else {
@@ -461,11 +454,117 @@ export default function DetalleRendimientoSelector({
       );
     }
   };
+  // Componente reutilizable para tarjetas de estadísticas
+  const TarjetaEstadistica = ({ icono, titulo, valor, descripcion, color }) => (
+    <View style={styles.tarjeta}>
+      <View style={styles.tarjetaHeader}>
+        <MaterialCommunityIcons name={icono} size={20} color={color} />
+        <Text style={styles.tarjetaTitulo}>{titulo}</Text>
+      </View>
+      <Text style={[styles.tarjetaValor, { color }]}>{valor}</Text>
+      <Text style={styles.tarjetaDescripcion}>{descripcion}</Text>
+    </View>
+  );
+
+  // calcular el rendimiento por mes
+  const rendimientoAcumuladoPorMes = (intervalo) => {
+    if (intervalo === "mensual") {
+      const infoPorMes = datosPorMes.infoPorMes;
+      const mesLength = infoPorMes?.[mesSeleccionado]?.info.length;
+      const rendimientoAcumuladoPorMes =
+        infoPorMes?.[mesSeleccionado]?.info?.[mesLength - 1]
+          ?.RendimientoAcumulado;
+      if (rendimientoAcumuladoPorMes) return rendimientoAcumuladoPorMes;
+      return 100;
+    }
+    const rendimientoPorRegistro = (
+      registroDia.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
+      registroDia.length
+    ).toFixed(2);
+
+    console.log("rendimientoPorRegistro", rendimientoPorRegistro);
+    if (rendimientoPorRegistro) return rendimientoPorRegistro;
+    return 0;
+  };
+
+  // calcular el numero de dias trabajados
+  const totalDiasTrabajados = (intervalo) => {
+    const infoPorMes = datosPorMes.infoPorMes;
+    if (intervalo === "mensual") {
+      const diasTrabajados = new Set(
+        infoPorMes?.[mesSeleccionado]?.info
+          ?.filter((item) => !!item.fechaFin)
+          ?.map((item) => item.fechaFin.split("T")[0])
+      ).size;
+      if (diasTrabajados) return `${diasTrabajados}d`;
+
+      return 0;
+    }
+    const registrosPorDia = registroDia.length;
+    if (registrosPorDia) return registrosPorDia;
+
+    return 0;
+  };
+  const colorProgreso = RendimientoUtils.determinarColorProgreso(
+    rendimientoAcumuladoPorMes()
+  );
+  const textoEstado = RendimientoUtils.determinarTextoEstado(
+    rendimientoAcumuladoPorMes()
+  );
+
+  const renderizadoTargetasInfo = () => {
+    console.log("intervalo", intervalo);
+    if (modo != "semanal") {
+      return (
+        <View style={styles.tarjetasContainer}>
+          {/* Tarjeta de Rendimiento */}
+          <TarjetaEstadistica
+            icono="chart-line"
+            titulo="Rendimiento"
+            valor={`${rendimientoAcumuladoPorMes(intervalo)}%`}
+            descripcion={textoEstado}
+            color={colorProgreso}
+          />
+
+          {/* Tarjeta de Registros */}
+          <TarjetaEstadistica
+            icono="clipboard-list"
+            titulo="Registros"
+            valor={totalDiasTrabajados(intervalo)}
+            descripcion="Total de días"
+            color={colors.primary}
+          />
+
+          {/* Tarjeta de Tokens especial (hardcodeado) */}
+          {/* Tarjeta de Tokens con ribete amarillo */}
+          <View style={styles.tarjetaTokens}>
+            <View style={styles.tarjetaHeader}>
+              <MaterialCommunityIcons
+                name="ticket-confirmation"
+                size={20}
+                color="#F5B700"
+              />
+              <Text style={styles.tarjetaTitulo}>Tokens</Text>
+            </View>
+            <Text style={[styles.tarjetaValor, { color: "#F5B700" }]}>
+              {RendimientoUtils.generarTokensRandom()}
+            </Text>
+            <Text style={styles.tarjetaDescripcion}>Disponibles</Text>
+          </View>
+        </View>
+      );
+    }
+    return <View></View>;
+  };
 
   return (
     <View style={styles.contenedor}>
       {/* Selector de periodo */}
       <View style={styles.contenido}>{renderizarCabecera()}</View>
+
+      {/* Renderizado targetas de informacion */}
+
+      <View>{renderizadoTargetasInfo()}</View>
 
       {/* Rendirizado condicional */}
       <View style={styles.visualizadorContainer}>
@@ -483,6 +582,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     overflow: "hidden",
     marginVertical: 10,
+    paddingBottom: 50,
   },
   header: {
     paddingVertical: 5,
@@ -515,6 +615,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     width: "100%",
   },
+  selectorContainerDia: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "start",
+    marginBottom: 5,
+    width: "100%",
+  },
   button: {
     padding: 8,
     backgroundColor: "transparent",
@@ -529,6 +636,13 @@ const styles = StyleSheet.create({
   dateText: {
     fontWeight: "500",
     fontSize: 16,
+  },
+  diaText: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    paddingLeft: "20%",
   },
   weekInfo: {
     fontSize: 14,
@@ -579,5 +693,65 @@ const styles = StyleSheet.create({
     color: "#666",
     fontSize: 14,
     fontStyle: "italic",
+  },
+  // Estilos para tarjetas
+  tarjetasContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: 10,
+  },
+  tarjeta: {
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    padding: 12,
+    width: "31%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    alignItems: "center",
+  },
+  tarjetaHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 2,
+  },
+  tarjetaTitulo: {
+    fontSize: 12,
+    fontWeight: "500",
+    marginLeft: 4,
+    color: "#555",
+  },
+  tarjetaValor: {
+    fontSize: 16 *1.6,
+    fontWeight: "bold",
+    marginVertical: 2,
+  },
+  tarjetaDescripcion: {
+    fontSize: 10,
+    color: "#777",
+    textAlign: "center",
+  },
+  // Estilos para tarjeta especial de tokens
+  tarjetaTokens: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 12,
+    width: "31%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#F5B700",
+  },
+  estadoTexto: {
+    fontSize: 10,
+    color: "#666",
+    textAlign: "center",
   },
 });
