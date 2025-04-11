@@ -1,10 +1,8 @@
 import { View, Text, ScrollView } from "react-native";
 import styles from "../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import GraficoSemanal from "./components/GraficoSemanal";
-import GraficoAnual from "./components/GraficoAnual";
-
-export const PERSONA_ID = 4901;
+import HeaderCanje from "./components/headerCanje";
+import BarraFiltro from "./components/barraFiltro";
 
 const Index = () => {
   const insets = useSafeAreaInsets();
@@ -12,16 +10,16 @@ const Index = () => {
   return (
     <ScrollView style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
-        <Text style={styles.headerText}>myRendimiento</Text>
+        <Text style={styles.headerText}>Canje de puntos</Text>
       </View>
       <View>
-        <GraficoSemanal PERSONA_ID={PERSONA_ID} />
-      </View>
-      <View>
-        <GraficoAnual PERSONA_ID={PERSONA_ID} />
+        <HeaderCanje />
+        <BarraFiltro />
       </View>
     </ScrollView>
   );
 };
+
+s;
 
 export default Index;
