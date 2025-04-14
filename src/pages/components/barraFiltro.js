@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-web";
 
 const BarraFiltro = () => {
@@ -9,10 +9,12 @@ const BarraFiltro = () => {
   return (
     <View style={styles.contenedor}>
       <View style={styles.fila}>
-        <View style={styles.checkBox}>
-          <CheckBox />
+        <View style={styles.elemento}>
+          <Text style={styles.labelCanjeable}>Canjeable</Text>
+          <CheckBox style={styles.checkBox} />
         </View>
-        <View style={styles.imput}>
+        <View style={[styles.elemento, styles.sliderContainer]}>
+          <Text style={styles.labelSlider}>Precio</Text>
           <input
             type="range"
             min="0"
@@ -22,15 +24,16 @@ const BarraFiltro = () => {
             style={styles.slider}
           />
         </View>
-        <View style={styles.selectBox}>
+        <View style={styles.elemento}>
+          <Text style={styles.labelCategoria}>Categorias</Text>
           <select
             value={opcionSeleccionada}
             onChange={(e) => setOpcionSeleccionada(e.target.value)}
             style={styles.selectBox}
           >
-            <option value="Opción 1">Opción 1</option>
-            <option value="Opción 2">Opción 2</option>
-            <option value="Opción 3">Opción 3</option>
+            <option value="Opción 1">Todo</option>
+            <option value="Opción 2">Servicios</option>
+            <option value="Opción 3">Experiencias</option>
           </select>
         </View>
       </View>
@@ -42,39 +45,60 @@ const styles = StyleSheet.create({
   contenedor: {
     width: "100%",
     alignSelf: "center",
-    overflow: "hidden",
-    marginVertical: 10,
-    fontFamily: "Arial",
     borderBottomWidth: 1,
-    borderBottomColor: "black",
-  },
-  labelFiltro: {
-    marginBottom: 10,
-    marginLeft: 10,
+    borderBottomColor: "rgb(210,210,210)",
+    marginTop: -5,
   },
   fila: {
     flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  elemento: {
     alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 10,
+    justifyContent: "flex-end",
   },
-  checkBox: {},
+
+  labelCanjeable: {
+    marginBottom: 8,
+    fontSize: 12,
+    color: "rgb(160,160,160)",
+    justifyContent: "end",
+  },
+
+  labelSlider: {
+    marginBottom: 8,
+    fontSize: 12,
+    color: "rgb(160,160,160)",
+    alignSelf: "flex-end",
+  },
+
+  labelCategoria: {
+    fontSize: 12,
+    color: "rgb(160,160,160)",
+    marginBottom: 5,
+    alignSelf: "flex-end",
+  },
+
+  sliderContainer: {
+    flex: 1,
+    marginHorizontal: 10,
+    marginBottom: 5,
+  },
+
   slider: {
-    width: 150,
-    marginRight: 10,
-    marginLeft: 40,
+    width: "100%",
   },
+
   selectBox: {
     padding: 5,
     borderColor: "#ccc",
     borderWidth: 1,
-    backgroundColor: "orange",
-    marginRight: 10,
     width: 140,
   },
-  imput: {
-    backgroundColor: "red",
-  },
+  checkBox: { marginBottom: 8, alignSelf: "flex-start" },
 });
 
 export default BarraFiltro;
