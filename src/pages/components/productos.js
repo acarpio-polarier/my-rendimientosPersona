@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -10,18 +10,31 @@ import {
 
 import foto1 from "./foto1.jpg";
 import foto2 from "./foto2.jpg";
+import noimage from "./noimage.png";
+import ConfirmPopup from "./confirmPopup";
 
 const imageMap = {
   "foto1.jpg": foto1,
   "foto2.jpg": foto2,
+  "noimage.png": noimage,
 };
 
 const Productos = ({ data }) => {
+  const [selectedProductId, setSelectedProductId] = useState(null);
+
+  const handleOpenModal = (id) => {
+    setSelectedProductId(id);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProductId(null);
+  };
+
   const renderItem = ({ item }) => (
     <View style={styles.contenedor}>
       <View style={styles.foto}>
         <Image
-          source={imageMap[item.foto] || foto1}
+          source={imageMap[item.foto] || noimage}
           style={styles.imagen}
           resizeMode="cover"
         />
@@ -32,10 +45,22 @@ const Productos = ({ data }) => {
       <Text style={styles.description}>{item.description}</Text>
       <Text style={styles.tokenLabel}>Tokens: {item.price}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleOpenModal(item.id)}
+        >
           <Text style={styles.buttonText}>Canjear</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Solo se muestra si el producto coincide con el modal activo */}
+      {selectedProductId === item.id && (
+        <ConfirmPopup
+          visible={true}
+          onClose={handleCloseModal}
+          product={item}
+        />
+      )}
     </View>
   );
 

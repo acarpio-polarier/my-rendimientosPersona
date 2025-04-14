@@ -5,13 +5,13 @@
     { "id": 2, "foto": "foto2.jpg", "title": "Restaurante Y" , 
     "description": "Restaurante y en Campos para dos personas", 
     "price": 150},
-    { "id": 3, "foto": "foto1.jpg", "title": "Restaurante Z" , 
+    { "id": 3, "foto": "foto3.jpg", "title": "Restaurante Z" , 
     "description": "Restaurante z en Manacor para dos personas", 
     "price": 120},
-    { "id": 4, "foto": "foto1.jpg", "title": "Restaurante A" , 
+    { "id": 4, "foto": "foto4.jpg", "title": "Restaurante A" , 
     "description": "Restaurante a en Calle Indrustria para dos personas", 
     "price": 180},
-    { "id": 5, "foto": "foto1.jpg", "title": "Restaurante B" , 
+    { "id": 5, "foto": "foto5.jpg", "title": "Restaurante B" , 
     "description": "Restaurante b en Porreras para dos personas", 
     "price": 90}
 ]
