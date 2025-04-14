@@ -3,7 +3,6 @@ import styles from "../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HeaderCanje from "./components/headerCanje";
 import BarraFiltro from "./components/barraFiltro";
-import Productos from "./components/productos";
 import data from "./data/data.json";
 import dataTokens from "./data/dataTokens.json";
 
@@ -19,8 +18,7 @@ const Index = () => {
       </View>
       <View>
         <HeaderCanje dataTokens={dataTokens} />
-        <BarraFiltro dataTokens={dataTokens} />
-        <Productos data={data} />
+        <BarraFiltro dataTokens={dataTokens} data={data} />
       </View>
     </ScrollView>
   );

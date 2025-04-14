@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-web";
+import Productos from "./productos";
 
-const BarraFiltro = () => {
-  const [valorSlider, setValorSlider] = useState(50);
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState("Opción 1");
+const BarraFiltro = ({ data }) => {
+  const [opcionSeleccionada, setOpcionSeleccionada] = useState("0");
   const [selected, setSelected] = useState(false);
+
+  useEffect(() => {
+    console.log("Datos desde Barra:", data);
+  }, [data]);
+
+  const filtrarDatos = () => {
+    let filtrado = data;
+
+    if (opcionSeleccionada !== "0") {
+      const categoria = parseInt(opcionSeleccionada);
+      filtrado = filtrado.filter((item) => item.categoria === categoria);
+    }
+
+    console.log("Datos filtrados:", filtrado);
+    return filtrado;
+  };
+
+  const productosFiltrados = filtrarDatos();
 
   return (
     <View style={styles.contenedor}>
@@ -18,17 +36,6 @@ const BarraFiltro = () => {
             style={styles.checkBox}
           />
         </View>
-        {/* <View style={[styles.elemento, styles.sliderContainer]}>
-          <Text style={styles.labelSlider}>Precio</Text>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={valorSlider}
-            onChange={(e) => setValorSlider(e.target.value)}
-            style={styles.slider}
-          />
-        </View> */}
         <View style={styles.elemento}>
           <Text style={styles.labelCategoria}>Categorias</Text>
           <select
@@ -36,12 +43,14 @@ const BarraFiltro = () => {
             onChange={(e) => setOpcionSeleccionada(e.target.value)}
             style={styles.selectBox}
           >
-            <option value="1">Todo</option>
+            <option value="0">Todo</option>
+            <option value="1">Experiencias</option>
             <option value="2">Servicios</option>
-            <option value="3">Experiencias</option>
           </select>
         </View>
       </View>
+      <View style={styles.linea}></View>
+      <Productos data={productosFiltrados} />
     </View>
   );
 };
@@ -50,8 +59,6 @@ const styles = StyleSheet.create({
   contenedor: {
     width: "100%",
     alignSelf: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
     marginTop: -5,
   },
   fila: {
@@ -104,6 +111,7 @@ const styles = StyleSheet.create({
     width: 140,
   },
   checkBox: { marginBottom: 8, alignSelf: "flex-start" },
+  linea: { borderBottomWidth: 1, borderBottomColor: "rgb(210,210,210)" },
 });
 
 export default BarraFiltro;
