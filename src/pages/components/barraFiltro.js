@@ -5,15 +5,20 @@ import { CheckBox } from "react-native-web";
 const BarraFiltro = () => {
   const [valorSlider, setValorSlider] = useState(50);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("Opción 1");
+  const [selected, setSelected] = useState(false);
 
   return (
     <View style={styles.contenedor}>
       <View style={styles.fila}>
         <View style={styles.elemento}>
           <Text style={styles.labelCanjeable}>Canjeable</Text>
-          <CheckBox style={styles.checkBox} />
+          <CheckBox
+            value={selected}
+            onValueChange={setSelected}
+            style={styles.checkBox}
+          />
         </View>
-        <View style={[styles.elemento, styles.sliderContainer]}>
+        {/* <View style={[styles.elemento, styles.sliderContainer]}>
           <Text style={styles.labelSlider}>Precio</Text>
           <input
             type="range"
@@ -23,7 +28,7 @@ const BarraFiltro = () => {
             onChange={(e) => setValorSlider(e.target.value)}
             style={styles.slider}
           />
-        </View>
+        </View> */}
         <View style={styles.elemento}>
           <Text style={styles.labelCategoria}>Categorias</Text>
           <select
@@ -31,9 +36,9 @@ const BarraFiltro = () => {
             onChange={(e) => setOpcionSeleccionada(e.target.value)}
             style={styles.selectBox}
           >
-            <option value="Opción 1">Todo</option>
-            <option value="Opción 2">Servicios</option>
-            <option value="Opción 3">Experiencias</option>
+            <option value="1">Todo</option>
+            <option value="2">Servicios</option>
+            <option value="3">Experiencias</option>
           </select>
         </View>
       </View>

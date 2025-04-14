@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-const HeaderCanje = () => {
+const HeaderCanje = ({ dataTokens }) => {
   return (
     <View style={styles.contenedor}>
       <View>
         <View>
-          <Text style={styles.tokens}>€ Tokens: 100</Text>
+          <Text style={styles.tokens}>€ Tokens: {dataTokens[0]?.cantidad}</Text>
         </View>
         <Text style={styles.labelFiltro}>Filtros</Text>
       </View>

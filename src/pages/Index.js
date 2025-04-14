@@ -4,7 +4,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HeaderCanje from "./components/headerCanje";
 import BarraFiltro from "./components/barraFiltro";
 import Productos from "./components/productos";
-import data from "./data.json";
+import data from "./data/data.json";
+import dataTokens from "./data/dataTokens.json";
 
 const Index = () => {
   const insets = useSafeAreaInsets();
@@ -17,8 +18,8 @@ const Index = () => {
         <Text style={styles.headerText}>Canje de puntos</Text>
       </View>
       <View>
-        <HeaderCanje />
-        <BarraFiltro />
+        <HeaderCanje dataTokens={dataTokens} />
+        <BarraFiltro dataTokens={dataTokens} />
         <Productos data={data} />
       </View>
     </ScrollView>

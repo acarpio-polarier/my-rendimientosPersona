@@ -8,14 +8,16 @@ import {
   FlatList,
 } from "react-native";
 
-import foto1 from "./foto1.jpg";
-import foto2 from "./foto2.jpg";
-import noimage from "./noimage.png";
+import foto1 from "../fotos/foto1.jpg";
+import foto2 from "../fotos/foto2.jpg";
+import foto3 from "../fotos/foto3.jpg";
+import noimage from "../fotos/noimage.png";
 import ConfirmPopup from "./confirmPopup";
 
 const imageMap = {
   "foto1.jpg": foto1,
   "foto2.jpg": foto2,
+  "foto3.jpg": foto3,
   "noimage.png": noimage,
 };
 
@@ -53,7 +55,6 @@ const Productos = ({ data }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Solo se muestra si el producto coincide con el modal activo */}
       {selectedProductId === item.id && (
         <ConfirmPopup
           visible={true}
@@ -112,8 +113,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "grey",
-    fontSize: 11,
-    fontWeight: "bold",
+    fontSize: 13,
   },
   imagen: {
     borderWidth: 2,
