@@ -15,8 +15,7 @@ const ConfirmPopup = ({ visible, onClose, product }) => {
         <View style={styles.popup}>
           <Text style={styles.title}>Confirmar Canje</Text>
           <Text style={styles.message}>
-            ¿Estás seguro que deseas canjear {product.title} por {product.price}{" "}
-            tokens?
+            Estás apunto de canjear {product.title} por {product.price} tokens
           </Text>
           <View style={styles.buttons}>
             <TouchableOpacity
@@ -55,14 +54,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 10,
+    textAlign: "center",
   },
   message: {
     marginBottom: 20,
     fontSize: 14,
+    textAlign: "center",
   },
   buttons: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   button: {
     paddingVertical: 8,

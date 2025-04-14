@@ -5,10 +5,10 @@
     { "id": 2, "categoria": 1, "foto": "foto2.jpg", "title": "Restaurante Y" , 
     "description": "Restaurante y en Campos para dos personas", 
     "price": 150},
-    { "id": 4, "categoria": 1, "foto": "foto4.jpg", "title": "Restaurante A" , 
-    "description": "Restaurante a en Calle Indrustria para dos personas", 
-    "price": 180},
-    { "id": 5, "categoria": 2, "foto": "foto3.jpg", "title": "Refresco" , 
+    { "id": 4, "categoria": 2, "foto": "foto3.jpg", "title": "Refresco" , 
     "description": "Bono para gastar en máquina expendedora", 
-    "price": 10}
+    "price": 10},
+    { "id": 5, "categoria": 1, "foto": "foto4.jpg", "title": "Restaurante A" , 
+    "description": "Restaurante a en Calle Indrustria para dos personas", 
+    "price": 180}
 ]

@@ -1,12 +1,16 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
+import token from "../fotos/token.png";
 
 const HeaderCanje = ({ dataTokens }) => {
   return (
     <View style={styles.contenedor}>
       <View>
-        <View>
-          <Text style={styles.tokens}>€ Tokens: {dataTokens[0]?.cantidad}</Text>
+        <View style={styles.contenedorToken}>
+          <Image style={styles.token} source={token} />
+          <Text style={styles.tokenLabel}>
+            Tokens: {dataTokens[0]?.cantidad}
+          </Text>
         </View>
         <Text style={styles.labelFiltro}>Filtros</Text>
       </View>
@@ -24,7 +28,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "rgb(210,210,210)",
   },
-  tokens: {
+  contenedorToken: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "end",
+  },
+  token: {
+    width: 20,
+    height: 20,
+    marginRight: 15,
+  },
+  tokenLabel: {
     display: "flex",
     justifyContent: "end",
     alignItems: "center",
