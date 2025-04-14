@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
@@ -16,6 +17,8 @@ import { PERSONA_ID } from "../Index";
 import FechaUtils from "../../helpers/FechaUtils";
 import DetalleRegistros from "./DetalleRegistros";
 import RendimientoUtils from "../../helpers/RendimientoUtils";
+
+const screen_height = Dimensions.get("window").height;
 
 // Recibir props directamente con destructuring
 export default function DetalleRendimientoSelector({
@@ -536,7 +539,7 @@ export default function DetalleRendimientoSelector({
             titulo="Registros"
             valor={totalDiasTrabajados(intervalo)}
             descripcion="Total de días"
-            color={colors.primary}
+            color={colors.darkGray}
           />
 
           {/* Tarjeta de Tokens especial (hardcodeado) */}
@@ -585,7 +588,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     marginVertical: 10,
-    paddingBottom: 50,
+    paddingBottom: 0,
     height: "95%",
   },
   header: {
@@ -611,8 +614,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: "15%",
-    maxHeight: "15%",
+    height: screen_height * 0.1,
   },
   selectorContainer: {
     flexDirection: "row",
@@ -620,6 +622,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 5,
     width: "100%",
+    height: screen_height * 0.2,
   },
   selectorContainerDia: {
     flexDirection: "row",
@@ -637,6 +640,7 @@ const styles = StyleSheet.create({
   },
   dateRange: {
     marginHorizontal: 16,
+    paddingTop: "5%",
     alignItems: "center",
   },
   dateText: {
@@ -718,6 +722,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: colors.primary_light,
   },
   tarjetaHeader: {
     flexDirection: "row",
@@ -725,13 +731,13 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   tarjetaTitulo: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "500",
     marginLeft: 4,
     color: "#555",
   },
   tarjetaValor: {
-    fontSize: 16.6,
+    fontSize: 20,
     fontWeight: "bold",
     marginVertical: 2,
   },
@@ -753,7 +759,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
     borderWidth: 2,
-    borderColor: "#F5B700",
+    borderColor: colors.primary,
   },
   estadoTexto: {
     fontSize: 10,

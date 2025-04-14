@@ -9511,5 +9511,1202 @@
         "HorasTrabajadasAcumuladas": 12.0,
         "TotalPrendasAcumuladas": 395,
         "MediaPrendasPorHoraAcumulada": 32.92
-      }
+      },
+      {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T05:33:00",
+        "fechaFin": "2025-04-14T07:22:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6552.0,
+        "IntervaloTiempoHoras": 1.82,
+        "TotalPrendas": 136,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 136
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 1.82,
+        "TotalPrendasAcumuladas": 136,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T08:23:00",
+        "fechaFin": "2025-04-14T10:45:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8532.0,
+        "IntervaloTiempoHoras": 2.37,
+        "TotalPrendas": 178,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 178
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 4.19,
+        "TotalPrendasAcumuladas": 314,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T07:59:00",
+        "fechaFin": "2025-04-14T09:14:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4500.0,
+        "IntervaloTiempoHoras": 1.25,
+        "TotalPrendas": 93,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 93
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 5.44,
+        "TotalPrendasAcumuladas": 407,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T05:12:00",
+        "fechaFin": "2025-04-14T06:55:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6228.0,
+        "IntervaloTiempoHoras": 1.73,
+        "TotalPrendas": 130,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 130
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 7.17,
+        "TotalPrendasAcumuladas": 537,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T07:25:00",
+        "fechaFin": "2025-04-14T09:47:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8532.0,
+        "IntervaloTiempoHoras": 2.37,
+        "TotalPrendas": 178,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 178
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 9.54,
+        "TotalPrendasAcumuladas": 715,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T09:28:00",
+        "fechaFin": "2025-04-14T10:28:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3600.0,
+        "IntervaloTiempoHoras": 1.0,
+        "TotalPrendas": 75,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 75
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 10.54,
+        "TotalPrendasAcumuladas": 790,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T06:22:00",
+        "fechaFin": "2025-04-14T07:48:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 5184.0,
+        "IntervaloTiempoHoras": 1.44,
+        "TotalPrendas": 108,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 108
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 11.98,
+        "TotalPrendasAcumuladas": 898,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T09:24:00",
+        "fechaFin": "2025-04-14T10:39:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4500.0,
+        "IntervaloTiempoHoras": 1.25,
+        "TotalPrendas": 93,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 93
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 13.23,
+        "TotalPrendasAcumuladas": 991,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-14T08:20:00",
+        "fechaFin": "2025-04-14T09:41:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4896.0,
+        "IntervaloTiempoHoras": 1.36,
+        "TotalPrendas": 102,
+        "MediaPrendasPorHora": 75,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 102
+        },
+        "RendimientoPorTipo": {
+            "toalla": 75.14820648695232
+        },
+        "RendimientoGlobal": 75,
+        "RendimientoAcumulado": 74,
+        "HorasTrabajadasAcumuladas": 14.59,
+        "TotalPrendasAcumuladas": 1093,
+        "MediaPrendasPorHoraAcumulada": 74
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-15T06:49:00",
+        "fechaFin": "2025-04-15T09:06:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8244.0,
+        "IntervaloTiempoHoras": 2.29,
+        "TotalPrendas": 146,
+        "MediaPrendasPorHora": 63,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 146
+        },
+        "RendimientoPorTipo": {
+            "toalla": 63.94
+        },
+        "RendimientoGlobal": 63,
+        "RendimientoAcumulado": 73,
+        "HorasTrabajadasAcumuladas": 16.88,
+        "TotalPrendasAcumuladas": 1239,
+        "MediaPrendasPorHoraAcumulada": 73
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-15T07:33:00",
+        "fechaFin": "2025-04-15T08:55:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4968.0,
+        "IntervaloTiempoHoras": 1.38,
+        "TotalPrendas": 156,
+        "MediaPrendasPorHora": 113,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 156
+        },
+        "RendimientoPorTipo": {
+            "toalla": 113.74
+        },
+        "RendimientoGlobal": 113,
+        "RendimientoAcumulado": 76,
+        "HorasTrabajadasAcumuladas": 18.26,
+        "TotalPrendasAcumuladas": 1395,
+        "MediaPrendasPorHoraAcumulada": 76
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-15T08:57:00",
+        "fechaFin": "2025-04-15T09:59:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3744.0,
+        "IntervaloTiempoHoras": 1.04,
+        "TotalPrendas": 107,
+        "MediaPrendasPorHora": 103,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 107
+        },
+        "RendimientoPorTipo": {
+            "toalla": 103.82
+        },
+        "RendimientoGlobal": 103,
+        "RendimientoAcumulado": 77,
+        "HorasTrabajadasAcumuladas": 19.3,
+        "TotalPrendasAcumuladas": 1502,
+        "MediaPrendasPorHoraAcumulada": 77
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-15T08:52:00",
+        "fechaFin": "2025-04-15T11:44:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 10368.0,
+        "IntervaloTiempoHoras": 2.88,
+        "TotalPrendas": 283,
+        "MediaPrendasPorHora": 98,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 283
+        },
+        "RendimientoPorTipo": {
+            "toalla": 98.42
+        },
+        "RendimientoGlobal": 98,
+        "RendimientoAcumulado": 80,
+        "HorasTrabajadasAcumuladas": 22.18,
+        "TotalPrendasAcumuladas": 1785,
+        "MediaPrendasPorHoraAcumulada": 80
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-15T05:15:00",
+        "fechaFin": "2025-04-15T06:16:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3708.0,
+        "IntervaloTiempoHoras": 1.03,
+        "TotalPrendas": 117,
+        "MediaPrendasPorHora": 113,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 117
+        },
+        "RendimientoPorTipo": {
+            "toalla": 113.74
+        },
+        "RendimientoGlobal": 113,
+        "RendimientoAcumulado": 81,
+        "HorasTrabajadasAcumuladas": 23.21,
+        "TotalPrendasAcumuladas": 1902,
+        "MediaPrendasPorHoraAcumulada": 81
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-15T06:28:00",
+        "fechaFin": "2025-04-15T09:04:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 9396.0,
+        "IntervaloTiempoHoras": 2.61,
+        "TotalPrendas": 246,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 246
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.55
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 83,
+        "HorasTrabajadasAcumuladas": 25.82,
+        "TotalPrendasAcumuladas": 2148,
+        "MediaPrendasPorHoraAcumulada": 83
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-16T06:37:00",
+        "fechaFin": "2025-04-16T09:31:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 10440.0,
+        "IntervaloTiempoHoras": 2.9,
+        "TotalPrendas": 153,
+        "MediaPrendasPorHora": 52,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 153
+        },
+        "RendimientoPorTipo": {
+            "toalla": 52.9446589643134
+        },
+        "RendimientoGlobal": 52,
+        "RendimientoAcumulado": 80,
+        "HorasTrabajadasAcumuladas": 28.72,
+        "TotalPrendasAcumuladas": 2301,
+        "MediaPrendasPorHoraAcumulada": 80
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-16T05:07:00",
+        "fechaFin": "2025-04-16T07:16:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 7776.0,
+        "IntervaloTiempoHoras": 2.16,
+        "TotalPrendas": 114,
+        "MediaPrendasPorHora": 52,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 114
+        },
+        "RendimientoPorTipo": {
+            "toalla": 52.9446589643134
+        },
+        "RendimientoGlobal": 52,
+        "RendimientoAcumulado": 78,
+        "HorasTrabajadasAcumuladas": 30.88,
+        "TotalPrendasAcumuladas": 2415,
+        "MediaPrendasPorHoraAcumulada": 78
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-16T05:56:00",
+        "fechaFin": "2025-04-16T08:39:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 9828.0,
+        "IntervaloTiempoHoras": 2.73,
+        "TotalPrendas": 144,
+        "MediaPrendasPorHora": 52,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 144
+        },
+        "RendimientoPorTipo": {
+            "toalla": 52.9446589643134
+        },
+        "RendimientoGlobal": 52,
+        "RendimientoAcumulado": 76,
+        "HorasTrabajadasAcumuladas": 33.61,
+        "TotalPrendasAcumuladas": 2559,
+        "MediaPrendasPorHoraAcumulada": 76
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T05:32:00",
+        "fechaFin": "2025-04-17T07:53:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8460.0,
+        "IntervaloTiempoHoras": 2.35,
+        "TotalPrendas": 250,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 250
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 78,
+        "HorasTrabajadasAcumuladas": 35.96,
+        "TotalPrendasAcumuladas": 2809,
+        "MediaPrendasPorHoraAcumulada": 78
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T08:35:00",
+        "fechaFin": "2025-04-17T10:50:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8100.0,
+        "IntervaloTiempoHoras": 2.25,
+        "TotalPrendas": 239,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 239
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 79,
+        "HorasTrabajadasAcumuladas": 38.21,
+        "TotalPrendasAcumuladas": 3048,
+        "MediaPrendasPorHoraAcumulada": 79
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T07:27:00",
+        "fechaFin": "2025-04-17T09:49:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8568.0,
+        "IntervaloTiempoHoras": 2.38,
+        "TotalPrendas": 253,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 253
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 81,
+        "HorasTrabajadasAcumuladas": 40.59,
+        "TotalPrendasAcumuladas": 3301,
+        "MediaPrendasPorHoraAcumulada": 81
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T06:00:00",
+        "fechaFin": "2025-04-17T08:49:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 10152.0,
+        "IntervaloTiempoHoras": 2.82,
+        "TotalPrendas": 300,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 300
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 82,
+        "HorasTrabajadasAcumuladas": 43.41,
+        "TotalPrendasAcumuladas": 3601,
+        "MediaPrendasPorHoraAcumulada": 82
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T06:14:00",
+        "fechaFin": "2025-04-17T07:55:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6084.0,
+        "IntervaloTiempoHoras": 1.69,
+        "TotalPrendas": 180,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 180
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 83,
+        "HorasTrabajadasAcumuladas": 45.1,
+        "TotalPrendasAcumuladas": 3781,
+        "MediaPrendasPorHoraAcumulada": 83
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T06:31:00",
+        "fechaFin": "2025-04-17T08:46:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8100.0,
+        "IntervaloTiempoHoras": 2.25,
+        "TotalPrendas": 239,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 239
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 84,
+        "HorasTrabajadasAcumuladas": 47.35,
+        "TotalPrendasAcumuladas": 4020,
+        "MediaPrendasPorHoraAcumulada": 84
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T09:18:00",
+        "fechaFin": "2025-04-17T10:21:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3816.0,
+        "IntervaloTiempoHoras": 1.06,
+        "TotalPrendas": 113,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 113
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 85,
+        "HorasTrabajadasAcumuladas": 48.41,
+        "TotalPrendasAcumuladas": 4133,
+        "MediaPrendasPorHoraAcumulada": 85
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T08:47:00",
+        "fechaFin": "2025-04-17T09:51:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3852.0,
+        "IntervaloTiempoHoras": 1.07,
+        "TotalPrendas": 114,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 114
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 85,
+        "HorasTrabajadasAcumuladas": 49.48,
+        "TotalPrendasAcumuladas": 4247,
+        "MediaPrendasPorHoraAcumulada": 85
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T08:39:00",
+        "fechaFin": "2025-04-17T09:49:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4212.0,
+        "IntervaloTiempoHoras": 1.17,
+        "TotalPrendas": 124,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 124
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 50.65,
+        "TotalPrendasAcumuladas": 4371,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-17T08:34:00",
+        "fechaFin": "2025-04-17T10:22:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6480.0,
+        "IntervaloTiempoHoras": 1.8,
+        "TotalPrendas": 191,
+        "MediaPrendasPorHora": 106,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 191
+        },
+        "RendimientoPorTipo": {
+            "toalla": 106.60572788630418
+        },
+        "RendimientoGlobal": 106,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 52.45,
+        "TotalPrendasAcumuladas": 4562,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T07:56:00",
+        "fechaFin": "2025-04-18T09:12:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4572.0,
+        "IntervaloTiempoHoras": 1.27,
+        "TotalPrendas": 102,
+        "MediaPrendasPorHora": 80,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 102
+        },
+        "RendimientoPorTipo": {
+            "toalla": 80.35
+        },
+        "RendimientoGlobal": 80,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 53.72,
+        "TotalPrendasAcumuladas": 4664,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T08:44:00",
+        "fechaFin": "2025-04-18T10:06:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4932.0,
+        "IntervaloTiempoHoras": 1.37,
+        "TotalPrendas": 94,
+        "MediaPrendasPorHora": 68,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 94
+        },
+        "RendimientoPorTipo": {
+            "toalla": 68.94
+        },
+        "RendimientoGlobal": 68,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 55.09,
+        "TotalPrendasAcumuladas": 4758,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T05:23:00",
+        "fechaFin": "2025-04-18T06:59:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 5760.0,
+        "IntervaloTiempoHoras": 1.6,
+        "TotalPrendas": 97,
+        "MediaPrendasPorHora": 60,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 97
+        },
+        "RendimientoPorTipo": {
+            "toalla": 60.67
+        },
+        "RendimientoGlobal": 60,
+        "RendimientoAcumulado": 85,
+        "HorasTrabajadasAcumuladas": 56.69,
+        "TotalPrendasAcumuladas": 4855,
+        "MediaPrendasPorHoraAcumulada": 85
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T09:41:00",
+        "fechaFin": "2025-04-18T12:35:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 10476.0,
+        "IntervaloTiempoHoras": 2.91,
+        "TotalPrendas": 294,
+        "MediaPrendasPorHora": 101,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 294
+        },
+        "RendimientoPorTipo": {
+            "toalla": 101.25
+        },
+        "RendimientoGlobal": 101,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 59.6,
+        "TotalPrendasAcumuladas": 5149,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T05:03:00",
+        "fechaFin": "2025-04-18T06:07:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3852.0,
+        "IntervaloTiempoHoras": 1.07,
+        "TotalPrendas": 97,
+        "MediaPrendasPorHora": 90,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 97
+        },
+        "RendimientoPorTipo": {
+            "toalla": 90.78
+        },
+        "RendimientoGlobal": 90,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 60.67,
+        "TotalPrendasAcumuladas": 5246,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T07:15:00",
+        "fechaFin": "2025-04-18T08:16:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 3708.0,
+        "IntervaloTiempoHoras": 1.03,
+        "TotalPrendas": 103,
+        "MediaPrendasPorHora": 100,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 103
+        },
+        "RendimientoPorTipo": {
+            "toalla": 100.5
+        },
+        "RendimientoGlobal": 100,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 61.7,
+        "TotalPrendasAcumuladas": 5349,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T08:31:00",
+        "fechaFin": "2025-04-18T09:46:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4500.0,
+        "IntervaloTiempoHoras": 1.25,
+        "TotalPrendas": 108,
+        "MediaPrendasPorHora": 86,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 108
+        },
+        "RendimientoPorTipo": {
+            "toalla": 86.96
+        },
+        "RendimientoGlobal": 86,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 62.95,
+        "TotalPrendasAcumuladas": 5457,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T05:10:00",
+        "fechaFin": "2025-04-18T06:23:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4428.0,
+        "IntervaloTiempoHoras": 1.23,
+        "TotalPrendas": 108,
+        "MediaPrendasPorHora": 88,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 108
+        },
+        "RendimientoPorTipo": {
+            "toalla": 88.1
+        },
+        "RendimientoGlobal": 88,
+        "RendimientoAcumulado": 86,
+        "HorasTrabajadasAcumuladas": 64.18,
+        "TotalPrendasAcumuladas": 5565,
+        "MediaPrendasPorHoraAcumulada": 86
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T08:06:00",
+        "fechaFin": "2025-04-18T09:33:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 5256.0,
+        "IntervaloTiempoHoras": 1.46,
+        "TotalPrendas": 166,
+        "MediaPrendasPorHora": 114,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 166
+        },
+        "RendimientoPorTipo": {
+            "toalla": 114.24
+        },
+        "RendimientoGlobal": 114,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 65.64,
+        "TotalPrendasAcumuladas": 5731,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-18T09:38:00",
+        "fechaFin": "2025-04-18T12:26:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 10116.0,
+        "IntervaloTiempoHoras": 2.81,
+        "TotalPrendas": 231,
+        "MediaPrendasPorHora": 82,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 231
+        },
+        "RendimientoPorTipo": {
+            "toalla": 82.41
+        },
+        "RendimientoGlobal": 82,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 68.45,
+        "TotalPrendasAcumuladas": 5962,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T08:05:00",
+        "fechaFin": "2025-04-19T09:24:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4752.0,
+        "IntervaloTiempoHoras": 1.32,
+        "TotalPrendas": 124,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 124
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 69.77,
+        "TotalPrendasAcumuladas": 6086,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T05:10:00",
+        "fechaFin": "2025-04-19T08:00:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 10224.0,
+        "IntervaloTiempoHoras": 2.84,
+        "TotalPrendas": 268,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 268
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 72.61,
+        "TotalPrendasAcumuladas": 6354,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T06:55:00",
+        "fechaFin": "2025-04-19T08:20:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 5148.0,
+        "IntervaloTiempoHoras": 1.43,
+        "TotalPrendas": 135,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 135
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 74.04,
+        "TotalPrendasAcumuladas": 6489,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T05:09:00",
+        "fechaFin": "2025-04-19T06:57:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6480.0,
+        "IntervaloTiempoHoras": 1.8,
+        "TotalPrendas": 170,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 170
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 75.84,
+        "TotalPrendasAcumuladas": 6659,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T07:52:00",
+        "fechaFin": "2025-04-19T09:48:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6984.0,
+        "IntervaloTiempoHoras": 1.94,
+        "TotalPrendas": 183,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 183
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 87,
+        "HorasTrabajadasAcumuladas": 77.78,
+        "TotalPrendasAcumuladas": 6842,
+        "MediaPrendasPorHoraAcumulada": 87
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T05:08:00",
+        "fechaFin": "2025-04-19T07:41:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 9216.0,
+        "IntervaloTiempoHoras": 2.56,
+        "TotalPrendas": 241,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 241
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 88,
+        "HorasTrabajadasAcumuladas": 80.34,
+        "TotalPrendasAcumuladas": 7083,
+        "MediaPrendasPorHoraAcumulada": 88
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-19T08:48:00",
+        "fechaFin": "2025-04-19T10:06:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 4716.0,
+        "IntervaloTiempoHoras": 1.31,
+        "TotalPrendas": 123,
+        "MediaPrendasPorHora": 94,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 123
+        },
+        "RendimientoPorTipo": {
+            "toalla": 94.49124707181143
+        },
+        "RendimientoGlobal": 94,
+        "RendimientoAcumulado": 88,
+        "HorasTrabajadasAcumuladas": 81.65,
+        "TotalPrendasAcumuladas": 7206,
+        "MediaPrendasPorHoraAcumulada": 88
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T07:17:00",
+        "fechaFin": "2025-04-20T09:35:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 8316.0,
+        "IntervaloTiempoHoras": 2.31,
+        "TotalPrendas": 239,
+        "MediaPrendasPorHora": 103,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 239
+        },
+        "RendimientoPorTipo": {
+            "toalla": 103.72
+        },
+        "RendimientoGlobal": 103,
+        "RendimientoAcumulado": 88,
+        "HorasTrabajadasAcumuladas": 83.96,
+        "TotalPrendasAcumuladas": 7445,
+        "MediaPrendasPorHoraAcumulada": 88
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T09:57:00",
+        "fechaFin": "2025-04-20T12:42:00",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 9900.0,
+        "IntervaloTiempoHoras": 2.75,
+        "TotalPrendas": 320,
+        "MediaPrendasPorHora": 116,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 320
+        },
+        "RendimientoPorTipo": {
+            "toalla": 116.46
+        },
+        "RendimientoGlobal": 116,
+        "RendimientoAcumulado": 89,
+        "HorasTrabajadasAcumuladas": 86.71,
+        "TotalPrendasAcumuladas": 7765,
+        "MediaPrendasPorHoraAcumulada": 89
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T08:10:00",
+        "fechaFin": "2025-04-20T09:38:48",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 5328.0,
+        "IntervaloTiempoHoras": 1.48,
+        "TotalPrendas": 91,
+        "MediaPrendasPorHora": 61,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 91
+        },
+        "RendimientoPorTipo": {
+            "toalla": 61.93
+        },
+        "RendimientoGlobal": 61,
+        "RendimientoAcumulado": 89,
+        "HorasTrabajadasAcumuladas": 88.19,
+        "TotalPrendasAcumuladas": 7856,
+        "MediaPrendasPorHoraAcumulada": 89
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T09:26:00",
+        "fechaFin": "2025-04-20T11:25:24",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 7164.0,
+        "IntervaloTiempoHoras": 1.99,
+        "TotalPrendas": 201,
+        "MediaPrendasPorHora": 101,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 201
+        },
+        "RendimientoPorTipo": {
+            "toalla": 101.14
+        },
+        "RendimientoGlobal": 101,
+        "RendimientoAcumulado": 89,
+        "HorasTrabajadasAcumuladas": 90.18,
+        "TotalPrendasAcumuladas": 8057,
+        "MediaPrendasPorHoraAcumulada": 89
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T06:56:00",
+        "fechaFin": "2025-04-20T09:06:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 7812.0,
+        "IntervaloTiempoHoras": 2.17,
+        "TotalPrendas": 208,
+        "MediaPrendasPorHora": 95,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 208
+        },
+        "RendimientoPorTipo": {
+            "toalla": 95.98
+        },
+        "RendimientoGlobal": 95,
+        "RendimientoAcumulado": 89,
+        "HorasTrabajadasAcumuladas": 92.35,
+        "TotalPrendasAcumuladas": 8265,
+        "MediaPrendasPorHoraAcumulada": 89
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T08:46:00",
+        "fechaFin": "2025-04-20T10:35:12",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 6552.0,
+        "IntervaloTiempoHoras": 1.82,
+        "TotalPrendas": 111,
+        "MediaPrendasPorHora": 61,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 111
+        },
+        "RendimientoPorTipo": {
+            "toalla": 61.48
+        },
+        "RendimientoGlobal": 61,
+        "RendimientoAcumulado": 88,
+        "HorasTrabajadasAcumuladas": 94.17,
+        "TotalPrendasAcumuladas": 8376,
+        "MediaPrendasPorHoraAcumulada": 88
+    },
+    {
+        "idPersona": 4901,
+        "idMaquina": 1428,
+        "fechaIni": "2025-04-20T06:53:00",
+        "fechaFin": "2025-04-20T08:26:36",
+        "idLavanderia": 14,
+        "denominacion": "PLEGADOR DE TOALLAS No.1 6C TEMATIC PRO",
+        "IntervaloTiempoSegundos": 5616.0,
+        "IntervaloTiempoHoras": 1.56,
+        "TotalPrendas": 106,
+        "MediaPrendasPorHora": 68,
+        "DiccionarioPrendasPorTipo": {
+            "toalla": 106
+        },
+        "RendimientoPorTipo": {
+            "toalla": 68.32
+        },
+        "RendimientoGlobal": 68,
+        "RendimientoAcumulado": 88,
+        "HorasTrabajadasAcumuladas": 95.73,
+        "TotalPrendasAcumuladas": 8482,
+        "MediaPrendasPorHoraAcumulada": 88
+    }
+      
 ]

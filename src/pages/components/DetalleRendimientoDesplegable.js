@@ -55,10 +55,10 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
 
 const styles = StyleSheet.create({
   contenidoVisualizacion: {
-    backgroundColor: "white",
     padding: 15,
     opacity: 1,
     transition: "opacity 0.3s ease-in-out",
+    width: "100%",
   },
   cargando: {
     opacity: 0.5,
@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   tituloMetrica: {
-    fontSize: 16,
+    fontSize: 20,
     color: "#333",
     fontWeight: "500",
   },
   valorMetrica: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     color: colors.primary,
   },

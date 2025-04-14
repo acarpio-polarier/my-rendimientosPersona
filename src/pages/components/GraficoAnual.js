@@ -268,18 +268,18 @@ const styles = StyleSheet.create({
   },
   datoLabel: {
     color: "#666",
-    fontSize: 12,
+    fontSize: 20,
     textAlign: "center",
   },
   datoValor: {
-    color: "#333",
-    fontSize: 16,
+    color: colors.primary,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
   },
   infoButton: {
     position: "absolute",
-    right: 12,
+    right: 15,
     padding: 5,
   },
   selectorAño: {

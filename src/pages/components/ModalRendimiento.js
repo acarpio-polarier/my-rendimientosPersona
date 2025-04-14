@@ -46,56 +46,6 @@ const ModalRendimiento = ({
   // Umbral para considerar un swipe como suficiente para cerrar
   const SWIPE_THRESHOLD = 50;
 
-  // Configuramos el PanResponder para manejar los gestos
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Solo responder si el movimiento es principalmente vertical
-        return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        // Solo permitir deslizar hacia abajo
-        if (gestureState.dy > 0) {
-          pan.setValue({ x: 0, y: gestureState.dy });
-          // Reducir la opacidad proporcionalmente al deslizamiento
-          opacity.setValue(1 - Math.min(gestureState.dy / 200, 0.5));
-        }
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dy > SWIPE_THRESHOLD) {
-          // Si se desliza lo suficiente, cerrar el modal
-          Animated.timing(opacity, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-          }).start(() => {
-            onClose();
-            // Reiniciar los valores animados después de cerrar
-            setTimeout(() => {
-              pan.setValue({ x: 0, y: 0 });
-              opacity.setValue(1);
-            }, 100);
-          });
-        } else {
-          // Si no se desliza lo suficiente, volver a la posición original
-          Animated.parallel([
-            Animated.spring(pan, {
-              toValue: { x: 0, y: 0 },
-              friction: 5,
-              useNativeDriver: true,
-            }),
-            Animated.spring(opacity, {
-              toValue: 1,
-              friction: 5,
-              useNativeDriver: true,
-            }),
-          ]).start();
-        }
-      },
-    })
-  ).current;
-
   return (
     <Modal
       isVisible={isVisible}
@@ -116,7 +66,7 @@ const ModalRendimiento = ({
           styles.modalContent,
           containerStyle,
           {
-            transform: [{ translateY: pan.y }],
+            transform: pan.getTranslateTransform(),
             opacity: opacity,
           },
         ]}
@@ -127,11 +77,7 @@ const ModalRendimiento = ({
             styles.modalHeader,
             { backgroundColor: headerBackgroundColor },
           ]}
-          {...panResponder.panHandlers}
         >
-          {/* Línea de arrastre - Indicador de que el modal se puede arrastrar */}
-          <View style={styles.dragIndicator} />
-
           {/* Título (si existe) */}
           {title ? (
             <Text style={[styles.modalHeaderText, { color: headerTextColor }]}>
@@ -158,7 +104,7 @@ const ModalRendimiento = ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.modalBodyContent}
         >
-          {children}
+          <ScrollView>{children}</ScrollView>
         </View>
       </Animated.View>
     </Modal>
@@ -206,12 +152,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+    paddingTop: 5,
     marginBottom: 5,
   },
   closeButton: {
     position: "absolute",
     right: 15,
-    top: 20,
+    top: 10,
     padding: 5,
   },
   closeButtonNoTitle: {

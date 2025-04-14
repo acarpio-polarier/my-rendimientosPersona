@@ -329,18 +329,18 @@ const styles = StyleSheet.create({
   },
   datoLabel: {
     color: "#666",
-    fontSize: 12,
+    fontSize: 20,
     textAlign: "center",
   },
   datoValor: {
-    color: "#333",
-    fontSize: 16,
+    color: colors.primary,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
   },
   infoButton: {
     position: "absolute",
-    right: 12,
+    right: 15,
     padding: 5,
   },
   contenido: {
@@ -400,11 +400,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   percentageText: {
-    fontSize: 21,
+    paddingTop: "15%",
+    fontSize: 35,
     fontWeight: "bold",
   },
   estadoText: {
-    fontSize: 14,
+    fontSize: 15,
     marginTop: 5,
   },
   noDataContainer: {

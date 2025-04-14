@@ -121,11 +121,15 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     return colors.white;
   };
 
+  const HEIGHT_HEADER = 48;
+  const HEIGHT_ROW = 48;
+  const tablaHeight = HEIGHT_HEADER + data.length * HEIGHT_ROW;
+
   return (
     <View>
       <View style={styles.contenedorPrincipal}>
         {/* Tabla independiente */}
-        <View style={styles.tableContainer}>
+        <View style={[styles.tableContainer, { height: tablaHeight }]}>
           {/* Cabecera fija */}
           <DataTable>
             <DataTable.Header style={styles.cabeceraTabla}>
@@ -144,51 +148,48 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
             </DataTable.Header>
           </DataTable>
 
-          {/* Scroll solo en las filas */}
-          <ScrollView nestedScrollEnabled={true} style={{ height: "94%" }}>
-            <DataTable>
-              {tableData.map((rowData, rowIndex) => (
-                <TouchableOpacity
-                  key={rowIndex}
-                  onPress={() => handleRowPress(rowData)}
+          <DataTable style={{ height: "100%" }}>
+            {tableData.map((rowData, rowIndex) => (
+              <TouchableOpacity
+                key={rowIndex}
+                onPress={() => handleRowPress(rowData)}
+              >
+                <DataTable.Row
+                  style={{
+                    backgroundColor: getBackgroundColor(rowIndex),
+                  }}
                 >
-                  <DataTable.Row
-                    style={{
-                      backgroundColor: getBackgroundColor(rowIndex),
-                    }}
-                  >
-                    {rowData.map((cell, colIndex) => {
-                      if (colIndex === 2) {
-                        return (
-                          <DataTable.Cell
-                            key={colIndex}
-                            style={{ justifyContent: "center" }}
-                          >
-                            <Text
-                              style={[
-                                styles.cellText,
-                                { color: getColor(cell) },
-                              ]}
-                            >
-                              {cell}
-                            </Text>
-                          </DataTable.Cell>
-                        );
-                      }
+                  {rowData.map((cell, colIndex) => {
+                    if (colIndex === 2) {
                       return (
                         <DataTable.Cell
                           key={colIndex}
                           style={{ justifyContent: "center" }}
                         >
-                          <Text style={styles.cellText}>{cell}</Text>
+                          <Text
+                            style={[
+                              styles.cellText,
+                              { color: getColor(cell), fontSize: 17 },
+                            ]}
+                          >
+                            {cell}
+                          </Text>
                         </DataTable.Cell>
                       );
-                    })}
-                  </DataTable.Row>
-                </TouchableOpacity>
-              ))}
-            </DataTable>
-          </ScrollView>
+                    }
+                    return (
+                      <DataTable.Cell
+                        key={colIndex}
+                        style={{ justifyContent: "center" }}
+                      >
+                        <Text style={styles.cellText}>{cell}</Text>
+                      </DataTable.Cell>
+                    );
+                  })}
+                </DataTable.Row>
+              </TouchableOpacity>
+            ))}
+          </DataTable>
         </View>
       </View>
     </View>
@@ -202,13 +203,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.smokedWhite,
     borderRadius: 10,
     overflow: "hidden",
-    marginVertical: 10,
-    paddingBottom: 100,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
   },
 
   cabeceraTabla: {
@@ -236,16 +230,14 @@ const styles = StyleSheet.create({
   cellText: {
     textAlign: "center",
     width: "100%",
+    fontSize: 17,
   },
   wrapper: {
     flexDirection: "row",
   },
-  scrollViewContent: {
-    paddingBottom: 20,
-  },
+  scrollViewContent: {},
   head: {
     height: 44,
-    backgroundColor: colors.primary,
   },
   row: {
     height: 44,
@@ -283,9 +275,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     width: "100%",
   },
-  scrollViewContent: {
-    alignItems: "center",
-  },
+
   tableBorder: {
     borderWidth: 1,
     borderColor: "#E5E5E5",

@@ -79,11 +79,15 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     });
 
     // Tomar el último registro del día
-    const ultimoRegistro = registrosOrdenados[0];
+    console.log("registros ordenados", registrosOrdenados);
+    const rendimientoPorDiaRegistro = (
+      registrosOrdenados.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
+      registrosOrdenados.length
+    ).toFixed(0);
 
     return {
       // Usamos el RendimientoAcumulado del último registro
-      promedio: ultimoRegistro.RendimientoAcumulado || 0,
+      promedio: rendimientoPorDiaRegistro || 0,
       cantidad: datosDia.data.length,
     };
   };
@@ -141,13 +145,17 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       const dias = generarDiasSemana(datosAgrupados);
       const { mejorDiaId, todosIguales } = encontrarMejorDia(dias);
 
-      // Marcar el mejor día si corresponde
       const diasConMejorMarcado = dias.map((dia) => ({
         ...dia,
         mejorDia: !todosIguales && dia.fechaFormateada === mejorDiaId,
       }));
 
       setDiasSemana(diasConMejorMarcado);
+
+      const primerDiaConDatos = diasConMejorMarcado.find((d) => d.tieneDatos);
+      if (primerDiaConDatos) {
+        setDiaSeleccionado(primerDiaConDatos.fechaFormateada);
+      }
     } catch (error) {
       console.error("Error al procesar datos de la semana:", error);
       setDiasSemana([]);
@@ -264,7 +272,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
         {item.tieneDatos ? (
           <View style={styles.indicadorRendimiento}>
             <Text style={[styles.porcentaje, { color: colorTexto }]}>
-              {porcentaje.toFixed(1)}%
+              {porcentaje}%
             </Text>
           </View>
         ) : (
@@ -324,7 +332,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
           <TarjetaEstadistica
             icono="chart-line"
             titulo="Rendimiento"
-            valor={`${porcentaje.toFixed(1)}%`}
+            valor={`${porcentaje}%`}
             descripcion={textoEstado}
             color={colorProgreso}
           />
@@ -335,7 +343,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
             titulo="Registros"
             valor={estadisticas.cantidad}
             descripcion="Total del día"
-            color={colors.primary}
+            color={colors.darkGray}
           />
 
           {/* Tarjeta de Tokens especial (hardcodeado) */}
@@ -379,14 +387,11 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   return (
     <View style={styles.container}>
       {/* Lista horizontal de días */}
-      <FlatList
-        horizontal
-        data={diasSemana}
-        renderItem={({ item }) => <DiaItem item={item} />}
-        keyExtractor={(item) => item.fechaFormateada}
-        showsHorizontalScrollIndicator={true}
-        contentContainerStyle={styles.diasListContainer}
-      />
+      <View style={[styles.diasListContainer, { flexDirection: "row" }]}>
+        {diasSemana.map((item) => (
+          <DiaItem key={item.fechaFormateada} item={item} />
+        ))}
+      </View>
 
       {/* Detalles del día seleccionado */}
       <View style={styles.detalleContainer}>
@@ -398,23 +403,26 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
             )}
           />
         ) : (
-          <MensajeSinDatos mensaje="Selecciona un día para ver detalles" />
+          //aqui
+          <DetallesDia
+            dia={diasSemana.find(
+              (dia) => dia.fechaFormateada === diaSeleccionado
+            )}
+          />
         )}
       </View>
       {/* Detalle de registros */}
-      <View style={styles.tablaContainer}>
-        {diaSeleccionado &&
-        diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado) ? (
-          <DetalleRegistros
-            dia={
-              diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
-                ?.datosOriginales
-            }
-          />
-        ) : (
-          <View></View>
-        )}
-      </View>
+      {diaSeleccionado &&
+      diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado) ? (
+        <DetalleRegistros
+          dia={
+            diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
+              ?.datosOriginales
+          }
+        />
+      ) : (
+        <View></View>
+      )}
     </View>
   );
 };
@@ -422,23 +430,27 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginTop: 10,
+    alignSelf: "center",
+    borderRadius: 10,
+    overflow: "hidden",
+    marginVertical: 10,
+    paddingBottom: 0,
+    height: "95%",
   },
   diasListContainer: {
     justifyContent: "space-between",
     alignSelf: "center",
     width: "99%",
     paddingVertical: 5,
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
   },
   diaItem: {
-    height: 80,
+    height: 85,
     width: 47,
-    marginHorizontal: 0,
+    marginHorizontal: 1,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    padding: 5,
     position: "relative",
   },
   diaSeleccionado: {
@@ -455,12 +467,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   nombreDia: {
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: "500",
     textTransform: "capitalize",
   },
   numeroDia: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: "bold",
     marginVertical: 4,
   },
@@ -468,7 +480,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   porcentaje: {
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: "500",
   },
   indicadorSinDatos: {
@@ -484,7 +496,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   fechaCompleta: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "500",
     marginBottom: 15,
     textTransform: "capitalize",
@@ -492,7 +504,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mejorDiaTexto: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#FFD700",
     marginLeft: 5,
@@ -515,6 +527,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: colors.primary,
   },
   tarjetaHeader: {
     flexDirection: "row",
@@ -522,13 +536,13 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   tarjetaTitulo: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "500",
     marginLeft: 4,
     color: "#555",
   },
   tarjetaValor: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     marginVertical: 2,
   },
@@ -565,7 +579,7 @@ const styles = StyleSheet.create({
   },
   sinDatosTexto: {
     color: "#666",
-    fontSize: 14,
+    fontSize: 20,
     fontStyle: "italic",
   },
   cargandoContainer: {
@@ -580,9 +594,6 @@ const styles = StyleSheet.create({
   },
   tablaContainer: {
     width: "99%",
-  },
-  contenedorFlexible: {
-    maxHeight: screen_height * 0.17,
   },
 });
 
