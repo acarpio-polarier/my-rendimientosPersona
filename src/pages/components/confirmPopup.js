@@ -1,34 +1,34 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const ConfirmPopup = ({ visible, onClose, product }) => {
+const ConfirmPopup = ({ visible, cerrarPopup, product }) => {
   if (!visible) return null;
 
-  const handleConfirm = () => {
+  const confirmarPopup = () => {
     console.log("Producto canjeado:", product.title);
-    onClose();
+    cerrarPopup();
   };
 
   return (
     <Modal transparent visible={visible} animationType="fade">
-      <View style={styles.overlay}>
+      <View style={styles.contenedorMain}>
         <View style={styles.popup}>
-          <Text style={styles.title}>Confirmar Canje</Text>
-          <Text style={styles.message}>
+          <Text style={styles.titulo}>Confirmar Canje</Text>
+          <Text style={styles.mensaje}>
             Estás apunto de canjear {product.title} por {product.price} tokens
           </Text>
-          <View style={styles.buttons}>
+          <View style={styles.contenedorBotones}>
             <TouchableOpacity
-              onPress={onClose}
-              style={[styles.button, styles.cancel]}
+              onPress={cerrarPopup}
+              style={[styles.botonBase, styles.cancelar]}
             >
-              <Text style={styles.buttonText}>Cancelar</Text>
+              <Text style={styles.textoBotones}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={handleConfirm}
-              style={[styles.button, styles.confirm]}
+              onPress={confirmarPopup}
+              style={[styles.botonBase, styles.confirmar]}
             >
-              <Text style={styles.buttonText}>Confirmar</Text>
+              <Text style={styles.textoBotones}>Confirmar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -38,7 +38,7 @@ const ConfirmPopup = ({ visible, onClose, product }) => {
 };
 
 const styles = StyleSheet.create({
-  overlay: {
+  contenedorMain: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
@@ -50,34 +50,34 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
   },
-  title: {
+  titulo: {
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 10,
     textAlign: "center",
   },
-  message: {
+  mensaje: {
     marginBottom: 20,
     fontSize: 14,
     textAlign: "center",
   },
-  buttons: {
+  contenedorBotones: {
     flexDirection: "row",
     justifyContent: "center",
   },
-  button: {
+  botonBase: {
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 5,
     marginLeft: 10,
   },
-  cancel: {
+  cancelar: {
     backgroundColor: "#ccc",
   },
-  confirm: {
+  confirmar: {
     backgroundColor: "orange",
   },
-  buttonText: {
+  textoBotones: {
     color: "#fff",
     fontWeight: "bold",
   },

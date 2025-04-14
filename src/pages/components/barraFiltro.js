@@ -3,19 +3,19 @@ import { View, Text, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-web";
 import Productos from "./productos";
 
-const BarraFiltro = ({ data }) => {
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState("0");
-  const [selected, setSelected] = useState(false);
+const BarraFiltro = ({ data, dataTokens }) => {
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("0");
+  const [canjeableSeleccionado, setCanjeableSeleccionado] = useState(false);
 
   useEffect(() => {
-    console.log("Datos desde Barra:", data);
-  }, [data]);
+    console.log("Tokens:", dataTokens);
+  }, [dataTokens]);
 
   const filtrarDatos = () => {
     let filtrado = data;
 
-    if (opcionSeleccionada !== "0") {
-      const categoria = parseInt(opcionSeleccionada);
+    if (categoriaSeleccionada !== "0") {
+      const categoria = parseInt(categoriaSeleccionada);
       filtrado = filtrado.filter((item) => item.categoria === categoria);
     }
 
@@ -28,19 +28,19 @@ const BarraFiltro = ({ data }) => {
   return (
     <View style={styles.contenedor}>
       <View style={styles.fila}>
-        <View style={styles.elemento}>
+        <View style={styles.seccion}>
           <Text style={styles.labelCanjeable}>Canjeable</Text>
           <CheckBox
-            value={selected}
-            onValueChange={setSelected}
+            value={canjeableSeleccionado}
+            onValueChange={setCanjeableSeleccionado}
             style={styles.checkBox}
           />
         </View>
-        <View style={styles.elemento}>
+        <View style={styles.seccion}>
           <Text style={styles.labelCategoria}>Categorias</Text>
           <select
-            value={opcionSeleccionada}
-            onChange={(e) => setOpcionSeleccionada(e.target.value)}
+            value={categoriaSeleccionada}
+            onChange={(e) => setCategoriaSeleccionada(e.target.value)}
             style={styles.selectBox}
           >
             <option value="0">Todo</option>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
   },
-  elemento: {
+  seccion: {
     alignItems: "center",
     justifyContent: "flex-end",
   },

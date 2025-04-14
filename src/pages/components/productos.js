@@ -22,14 +22,14 @@ const imageMap = {
 };
 
 const Productos = ({ data }) => {
-  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
 
-  const handleOpenModal = (id) => {
-    setSelectedProductId(id);
+  const abrirPopup = (id) => {
+    setIdProductoSeleccionado(id);
   };
 
-  const handleCloseModal = () => {
-    setSelectedProductId(null);
+  const cerrarPopup = () => {
+    setIdProductoSeleccionado(null);
   };
 
   const renderItem = ({ item }) => (
@@ -49,18 +49,14 @@ const Productos = ({ data }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => handleOpenModal(item.id)}
+          onPress={() => abrirPopup(item.id)}
         >
           <Text style={styles.buttonText}>Canjear</Text>
         </TouchableOpacity>
       </View>
 
-      {selectedProductId === item.id && (
-        <ConfirmPopup
-          visible={true}
-          onClose={handleCloseModal}
-          product={item}
-        />
+      {idProductoSeleccionado === item.id && (
+        <ConfirmPopup visible={true} cerrarPopup={cerrarPopup} product={item} />
       )}
     </View>
   );

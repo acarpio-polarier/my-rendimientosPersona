@@ -4,22 +4,22 @@ import token from "../fotos/token.png";
 
 const HeaderCanje = ({ dataTokens }) => {
   return (
-    <View style={styles.contenedor}>
+    <View style={styles.contenedorMain}>
       <View>
         <View style={styles.contenedorToken}>
-          <Image style={styles.token} source={token} />
+          <Image style={styles.tokenIcono} source={token} />
           <Text style={styles.tokenLabel}>
             Tokens: {dataTokens[0]?.cantidad}
           </Text>
         </View>
-        <Text style={styles.labelFiltro}>Filtros</Text>
+        <Text style={styles.filtroLabel}>Filtros</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  contenedor: {
+  contenedorMain: {
     width: "100%",
     alignSelf: "center",
     overflow: "hidden",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "end",
   },
-  token: {
+  tokenIcono: {
     width: 20,
     height: 20,
     marginRight: 15,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     right: 10,
     color: "rgb(160,160,160)",
   },
-  labelFiltro: {
+  filtroLabel: {
     left: 10,
     marginBottom: 5,
     fontSize: 12,
