@@ -80,6 +80,11 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
 
     // Tomar el último registro del día
     console.log("registros ordenados", registrosOrdenados);
+    const datosPorDia = diasSemana.find(
+      (dia) => dia.fechaFormateada === diaSeleccionado
+    )?.datosOriginales;
+
+    console.log("datosPorDia", registrosOrdenados);
     const rendimientoPorDiaRegistro = (
       registrosOrdenados.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
       registrosOrdenados.length
@@ -314,6 +319,17 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       (dia) => dia.fechaFormateada === diaSeleccionado
     );
 
+    const calcularRendimientoDia = (diaSeleccionado) => {
+      console.log("diaSeleccionado", diaSeleccionado);
+      const registrosDia = diaSeleccionado?.datosOriginales;
+      const rendimientoPorDia = (
+        registrosDia.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
+        registrosDia.length
+      ).toFixed(2);
+      console.log("rendimiento por dia", rendimientoPorDia);
+      return rendimientoPorDia;
+    };
+
     return (
       <>
         <Text style={styles.fechaCompleta}>
@@ -332,7 +348,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
           <TarjetaEstadistica
             icono="chart-line"
             titulo="Rendimiento"
-            valor={`${porcentaje}%`}
+            valor={`${calcularRendimientoDia(diaSeleccionadoData)}%`}
             descripcion={textoEstado}
             color={colorProgreso}
           />
@@ -528,7 +544,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
     borderWidth: 2,
-    borderColor: colors.primary,
   },
   tarjetaHeader: {
     flexDirection: "row",

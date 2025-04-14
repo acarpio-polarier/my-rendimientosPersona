@@ -474,6 +474,8 @@ export default function DetalleRendimientoSelector({
       const rendimientoAcumuladoPorMes =
         infoPorMes?.[mesSeleccionado]?.info?.[mesLength - 1]
           ?.RendimientoAcumulado;
+      console.log("datosPorMes", datosPorMes);
+      console.log("rendimientoAcumuladoPorMes", rendimientoAcumuladoPorMes);
       if (rendimientoAcumuladoPorMes) return rendimientoAcumuladoPorMes;
       return 0;
     }
@@ -723,7 +725,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
     borderWidth: 2,
-    borderColor: colors.primary_light,
   },
   tarjetaHeader: {
     flexDirection: "row",

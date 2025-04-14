@@ -76,8 +76,12 @@ const GraficoSemanal = () => {
 
       // Verificar si hay datos
       if (datos && datos.length > 0) {
+        const rendimientoPorDia = (
+          datos.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
+          datos.length
+        ).toFixed(0);
+        console.log("rendimientoPorDia", rendimientoPorDia);
         const media = datos[datos.length - 1].RendimientoAcumulado;
-        console.log("Media de rendimiento:", media);
         setProgreso(media / 100);
         setDatosRendimiento(datos);
 

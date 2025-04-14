@@ -30,7 +30,7 @@ function getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin) {
   return new Promise((resolve, reject) => {
     fetchWithTimeout(
       connectionConstants.ODATA_URL +
-        "getRendimientoPersonaMaquina" +
+        "getRendimientoPersonaMaquinav3" +
         "?idPersona=" +
         idPersona +
         "&fechaIni=" +
