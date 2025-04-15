@@ -1,9 +1,14 @@
 import React, { PureComponent } from "react";
-import { View, StyleSheet, TouchableOpacity, Modal, ScrollView, Platform } from "react-native";
-
-import { colors, DEVICE_HEIGHT } from "../styles/base";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+  Platform,
+} from "react-native";
+import { colors, DEVICE_HEIGHT } from "../../styles/base";
 import { TextElement as Text } from "./Text";
-
 import { BlurView } from "expo-blur";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -43,19 +48,40 @@ export default class CustomModal extends PureComponent {
         statusBarTranslucent={true}
       >
         <BlurView intensity={80} tint="dark" style={styles.centeredView}>
-          <TouchableOpacity style={styles.touchable_dismiss} onPress={hideModal} />
+          <TouchableOpacity
+            style={styles.touchable_dismiss}
+            onPress={hideModal}
+          />
           <View
-            style={[styles.container, position == "bottom" ? styles.positionBottom : styles.positionCenter, modalStyle]}
+            style={[
+              styles.container,
+              position == "bottom"
+                ? styles.positionBottom
+                : styles.positionCenter,
+              modalStyle,
+            ]}
           >
             {showHeader && (
               <View style={styles.modalHeader}>
-                <Text itemHeader semibold lightBlack style={{ flex: 1, padding: 10, paddingLeft: 10 }}>
+                <Text
+                  itemHeader
+                  semibold
+                  lightBlack
+                  style={{ flex: 1, padding: 10, paddingLeft: 10 }}
+                >
                   {title}
                 </Text>
                 {showCloseButton && (
                   <View style={styles.container_close}>
-                    <TouchableOpacity onPress={hideModal} style={styles.touchable_close}>
-                      <MaterialCommunityIcons name="close" size={24} color={colors.lightBlack} />
+                    <TouchableOpacity
+                      onPress={hideModal}
+                      style={styles.touchable_close}
+                    >
+                      <MaterialCommunityIcons
+                        name="close"
+                        size={24}
+                        color={colors.lightBlack}
+                      />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -65,18 +91,27 @@ export default class CustomModal extends PureComponent {
               bounces={Platform.OS === "android"}
               keyboardShouldPersistTaps="always"
               style={[styles.modalBody, { maxHeight: _maxHeight }]}
-              contentContainerStyle={[contentContainerStyle, { height: _height }]}
+              contentContainerStyle={[
+                contentContainerStyle,
+                { height: _height },
+              ]}
             >
               {children}
             </ScrollView>
             {saveMode && (
               <View style={styles.saveMode}>
-                <TouchableOpacity style={styles.botonCancelar} onPress={hideModal}>
+                <TouchableOpacity
+                  style={styles.botonCancelar}
+                  onPress={hideModal}
+                >
                   <Text semibold white>
                     Cancelar
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonAceptar} onPress={onAceptar}>
+                <TouchableOpacity
+                  style={styles.botonAceptar}
+                  onPress={onAceptar}
+                >
                   <Text semibold white>
                     Aceptar
                   </Text>
@@ -148,6 +183,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: "row",
   },
-  botonCancelar: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: colors.danger },
-  botonAceptar: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: colors.success },
+  botonCancelar: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.danger,
+  },
+  botonAceptar: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.success,
+  },
 });

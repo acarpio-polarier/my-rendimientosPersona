@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text } from "react-native";
-import { colors, fontFamily, fontSize, lineHeight } from "../styles/base";
+import { colors, fontFamily, fontSize, lineHeight } from "../../styles/base";
 
 export class TextElement extends Component {
   constructor(props) {
@@ -64,10 +64,10 @@ export class TextElement extends Component {
           this.props.right_ && { textAlign: "right" },
           this.props.center_ && { textAlign: "center" },
 
-          this.props.bold && { fontWeight: 'bold' },
-          this.props.normalWeight && { fontWeight: 'normal' },
-          this.props.underLine && { textDecorationLine: 'underline' },
-          this.props.noneUnderline && { textDecorationLine: 'none' },
+          this.props.bold && { fontWeight: "bold" },
+          this.props.normalWeight && { fontWeight: "normal" },
+          this.props.underLine && { textDecorationLine: "underline" },
+          this.props.noneUnderline && { textDecorationLine: "none" },
 
           this.props.primary && { color: colors.primary },
           this.props.secondary && { color: colors.secondary },

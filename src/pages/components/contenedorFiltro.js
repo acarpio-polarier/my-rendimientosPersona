@@ -5,6 +5,7 @@ import FiltroCategoria from "./filtro/filtroCategoria";
 import FiltroPrecio from "./filtro/filtroPrecio";
 import FiltroBotonCanjeable from "./filtro/filtroBotonCanjeable";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CustomModal from "../../components/CustomModal";
 
 const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   if (!visible) return null;
@@ -26,7 +27,7 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   }, [precioRango]);
 
   const confirmarFiltro = () => {
-    const filtros = { orden, categoria, precioRango }; //<----- AMPLIAR
+    const filtros = { orden, categoria, precioRango };
     console.log("Filtro aplicado en popup:", filtros);
     onAplicarFiltros(filtros);
     cerrarPopup();
@@ -39,9 +40,6 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
           <View style={styles.barraSuperior}>
             <TouchableOpacity onPress={cerrarPopup} style={styles.botonAtras}>
               <MaterialCommunityIcons name="close" size={20} color={"white"} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.botonReiniciar}>
-              <Text style={styles.iconoBoton}>Reiniciar</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.linea} />

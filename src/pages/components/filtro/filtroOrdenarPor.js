@@ -6,8 +6,8 @@ const FiltroOrdenarPor = ({ onChange }) => {
 
   const opciones = [
     { id: 1, label: "Novedades" },
-    { id: 2, label: "Precio 🠕" },
-    { id: 3, label: "Precio 🠗" },
+    { id: 2, label: "Precio As." },
+    { id: 3, label: "Precio Des." },
   ];
 
   const handleSeleccion = (id) => {
