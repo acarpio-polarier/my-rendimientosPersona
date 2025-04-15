@@ -248,7 +248,7 @@ const FechaUtils = {
     }
 
     const values = sumas.map((total, i) =>
-      conteos[i] > 0 ? (total / conteos[i]) * 100 : 0
+      conteos[i] > 0 ? total / conteos[i] : 0
     );
 
     return {

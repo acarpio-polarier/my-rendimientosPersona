@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GraficoSemanal from "./components/GraficoSemanal";
 import GraficoAnual from "./components/GraficoAnual";
 
-export const PERSONA_ID = 8888;
+export const PERSONA_ID = 6666;
 
 const Index = () => {
   const insets = useSafeAreaInsets();

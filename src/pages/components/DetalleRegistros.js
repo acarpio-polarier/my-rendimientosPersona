@@ -1,24 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
-import DateUtils from "../../helpers/FechaUtils";
 import RendimientoUtils from "../../helpers/RendimientoUtils";
 import { colors } from "../../../styles/base";
+import { PERSONA_ID } from "../Index";
 
-const baseFontSize = 16;
+const HEIGHT_HEADER = 48;
+const HEIGHT_ROW = 48;
 
 const DetalleRegistros = ({ dia = [] }) => {
-  const datosConTokens = dia.map((item) => ({
-    ...item,
-    tokens: RendimientoUtils.generarTokensRandom(),
-  }));
+  const [data, setData] = useState([]);
+  console.log("dia", dia);
+  const formatearHora = (fecha) => {
+    const date = new Date(fecha);
+    const horas = date.getHours().toString().padStart(2, "0");
+    const minutos = date.getMinutes().toString().padStart(2, "0");
+    return `${horas}:${minutos}`;
+  };
 
-  const data = datosConTokens.map((item) => [
-    DateUtils.obtenerRangoHora(item.fechaIni),
-    DateUtils.obtenerRangoHora(item.fechaFin),
-    item.RendimientoGlobal + "%",
-    item.tokens,
-  ]);
+  useEffect(() => {
+    const cargarDatos = async () => {
+      const datosConTokens = await Promise.all(
+        dia.map(async (item) => {
+          try {
+            const fechaIni = new Date(item?.fechaIni).toISOString();
+            const fechaFin = new Date(item?.fechaFin).toISOString();
+
+            const datos = await RendimientoUtils.getTokensPersonaPorFecha(
+              PERSONA_ID,
+              fechaIni,
+              fechaFin
+            );
+            console.log("fechas registros", fechaIni, fechaFin, dia);
+            const tokens = datos?.TokensGanados ?? 0;
+
+            return {
+              ...item,
+              tokens,
+            };
+          } catch (error) {
+            console.error("Error al obtener tokens:", error);
+            return {
+              ...item,
+              tokens: 0,
+            };
+          }
+        })
+      );
+
+      const dataFormateada = datosConTokens.map((item) => [
+        formatearHora(item.fechaIni),
+        formatearHora(item.fechaFin),
+        item.RendimientoGlobal + "%",
+        item.tokens,
+      ]);
+      setData(dataFormateada);
+    };
+
+    cargarDatos();
+  }, [dia]);
 
   const getColor = (valor) => {
     const rend = parseFloat(valor.split("%")[0]);
@@ -31,9 +71,6 @@ const DetalleRegistros = ({ dia = [] }) => {
     return index % 2 !== 0 ? colors.smokedWhite : colors.white;
   };
 
-  // Altura dinámica basada en filas
-  const HEIGHT_HEADER = 48;
-  const HEIGHT_ROW = 48;
   const tablaHeight = HEIGHT_HEADER + data.length * HEIGHT_ROW;
 
   return (

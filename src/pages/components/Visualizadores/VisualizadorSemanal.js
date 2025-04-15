@@ -13,6 +13,8 @@ import { colors } from "../../../../styles/base";
 import FechaUtils from "../../../helpers/FechaUtils";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 import DetalleRegistros from "../DetalleRegistros";
+import { rendimientoPersonasService } from "../../../services/RendimientoPersonaService";
+import { PERSONA_ID } from "../../Index";
 
 // Constantes
 
@@ -36,6 +38,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [datosPorDia, setDatosPorDia] = useState([]);
+  const [tokensDia, setTokensDia] = useState(0);
 
   // Agrupar y procesar datos cuando cambian
   useEffect(() => {
@@ -62,6 +65,42 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     setDatosPorDia(datosAgrupados);
     procesarDatosSemana(datosAgrupados);
   }, [data, semanaActual, rangoPeriodo]);
+
+  // calcular los tokens por dia
+  useEffect(() => {
+    getTokensPersonaPorFecha();
+  }, [diaSeleccionado]);
+
+  const getTokensPersonaPorFecha = async () => {
+    const datosAgrupados = Array.isArray(data[0].data)
+      ? data
+      : FechaUtils.agruparRegistrosPorDia(data);
+
+    const diaActual = datosAgrupados.find(
+      (dia) => dia.dia === diaSeleccionado
+    )?.dia;
+
+    if (!diaActual) {
+      console.warn("No se encontró el día actual para:", diaSeleccionado);
+      return;
+    }
+
+    const fechaActual = new Date(diaActual);
+
+    if (isNaN(fechaActual.getTime())) {
+      console.error("Fecha inválida:", diaActual);
+      return;
+    }
+
+    const datos = await rendimientoPersonasService.getTokensPersonaPorFecha(
+      PERSONA_ID,
+      diaActual,
+      diaActual
+    );
+    console.log("token1 fechas", diaActual, diaActual);
+    console.log("token1", datos);
+    setTokensDia(datos?.TokensGanados ?? 0);
+  };
 
   /**
    * Obtiene los datos estadísticos para un día específico
@@ -296,6 +335,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     if (!dia || !dia.tieneDatos) {
       return <MensajeSinDatos mensaje="No hay datos para este día" />;
     }
+    console.log("DiaO diasSemana", diasSemana);
     console.log(
       "DiaO",
       diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado)
@@ -317,6 +357,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
         registrosDia.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
         registrosDia.length
       ).toFixed(2);
+      console.log("rendimiento por dia V0.5", diaSeleccionado);
       console.log("rendimiento por dia", rendimientoPorDia);
       return rendimientoPorDia;
     };
@@ -365,7 +406,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
               <Text style={styles.tarjetaTitulo}>Tokens</Text>
             </View>
             <Text style={[styles.tarjetaValor, { color: "#F5B700" }]}>
-              {TOKENS_DISPONIBLES}
+              {tokensDia}
             </Text>
             <Text style={styles.tarjetaDescripcion}>Disponibles</Text>
           </View>

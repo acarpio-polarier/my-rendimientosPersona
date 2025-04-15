@@ -1,4 +1,5 @@
 import { colors } from "../../styles/base";
+import { rendimientoPersonasService } from "../services/RendimientoPersonaService";
 
 /**
  * Utilidades para manejar los datos de rendimiento en la aplicación
@@ -53,6 +54,28 @@ const RendimientoUtils = {
     } catch (error) {
       console.error("Error al calcular rendimiento promedio:", error);
       return 0;
+    }
+  },
+
+  /**
+   * Calcula y devuelve los tokens ganados durante una fecha en especifico
+   * @param {string} idPersona - Id de la persona
+   * @param {string} fechaInicio - Fecha de inicio del filtro
+   * @param {string} fechaFin - Fecha del final del turno
+   * @returns {Object} Objeto con estadísticas
+   */
+
+  getTokensPersonaPorFecha: async (idPersona, fechaInicio, fechaFin) => {
+    try {
+      const datos = await rendimientoPersonasService.getTokensPersonaPorFecha(
+        idPersona,
+        fechaInicio,
+        fechaFin
+      );
+      console.log("rendimiento utils", datos);
+      return datos;
+    } catch (error) {
+      console.log("Error obteniendo tokens", error);
     }
   },
 

@@ -45,6 +45,7 @@ export default function DetalleRendimientoSelector({
   const [registroDia, setRegistroDia] = useState([]);
   const [selectedDia, setSelectedDia] = useState(0);
   const [intervalo, setIntevalo] = useState("mensual");
+  const [tokensMensuales, setTokensMensuales] = useState(0);
 
   // Asegurarse de que el modo y selecciones se inicialicen correctamente
   useEffect(() => {
@@ -115,9 +116,36 @@ export default function DetalleRendimientoSelector({
         cargarDatosAnuales(anioSeleccionado);
       }
     }
+    getTokensPersonaPorFecha(PERSONA_ID, mesSeleccionado, anioSeleccionado);
 
     setRangoPeriodo(nuevoRango);
   }, [seleccionActual, modo, mesSeleccionado, anioSeleccionado]);
+
+  const getTokensPersonaPorFecha = async (
+    idPersona,
+    mesSeleccionado, // Este viene de 1 a 12
+    anioSeleccionado
+  ) => {
+    console.log("mesSeleccionado", mesSeleccionado, anioSeleccionado);
+
+    const fechaInicio = new Date(
+      Date.UTC(anioSeleccionado, mesSeleccionado, 1)
+    );
+    const fechaFin = new Date(anioSeleccionado, mesSeleccionado + 1, 1);
+
+    const fechaInicioStr = fechaInicio.toISOString().split("T")[0];
+    const fechaFinStr = fechaFin.toISOString().split("T")[0];
+
+    const datos = await RendimientoUtils.getTokensPersonaPorFecha(
+      idPersona,
+      fechaInicioStr,
+      fechaFinStr
+    );
+
+    console.log("un mes entero", fechaInicioStr, fechaFinStr);
+
+    setTokensMensuales(datos?.TokensGanados ?? 0);
+  };
 
   // Función para cargar datos anuales con cache
   const cargarDatosAnuales = async (anio) => {
@@ -562,7 +590,7 @@ export default function DetalleRendimientoSelector({
               <Text style={styles.tarjetaTitulo}>Tokens</Text>
             </View>
             <Text style={[styles.tarjetaValor, { color: "#F5B700" }]}>
-              {RendimientoUtils.generarTokensRandom()}
+              {tokensMensuales}
             </Text>
             <Text style={styles.tarjetaDescripcion}>Disponibles</Text>
           </View>

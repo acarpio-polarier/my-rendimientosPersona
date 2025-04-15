@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import { PERSONA_ID } from "../Index";
 import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import { Line } from "react-native-svg";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
-import { PERSONA_ID } from "../Index";
 import RendimientoUtils from "../../helpers//RendimientoUtils";
 import FechaUtils from "../../helpers//FechaUtils";
 import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
@@ -28,9 +28,11 @@ const GraficoAnual = () => {
   const [cargando, setCargando] = useState(true);
   const [hayDatos, setHayDatos] = useState(true);
   const [datosProcesados, setDatosProcesados] = useState([]);
+  const [tokensAnuales, setTokensAnuales] = useState();
 
   useEffect(() => {
     cargarDatos();
+    getTokensPersonaPorFecha(PERSONA_ID, añoActual);
   }, [añoActual]);
 
   const cargarDatos = () => {
@@ -75,6 +77,23 @@ const GraficoAnual = () => {
         console.error("Error obteniendo datos:", error);
       })
       .finally(() => setCargando(false));
+  };
+  const getTokensPersonaPorFecha = async (idPersona, añoActual) => {
+    try {
+      console.log("Año actual", añoActual);
+      const fechaInicio = `${añoActual}-01-01`;
+      const fechaFin = `${añoActual}-12-31`;
+
+      const datos = await RendimientoUtils.getTokensPersonaPorFecha(
+        idPersona,
+        fechaInicio,
+        fechaFin
+      );
+
+      setTokensAnuales(datos?.TokensGanados ?? 0);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const cambiarAño = (incremento) => {
@@ -166,7 +185,7 @@ const GraficoAnual = () => {
         <View style={styles.datosContainer}>
           <View style={styles.datoItem}>
             <Text style={styles.datoLabel}>Tokens</Text>
-            <Text style={styles.datoValor}>666</Text>
+            <Text style={styles.datoValor}>{tokensAnuales}</Text>
           </View>
         </View>
 

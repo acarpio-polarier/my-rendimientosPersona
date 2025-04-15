@@ -40,7 +40,7 @@ const GraficoSemanal = () => {
   const [cargando, setCargando] = useState(true);
   const [hayDatos, setHayDatos] = useState(true);
   const [datosRendimiento, setDatosRendimiento] = useState([]);
-  const [tokensSemanales, setTokensSemanales] = useState();
+  const [tokensSemanales, setTokensSemanales] = useState(0);
 
   const [datosPorDia, setDatosPorDia] = useState([]);
 
@@ -66,14 +66,16 @@ const GraficoSemanal = () => {
     }
   }, [semanaSeleccionada]);
   const getTokensPersonaPorFecha = async (idPersona, fechaInicio, fechaFin) => {
-    const datos = await rendimientoPersonasService.getTokensPersonaPorFecha(
+    const datos = await RendimientoUtils.getTokensPersonaPorFecha(
       idPersona,
       fechaInicio,
       fechaFin
     );
-    console.log("getTokensPorFecha", fechaInicio, fechaFin, idPersona, datos);
-    setTokensSemanales(datos.TokensGanados);
+    console.log("tokens fechas semanales", fechaInicio, fechaFin);
+
+    setTokensSemanales(datos?.TokensGanados ?? 0);
   };
+
   const getRendimientoMedio = async (idPersona, fechaInicio, fechaFin) => {
     try {
       const datos =
