@@ -40,9 +40,7 @@ const BarraFiltro = ({ data, dataTokens }) => {
       <TouchableOpacity style={styles.boton} onPress={abrirPopup}>
         <Text style={styles.labelCanjeable}>Filtros</Text>
       </TouchableOpacity>
-
       <View style={styles.linea}></View>
-
       <ContenedorFiltro
         visible={visible}
         cerrarPopup={cerrarPopup}
@@ -78,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
-    marginLeft: 10,
+    marginLeft: 20,
   },
 });
 

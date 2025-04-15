@@ -1,24 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-paper";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import token from "../../fotos/token.png";
 
 const FiltroPrecio = () => {
-  const [precio, setPrecio] = useState("");
+  const [precioRango, setPrecioRango] = useState([100, 500]);
 
   return (
     <View style={styles.contenedor}>
       <View style={styles.label}>
-        <Text>Precio:</Text>
+        <Text style={styles.labelText}>Precio:</Text>
       </View>
+
       <View style={styles.contenedorTexto}>
         <View style={styles.contenedorPrecio}>
           <Text>Precio más bajo</Text>
-          <TextInput style={styles.input} value={precio}></TextInput>
+          <View style={styles.contenedorTextoIcono}>
+            <Image style={styles.tokenIcono} source={token} />
+            <Text style={styles.valor}>{precioRango[0]}</Text>
+          </View>
         </View>
         <View style={styles.contenedorPrecio}>
-          <Text>Precio más bajo</Text>
-          <TextInput style={styles.input} value={precio}></TextInput>
+          <Text>Precio más alto</Text>
+          <View style={styles.contenedorTextoIcono}>
+            <Image style={styles.tokenIcono} source={token} />
+            <Text style={styles.valor}>{precioRango[1]}</Text>
+          </View>
         </View>
+      </View>
+
+      <View style={styles.sliderContainer}>
+        <MultiSlider
+          values={precioRango}
+          onValuesChange={setPrecioRango}
+          min={0}
+          max={1000}
+          step={10}
+          allowOverlap={false}
+          snapped
+          selectedStyle={{ backgroundColor: "orange" }}
+          markerStyle={{ backgroundColor: "orange" }}
+        />
       </View>
     </View>
   );
@@ -31,24 +53,41 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "rgb(210,210,210)",
+    paddingHorizontal: 10,
   },
   label: {
-    marginLeft: 10,
+    marginBottom: 10,
+  },
+  labelText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
   contenedorTexto: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 10,
+    marginBottom: 10,
   },
-  botonFiltro: {
-    backgroundColor: "orange",
-    width: "33%",
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
+  contenedorPrecio: {
     alignItems: "center",
   },
-  input: { width: 100, height: 10 },
+  contenedorTextoIcono: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "end",
+    marginTop: 5,
+  },
+  valor: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  sliderContainer: {
+    alignSelf: "center",
+  },
+  tokenIcono: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
 });
 
 export default FiltroPrecio;

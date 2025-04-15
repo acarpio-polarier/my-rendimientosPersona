@@ -12,7 +12,6 @@ const HeaderCanje = ({ dataTokens }) => {
             Tokens: {dataTokens[0]?.cantidad}
           </Text>
         </View>
-        <Text style={styles.filtroLabel}>Filtros</Text>
       </View>
     </View>
   );
@@ -25,8 +24,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginVertical: 10,
     fontFamily: "Arial",
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
   },
   contenedorToken: {
     flexDirection: "row",
@@ -43,12 +40,6 @@ const styles = StyleSheet.create({
     justifyContent: "end",
     alignItems: "center",
     right: 10,
-    color: "rgb(160,160,160)",
-  },
-  filtroLabel: {
-    left: 10,
-    marginBottom: 5,
-    fontSize: 12,
     color: "rgb(160,160,160)",
   },
 });

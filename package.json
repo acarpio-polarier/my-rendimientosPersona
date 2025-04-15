@@ -18,6 +18,7 @@
     "@expo/vector-icons": "^14.0.4",
     "@microsoft/signalr": "^8.0.7",
     "@notifee/react-native": "^9.1.8",
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-firebase/app": "^21.12.3",
     "@react-native-firebase/messaging": "^21.12.3",
@@ -80,6 +81,7 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "rn-range-slider": "^2.2.2",
     "victory": "^37.3.6",
     "victory-native": "^41.16.1"
   },

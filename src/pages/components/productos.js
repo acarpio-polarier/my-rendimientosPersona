@@ -74,7 +74,7 @@ const Productos = ({ data }) => {
 const styles = StyleSheet.create({
   contenedor: {
     backgroundColor: "white",
-    borderRadius: 3,
+    borderRadius: 10,
     width: "90%",
     alignSelf: "center",
     shadowColor: "#000",
@@ -85,19 +85,23 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   title: {
-    padding: 5,
+    marginTop: 3,
+    marginLeft: 5,
+    marginBottom: 3,
   },
   description: {
-    padding: 5,
+    marginLeft: 5,
+    marginBottom: 3,
     fontSize: 10,
   },
   tokenLabel: {
-    padding: 5,
+    marginBottom: 3,
+    marginLeft: 5,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    padding: 5,
+    padding: 10,
   },
   button: {
     backgroundColor: "orange",
@@ -108,11 +112,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "grey",
+    color: "white",
     fontSize: 13,
   },
   imagen: {
     borderWidth: 2,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     borderColor: "orange",
     width: "100%",
     height: 120,
