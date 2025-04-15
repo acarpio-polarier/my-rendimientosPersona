@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { colors, fontFamily } from "../../../../styles/base";
 
 const FiltroCategoria = ({ onChange }) => {
   const [seleccionado, setSeleccionado] = useState(0);
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   botonFiltro: {
-    backgroundColor: "orange",
+    backgroundColor: colors.primary_light,
     width: "33%",
     height: 30,
     borderRadius: 5,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   botonActivo: {
-    backgroundColor: "darkorange",
+    backgroundColor: colors.primary,
     opacity: 1,
   },
   labelBoton: {

@@ -13,6 +13,7 @@ import foto2 from "../fotos/foto2.jpg";
 import foto3 from "../fotos/foto3.jpg";
 import noimage from "../fotos/noimage.png";
 import ConfirmPopup from "./confirmPopup";
+import { colors, fontFamily } from "../../../styles/base";
 
 const imageMap = {
   "foto1.jpg": foto1,
@@ -41,9 +42,7 @@ const ProductosCards = ({ data }) => {
           resizeMode="cover"
         />
       </View>
-      <Text style={styles.title}>
-        <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
-      </Text>
+      <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.description}>{item.description}</Text>
       <Text style={styles.tokenLabel}>Tokens: {item.price}</Text>
       <View style={styles.buttonContainer}>
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "90%",
     alignSelf: "center",
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOffset: { width: 3, height: 3 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -89,20 +88,21 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: 5,
     marginBottom: 3,
-    color: "rgb(64,64,64)",
+    color: colors.lightBlack,
+    fontWeight: "bold",
   },
   description: {
     marginLeft: 5,
     marginBottom: 3,
     fontSize: 14,
-    color: "rgb(129, 129, 129)",
+    color: colors.darkGray,
   },
   tokenLabel: {
     marginBottom: 3,
     marginLeft: 5,
     marginTop: 10,
     fontSize: 20,
-    color: "rgb(64,64,64)",
+    color: colors.lightBlack,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: "#EDB637",
+    backgroundColor: colors.primary,
     width: 60,
     height: 30,
     borderRadius: 5,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    borderColor: "#EDB637",
+    borderColor: colors.primary,
     width: "100%",
     height: 120,
   },
