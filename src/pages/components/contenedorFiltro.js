@@ -1,47 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import FiltroOrdenarPor from "./filtro/filtroOrdenarPor";
 import FiltroCategoria from "./filtro/filtroCategoria";
 import FiltroPrecio from "./filtro/filtroPrecio";
 import FiltroBotonCanjeable from "./filtro/filtroBotonCanjeable";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import CustomModal from "../../components/CustomModal";
+import ModalRendimiento from "./../../components/ModalRendimiento";
 
 const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
-  if (!visible) return null;
-
   const [orden, setOrden] = useState(0);
   const [categoria, setCategoria] = useState(0);
   const [precioRango, setPrecioRango] = useState([100, 500]);
 
-  useEffect(() => {
-    console.log("Orden seleccionado:", orden);
-  }, [orden]);
+  const [modalVisible, setModalVisible] = useState(visible);
 
   useEffect(() => {
-    console.log("Categoria seleccionado:", categoria);
-  }, [categoria]);
+    if (visible) {
+      setModalVisible(true);
+    }
+  }, [visible]);
 
-  useEffect(() => {
-    console.log("Precio rango:", precioRango);
-  }, [precioRango]);
+  const handleClose = () => {
+    setModalVisible(false);
+    setTimeout(() => {
+      cerrarPopup();
+    }, 300);
+  };
 
   const confirmarFiltro = () => {
     const filtros = { orden, categoria, precioRango };
     console.log("Filtro aplicado en popup:", filtros);
     onAplicarFiltros(filtros);
-    cerrarPopup();
+    handleClose();
   };
 
   return (
-    <Modal transparent visible={visible} animationType="fade">
+    <ModalRendimiento
+      isVisible={modalVisible}
+      onClose={handleClose}
+      title={"Filtros"}
+      blurIntensity="light"
+    >
       <View style={styles.fondo}>
         <View style={styles.contenedor}>
-          <View style={styles.barraSuperior}>
-            <TouchableOpacity onPress={cerrarPopup} style={styles.botonAtras}>
-              <MaterialCommunityIcons name="close" size={20} color={"white"} />
-            </TouchableOpacity>
-          </View>
           <View style={styles.linea} />
           <View>
             <FiltroOrdenarPor onChange={(valor) => setOrden(valor)} />
@@ -62,29 +62,29 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
           </View>
         </View>
       </View>
-    </Modal>
+    </ModalRendimiento>
   );
 };
 
 const styles = StyleSheet.create({
-  fondo: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  contenedor: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    width: "95%",
-    alignSelf: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    overflow: "hidden",
-    marginVertical: 10,
-  },
+  // fondo: {
+  //   flex: 1,
+  //   backgroundColor: "rgba(0,0,0,0.5)",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // contenedor: {
+  //   backgroundColor: "white",
+  //   borderRadius: 10,
+  //   width: "95%",
+  //   alignSelf: "center",
+  //   shadowColor: "#000",
+  //   shadowOffset: { width: 3, height: 3 },
+  //   shadowOpacity: 0.1,
+  //   shadowRadius: 4,
+  //   overflow: "hidden",
+  //   marginVertical: 10,
+  // },
   barraSuperior: {
     flexDirection: "row",
     justifyContent: "space-between",
