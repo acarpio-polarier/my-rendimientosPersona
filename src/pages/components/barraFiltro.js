@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ContenedorFiltro from "./contenedorFiltro";
 import Productos from "./productos";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const BarraFiltro = ({ data, dataTokens }) => {
   const [visible, setVisible] = useState(false);
@@ -46,11 +47,20 @@ const BarraFiltro = ({ data, dataTokens }) => {
     setVisible(false);
   };
 
+  const reiniciarFiltros = () => {
+    setFiltros({ categoria: 0, orden: null, precioRango: [0, 1000] });
+  };
+
   return (
     <View style={styles.contenedor}>
-      <TouchableOpacity style={styles.boton} onPress={abrirPopup}>
-        <Text style={styles.labelCanjeable}>Filtros</Text>
-      </TouchableOpacity>
+      <View style={styles.contenedorBotones}>
+        <TouchableOpacity style={styles.boton} onPress={abrirPopup}>
+          <Text style={styles.labelBoton}>Filtros</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonFilter} onPress={reiniciarFiltros}>
+          <MaterialCommunityIcons name="filter-off" size={20} color={"white"} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.linea}></View>
       <ContenedorFiltro
         visible={visible}
@@ -69,9 +79,8 @@ const styles = StyleSheet.create({
     marginTop: -5,
   },
 
-  labelCanjeable: {
-    fontSize: 15,
-    color: "white",
+  contenedorBotones: {
+    flexDirection: "row",
   },
 
   linea: {
@@ -81,13 +90,28 @@ const styles = StyleSheet.create({
 
   boton: {
     backgroundColor: "orange",
-    width: "33%",
+    width: "20%",
     height: 30,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
     marginLeft: 20,
+  },
+
+  botonFilter: {
+    backgroundColor: "orange",
+    width: "10%",
+    height: 30,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    marginLeft: 5,
+  },
+
+  labelBoton: {
+    color: "white",
   },
 });
 
