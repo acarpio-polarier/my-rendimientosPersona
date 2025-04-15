@@ -74,7 +74,6 @@ export default function DetalleRendimientoSelector({
     return cache;
   });
 
-  const [datosMensualesCompletos, setDatosMensualesCompletos] = useState([]);
   const [datosAnuales, setDatosAnuales] = useState(datosAnualesIniciales || []);
   const [cargandoDatosAnuales, setCargandoDatosAnuales] = useState(false);
 
@@ -403,7 +402,9 @@ export default function DetalleRendimientoSelector({
             />
           </TouchableOpacity>
           <View style={styles.diaText}>
-            <Text style={styles.dateText}>Registros dia {selectedDia}</Text>
+            <Text style={styles.dateTextRegistros}>
+              Registros dia {selectedDia}
+            </Text>
           </View>
         </View>
       );
@@ -470,14 +471,18 @@ export default function DetalleRendimientoSelector({
   const rendimientoAcumuladoPorMes = (intervalo) => {
     if (intervalo === "mensual") {
       const infoPorMes = datosPorMes.infoPorMes;
-      const mesLength = infoPorMes?.[mesSeleccionado]?.info.length;
-      const rendimientoAcumuladoPorMes =
-        infoPorMes?.[mesSeleccionado]?.info?.[mesLength - 1]
-          ?.RendimientoAcumulado;
+      const infoMesActual = infoPorMes?.[mesSeleccionado]?.info;
+      const rendimientoMensual = (
+        infoMesActual?.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
+        infoMesActual?.length
+      ).toFixed(2);
       console.log("datosPorMes", datosPorMes);
-      console.log("rendimientoAcumuladoPorMes", rendimientoAcumuladoPorMes);
-      if (rendimientoAcumuladoPorMes) return rendimientoAcumuladoPorMes;
-      return 0;
+      console.log("infoPorMes", infoPorMes);
+      console.log("infoMesActual", infoMesActual);
+      console.log("rendimiento Mensual", rendimientoMensual);
+      // console.log("rendimientoAcumuladoPorMes", rendimientoAcumuladoPorMes);
+      if (rendimientoMensual === "NaN") return 0;
+      return rendimientoMensual;
     }
     const rendimientoPorRegistro = (
       registroDia.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
@@ -641,25 +646,33 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   dateRange: {
+    display: "flex",
     marginHorizontal: 16,
-    paddingTop: "5%",
-    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
   },
   dateText: {
     fontWeight: "500",
     fontSize: 16,
+    alignSelf: "start",
+  },
+  dateTextRegistros: {
+    fontWeight: "500",
+    fontSize: 16,
+    alignSelf: "start",
+    marginLeft: "20%",
   },
   diaText: {
     width: "100%",
     height: "100%",
     display: "flex",
     justifyContent: "center",
-    paddingLeft: "20%",
   },
   weekInfo: {
     fontSize: 14,
     color: "#666",
     textAlign: "center",
+    height: "auto",
   },
   visualizadorContainer: {
     width: "100%",
@@ -724,7 +737,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     alignItems: "center",
-    borderWidth: 2,
   },
   tarjetaHeader: {
     flexDirection: "row",
@@ -759,8 +771,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: colors.primary,
   },
   estadoTexto: {
     fontSize: 10,

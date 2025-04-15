@@ -42,7 +42,6 @@ const GraficoSemanal = () => {
   const [datosRendimiento, setDatosRendimiento] = useState([]);
 
   const [datosPorDia, setDatosPorDia] = useState([]);
-  const [diaSeleccionado, setDiaSeleccionado] = useState(null);
 
   // Efecto
   useEffect(() => {
@@ -54,15 +53,12 @@ const GraficoSemanal = () => {
     console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
     console.log("Fecha fin ISO:", nuevoRango.finIso);
     getRendimientoMedio(PERSONA_ID, nuevoRango.inicioIso, nuevoRango.finIso);
-    // Llamada
 
     // Si hay un cambio de semana, actualizar el estado del botón
     if (datosRendimiento.length > 0) {
       setHayDatos(true);
     }
   }, [semanaSeleccionada]);
-
-  // Llamada
 
   const getRendimientoMedio = async (idPersona, fechaInicio, fechaFin) => {
     try {
@@ -76,12 +72,10 @@ const GraficoSemanal = () => {
 
       // Verificar si hay datos
       if (datos && datos.length > 0) {
-        const rendimientoPorDia = (
+        const media = (
           datos.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
           datos.length
-        ).toFixed(0);
-        console.log("rendimientoPorDia", rendimientoPorDia);
-        const media = datos[datos.length - 1].RendimientoAcumulado;
+        ).toFixed(2);
         setProgreso(media / 100);
         setDatosRendimiento(datos);
 
@@ -171,7 +165,7 @@ const GraficoSemanal = () => {
             cornerRadius={0}
             startAngle={-Math.PI / 2}
             endAngle={Math.PI / 2}
-            animate={true}
+            animate={false}
           />
           <View style={styles.percentageTextContainer}>
             <Text style={[styles.percentageText, { color: colorProgreso }]}>
@@ -405,7 +399,7 @@ const styles = StyleSheet.create({
   },
   percentageText: {
     paddingTop: "15%",
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: "bold",
   },
   estadoText: {

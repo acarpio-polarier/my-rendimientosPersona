@@ -73,27 +73,18 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       return null;
     }
 
-    // Ordenar los registros por fecha para obtener el último
-    const registrosOrdenados = [...datosDia.data].sort((a, b) => {
-      return new Date(b.fechaFin) - new Date(a.fechaFin);
-    });
+    const registrosOrdenados = [...datosDia.data].sort(
+      (a, b) => new Date(b.fechaFin) - new Date(a.fechaFin)
+    );
 
-    // Tomar el último registro del día
-    console.log("registros ordenados", registrosOrdenados);
-    const datosPorDia = diasSemana.find(
-      (dia) => dia.fechaFormateada === diaSeleccionado
-    )?.datosOriginales;
-
-    console.log("datosPorDia", registrosOrdenados);
-    const rendimientoPorDiaRegistro = (
+    const promedio = (
       registrosOrdenados.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
       registrosOrdenados.length
     ).toFixed(0);
 
     return {
-      // Usamos el RendimientoAcumulado del último registro
-      promedio: rendimientoPorDiaRegistro || 0,
-      cantidad: datosDia.data.length,
+      promedio: promedio || 0,
+      cantidad: registrosOrdenados.length,
     };
   };
 
@@ -319,9 +310,9 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       (dia) => dia.fechaFormateada === diaSeleccionado
     );
 
-    const calcularRendimientoDia = (diaSeleccionado) => {
-      console.log("diaSeleccionado", diaSeleccionado);
-      const registrosDia = diaSeleccionado?.datosOriginales;
+    const calcularRendimientoDia = () => {
+      console.log("diaSeleccionado", diaSeleccionadoData);
+      const registrosDia = diaSeleccionadoData?.datosOriginales;
       const rendimientoPorDia = (
         registrosDia.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
         registrosDia.length
@@ -348,7 +339,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
           <TarjetaEstadistica
             icono="chart-line"
             titulo="Rendimiento"
-            valor={`${calcularRendimientoDia(diaSeleccionadoData)}%`}
+            valor={`${calcularRendimientoDia()}%`}
             descripcion={textoEstado}
             color={colorProgreso}
           />
@@ -512,7 +503,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   fechaCompleta: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "500",
     marginBottom: 15,
     textTransform: "capitalize",
@@ -520,7 +511,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mejorDiaTexto: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "bold",
     color: "#FFD700",
     marginLeft: 5,
@@ -543,7 +534,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     alignItems: "center",
-    borderWidth: 2,
   },
   tarjetaHeader: {
     flexDirection: "row",
@@ -578,8 +568,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#F5B700",
   },
   estadoTexto: {
     fontSize: 10,

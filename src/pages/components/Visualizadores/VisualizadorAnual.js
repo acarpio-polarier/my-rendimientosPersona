@@ -80,18 +80,6 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
       return [dia, registros, `${rendimientoPromedio}%`, tokens];
     }
   );
-  const handleComparativa = () => {};
-
-  // Calcular tokens totales
-  const tokensTotal = tableData.reduce((total, entry) => total + entry[3], 0);
-
-  // Calcular rendimiento medio
-  const rendimientoMedio =
-    tableData.length > 0
-      ? tableData.reduce((sum, entry) => sum + parseFloat(entry[2]), 0) /
-        tableData.length
-      : 0;
-
   // Crear objetos de datos de cada fila
   const handleRowPress = (rowData) => {
     console.log("Fila presionada", `Datos: ${rowData.join(", ")}`);
