@@ -10,8 +10,8 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [orden, setOrden] = useState(0);
   const [categoria, setCategoria] = useState(0);
   const [precioRango, setPrecioRango] = useState([100, 500]);
-
   const [modalVisible, setModalVisible] = useState(visible);
+  const [canjeable, setCanjeable] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -27,7 +27,7 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   };
 
   const confirmarFiltro = () => {
-    const filtros = { orden, categoria, precioRango };
+    const filtros = { orden, categoria, precioRango, canjeable };
     console.log("Filtro aplicado en popup:", filtros);
     onAplicarFiltros(filtros);
     handleClose();
@@ -50,7 +50,7 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
               precioRango={precioRango}
               setPrecioRango={setPrecioRango}
             />
-            <FiltroBotonCanjeable />
+            <FiltroBotonCanjeable onChange={(valor) => setCanjeable(valor)} />
           </View>
           <View style={styles.barraInferior}>
             <TouchableOpacity

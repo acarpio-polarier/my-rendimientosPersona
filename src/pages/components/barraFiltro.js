@@ -10,6 +10,7 @@ const BarraFiltro = ({ data, dataTokens }) => {
     categoria: 0,
     orden: null,
     precioRango: [0, 1000],
+    canjebale: false,
   });
 
   const aplicarFiltros = (valores) => {
@@ -31,6 +32,10 @@ const BarraFiltro = ({ data, dataTokens }) => {
       filtrado = filtrado.filter((item) => {
         return item.price >= minPrecio && item.price <= maxPrecio;
       });
+    }
+
+    if (filtros.canjebale && dataTokens?.tokens != null) {
+      filtrado = filtrado.filter((item) => item.price <= dataTokens.tokens);
     }
 
     console.log("Datos filtrados:", filtrado);

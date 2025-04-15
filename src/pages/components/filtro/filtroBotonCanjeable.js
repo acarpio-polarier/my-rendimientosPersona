@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 
-const FiltroBotonCanjeable = () => {
+const FiltroBotonCanjeable = ({ onChange }) => {
   const [switchPulsado, setSwitchPulsado] = useState(false);
-  const onSwitchPulsado = () => setSwitchPulsado(!switchPulsado);
+
+  const onSwitchPulsado = () => {
+    const nuevoValor = !switchPulsado;
+    setSwitchPulsado(nuevoValor);
+    onChange?.(nuevoValor);
+  };
 
   return (
     <View style={styles.contenedor}>

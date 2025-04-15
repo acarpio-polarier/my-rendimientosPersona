@@ -8,9 +8,7 @@ const HeaderCanje = ({ dataTokens }) => {
       <View>
         <View style={styles.contenedorToken}>
           <Image style={styles.tokenIcono} source={token} />
-          <Text style={styles.tokenLabel}>
-            Tokens: {dataTokens[0]?.cantidad}
-          </Text>
+          <Text style={styles.tokenLabel}>Tokens: {dataTokens[0]?.tokens}</Text>
         </View>
       </View>
     </View>
