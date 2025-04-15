@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-paper";
 
 const FiltroPrecio = () => {
+  const [precio, setPrecio] = useState("");
+
   return (
     <View style={styles.contenedor}>
       <View style={styles.label}>
@@ -11,11 +13,11 @@ const FiltroPrecio = () => {
       <View style={styles.contenedorTexto}>
         <View style={styles.contenedorPrecio}>
           <Text>Precio más bajo</Text>
-          <TextInput style={styles.input}></TextInput>
+          <TextInput style={styles.input} value={precio}></TextInput>
         </View>
         <View style={styles.contenedorPrecio}>
           <Text>Precio más bajo</Text>
-          <TextInput style={styles.input}></TextInput>
+          <TextInput style={styles.input} value={precio}></TextInput>
         </View>
       </View>
     </View>

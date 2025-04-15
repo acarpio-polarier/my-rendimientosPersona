@@ -11,7 +11,7 @@ const ContenedorFiltro = () => {
     <View style={styles.contenedor}>
       <View style={styles.barraSuperior}>
         <TouchableOpacity style={styles.botonAtras}>
-          <Text style={styles.iconoBoton}>X</Text>
+          <MaterialCommunityIcons name="close" size={20} color={"white"} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.botonReiniciar}>
           <Text style={styles.iconoBoton}>Reiniciar</Text>
