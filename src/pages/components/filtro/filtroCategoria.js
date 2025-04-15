@@ -1,22 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const FiltroCategoria = () => {
+const FiltroCategoria = ({ onChange }) => {
+  const [seleccionado, setSeleccionado] = useState(0);
+
+  const opciones = [
+    { id: 1, label: "Experiencias" },
+    { id: 2, label: "Servicios" },
+    { id: 3, label: "Otros" },
+  ];
+
+  const handleSeleccion = (id) => {
+    setSeleccionado(id);
+    onChange && onChange(id);
+  };
+
   return (
     <View style={styles.contenedor}>
       <View style={styles.label}>
-        <Text>Categoría: </Text>
+        <Text>Ordenar por:</Text>
       </View>
       <View style={styles.contenedorBotones}>
-        <TouchableOpacity style={styles.botonFiltro}>
-          <Text style={styles.labelBoton}>Experiencias</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.botonFiltro}>
-          <Text style={styles.labelBoton}>Servicios</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.botonFiltro}>
-          <Text style={styles.labelBoton}>Otros</Text>
-        </TouchableOpacity>
+        {opciones.map((opcion) => (
+          <TouchableOpacity
+            key={opcion.id}
+            style={[
+              styles.botonFiltro,
+              seleccionado === opcion.id && styles.botonActivo,
+            ]}
+            onPress={() => handleSeleccion(opcion.id)}
+          >
+            <Text style={styles.labelBoton}>{opcion.label}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
@@ -45,6 +61,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
+    opacity: 0.6,
+  },
+  botonActivo: {
+    backgroundColor: "darkorange",
+    opacity: 1,
   },
   labelBoton: {
     color: "white",

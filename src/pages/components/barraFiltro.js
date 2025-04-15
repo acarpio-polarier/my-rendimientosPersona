@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Checkbox } from "react-native-paper";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import ContenedorFiltro from "./contenedorFiltro";
 import Productos from "./productos";
 
 const BarraFiltro = ({ data, dataTokens }) => {
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("0");
-  const [canjeableSeleccionado, setCanjeableSeleccionado] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [filtros, setFiltros] = useState({ categoria: 0, orden: null });
 
-  useEffect(() => {
-    console.log("Tokens:", dataTokens);
-  }, [dataTokens]);
+  const aplicarFiltros = (valores) => {
+    console.log("Filtros recibidos a barraFiltro:", valores.categoria);
+    setFiltros(valores);
+  };
 
   const filtrarDatos = () => {
     let filtrado = data;
 
-    if (categoriaSeleccionada !== "0") {
-      const categoria = parseInt(categoriaSeleccionada);
+    const categoria = parseInt(filtros.categoria);
+
+    if (!isNaN(categoria) && categoria !== 0) {
       filtrado = filtrado.filter((item) => item.categoria === categoria);
     }
 
@@ -25,32 +27,27 @@ const BarraFiltro = ({ data, dataTokens }) => {
 
   const productosFiltrados = filtrarDatos();
 
+  const abrirPopup = () => {
+    setVisible(true);
+  };
+
+  const cerrarPopup = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.contenedor}>
-      <View style={styles.fila}>
-        <View style={styles.seccion}>
-          <Text style={styles.labelCanjeable}>Canjeable</Text>
-          <Checkbox
-            status={canjeableSeleccionado ? "checked" : "unchecked"}
-            onPress={() => {
-              setCanjeableSeleccionado(!canjeableSeleccionado);
-            }}
-          />
-        </View>
-        <View style={styles.seccion}>
-          <Text style={styles.labelCategoria}>Categorias</Text>
-          <select
-            value={categoriaSeleccionada}
-            onChange={(e) => setCategoriaSeleccionada(e.target.value)}
-            style={styles.selectBox}
-          >
-            <option value="0">Todo</option>
-            <option value="1">Experiencias</option>
-            <option value="2">Servicios</option>
-          </select>
-        </View>
-      </View>
+      <TouchableOpacity style={styles.boton} onPress={abrirPopup}>
+        <Text style={styles.labelCanjeable}>Filtros</Text>
+      </TouchableOpacity>
+
       <View style={styles.linea}></View>
+
+      <ContenedorFiltro
+        visible={visible}
+        cerrarPopup={cerrarPopup}
+        onAplicarFiltros={aplicarFiltros}
+      />
       <Productos data={productosFiltrados} />
     </View>
   );
@@ -62,57 +59,27 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: -5,
   },
-  fila: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
-  seccion: {
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
 
   labelCanjeable: {
-    marginBottom: 8,
-    fontSize: 12,
-    color: "rgb(160,160,160)",
-    justifyContent: "end",
+    fontSize: 15,
+    color: "white",
   },
 
-  labelSlider: {
-    marginBottom: 8,
-    fontSize: 12,
-    color: "rgb(160,160,160)",
-    alignSelf: "flex-end",
+  linea: {
+    borderBottomWidth: 1,
+    borderBottomColor: "rgb(210,210,210)",
   },
 
-  labelCategoria: {
-    fontSize: 12,
-    color: "rgb(160,160,160)",
-    marginBottom: 5,
-    alignSelf: "flex-end",
+  boton: {
+    backgroundColor: "orange",
+    width: "33%",
+    height: 30,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    marginLeft: 10,
   },
-
-  sliderContainer: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginBottom: 5,
-  },
-
-  slider: {
-    width: "100%",
-  },
-
-  selectBox: {
-    padding: 5,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    width: 140,
-  },
-  checkBox: { marginBottom: 8, alignSelf: "flex-start" },
-  linea: { borderBottomWidth: 1, borderBottomColor: "rgb(210,210,210)" },
 });
 
 export default BarraFiltro;
