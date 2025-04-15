@@ -67,24 +67,6 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
 };
 
 const styles = StyleSheet.create({
-  // fondo: {
-  //   flex: 1,
-  //   backgroundColor: "rgba(0,0,0,0.5)",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
-  // contenedor: {
-  //   backgroundColor: "white",
-  //   borderRadius: 10,
-  //   width: "95%",
-  //   alignSelf: "center",
-  //   shadowColor: "#000",
-  //   shadowOffset: { width: 3, height: 3 },
-  //   shadowOpacity: 0.1,
-  //   shadowRadius: 4,
-  //   overflow: "hidden",
-  //   marginVertical: 10,
-  // },
   barraSuperior: {
     flexDirection: "row",
     justifyContent: "space-between",
