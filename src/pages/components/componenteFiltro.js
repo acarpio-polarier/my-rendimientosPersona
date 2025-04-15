@@ -42,7 +42,7 @@ const ComponenteFiltro = ({ data, dataTokens }) => {
     }
 
     if (canjeable) {
-      const tokensDisponibles = dataTokens[0].tokens;
+      const tokensDisponibles = dataTokens;
       filtrado = filtrado.filter((item) => item.price <= tokensDisponibles);
     }
 

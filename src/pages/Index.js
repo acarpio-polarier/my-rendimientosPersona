@@ -1,10 +1,7 @@
 import { View, Text, ScrollView } from "react-native";
 import styles from "../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import HeaderCanje from "./components/headerCanje";
-import ComponenteFiltro from "./components/componenteFiltro";
-import data from "./data/data.json";
-import dataTokens from "./data/dataTokens.json";
+import MainComponent from "./components/mainComponent";
 
 const Index = () => {
   const insets = useSafeAreaInsets();
@@ -17,8 +14,7 @@ const Index = () => {
         <Text style={styles.headerText}>Canje de puntos</Text>
       </View>
       <View>
-        <HeaderCanje dataTokens={dataTokens} />
-        <ComponenteFiltro dataTokens={dataTokens} data={data} />
+        <MainComponent />
       </View>
     </ScrollView>
   );

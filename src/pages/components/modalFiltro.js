@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   botonAplicar: {
     backgroundColor: "#EDB637",
     width: 200,
-    height: 30,
+    height: 50,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
   iconoBoton: {
     color: "white",
     fontWeight: "bold",
+    fontSize: 20,
   },
   linea: {
     borderBottomWidth: 1,
