@@ -34,8 +34,9 @@ const BarraFiltro = ({ data, dataTokens }) => {
       });
     }
 
-    if (filtros.canjebale && dataTokens?.tokens != null) {
-      filtrado = filtrado.filter((item) => item.price <= dataTokens.tokens);
+    if (filtros.canjebale && dataTokens?.length > 0) {
+      const tokensDisponibles = dataTokens[0].tokens;
+      filtrado = filtrado.filter((item) => item.price <= tokensDisponibles);
     }
 
     console.log("Datos filtrados:", filtrado);
