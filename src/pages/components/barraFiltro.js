@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { CheckBox } from "react-native-web";
+import { Checkbox } from "react-native-paper";
 import Productos from "./productos";
 
 const BarraFiltro = ({ data, dataTokens }) => {
@@ -30,10 +30,11 @@ const BarraFiltro = ({ data, dataTokens }) => {
       <View style={styles.fila}>
         <View style={styles.seccion}>
           <Text style={styles.labelCanjeable}>Canjeable</Text>
-          <CheckBox
-            value={canjeableSeleccionado}
-            onValueChange={setCanjeableSeleccionado}
-            style={styles.checkBox}
+          <Checkbox
+            status={canjeableSeleccionado ? "checked" : "unchecked"}
+            onPress={() => {
+              setCanjeableSeleccionado(!canjeableSeleccionado);
+            }}
           />
         </View>
         <View style={styles.seccion}>

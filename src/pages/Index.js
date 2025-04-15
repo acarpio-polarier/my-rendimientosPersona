@@ -5,6 +5,7 @@ import HeaderCanje from "./components/headerCanje";
 import BarraFiltro from "./components/barraFiltro";
 import data from "./data/data.json";
 import dataTokens from "./data/dataTokens.json";
+import ContenedorFiltro from "./components/contenedorFiltro";
 
 const Index = () => {
   const insets = useSafeAreaInsets();
@@ -17,8 +18,9 @@ const Index = () => {
         <Text style={styles.headerText}>Canje de puntos</Text>
       </View>
       <View>
-        <HeaderCanje dataTokens={dataTokens} />
-        <BarraFiltro dataTokens={dataTokens} data={data} />
+        {/* <HeaderCanje dataTokens={dataTokens} />
+        <BarraFiltro dataTokens={dataTokens} data={data} /> */}
+        <ContenedorFiltro />
       </View>
     </ScrollView>
   );
