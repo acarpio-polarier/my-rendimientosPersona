@@ -3,9 +3,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import token from "../../fotos/token.png";
 
-const FiltroPrecio = () => {
-  const [precioRango, setPrecioRango] = useState([100, 500]);
-
+const FiltroPrecio = ({ precioRango, setPrecioRango }) => {
   return (
     <View style={styles.contenedor}>
       <View style={styles.label}>

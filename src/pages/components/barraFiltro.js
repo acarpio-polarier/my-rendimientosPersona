@@ -5,10 +5,14 @@ import Productos from "./productos";
 
 const BarraFiltro = ({ data, dataTokens }) => {
   const [visible, setVisible] = useState(false);
-  const [filtros, setFiltros] = useState({ categoria: 0, orden: null });
+  const [filtros, setFiltros] = useState({
+    categoria: 0,
+    orden: null,
+    precioRango: [0, 1000],
+  });
 
   const aplicarFiltros = (valores) => {
-    console.log("Filtros recibidos a barraFiltro:", valores.categoria);
+    console.log("Filtros recibidos a barraFiltro:", valores);
     setFiltros(valores);
   };
 
@@ -16,9 +20,16 @@ const BarraFiltro = ({ data, dataTokens }) => {
     let filtrado = data;
 
     const categoria = parseInt(filtros.categoria);
+    const [minPrecio, maxPrecio] = filtros.precioRango;
 
     if (!isNaN(categoria) && categoria !== 0) {
       filtrado = filtrado.filter((item) => item.categoria === categoria);
+    }
+
+    if (!isNaN(minPrecio) && !isNaN(maxPrecio)) {
+      filtrado = filtrado.filter((item) => {
+        return item.price >= minPrecio && item.price <= maxPrecio;
+      });
     }
 
     console.log("Datos filtrados:", filtrado);

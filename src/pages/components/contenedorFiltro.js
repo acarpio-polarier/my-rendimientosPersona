@@ -11,6 +11,7 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
 
   const [orden, setOrden] = useState(0);
   const [categoria, setCategoria] = useState(0);
+  const [precioRango, setPrecioRango] = useState([100, 500]);
 
   useEffect(() => {
     console.log("Orden seleccionado:", orden);
@@ -20,8 +21,12 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
     console.log("Categoria seleccionado:", categoria);
   }, [categoria]);
 
+  useEffect(() => {
+    console.log("Precio rango:", precioRango);
+  }, [precioRango]);
+
   const confirmarFiltro = () => {
-    const filtros = { orden, categoria }; //<----- AMPLIAR
+    const filtros = { orden, categoria, precioRango }; //<----- AMPLIAR
     console.log("Filtro aplicado en popup:", filtros);
     onAplicarFiltros(filtros);
     cerrarPopup();
@@ -43,7 +48,10 @@ const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
           <View>
             <FiltroOrdenarPor onChange={(valor) => setOrden(valor)} />
             <FiltroCategoria onChange={(valor) => setCategoria(valor)} />
-            <FiltroPrecio />
+            <FiltroPrecio
+              precioRango={precioRango}
+              setPrecioRango={setPrecioRango}
+            />
             <FiltroBotonCanjeable />
           </View>
           <View style={styles.barraInferior}>
