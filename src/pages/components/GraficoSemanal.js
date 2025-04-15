@@ -40,6 +40,7 @@ const GraficoSemanal = () => {
   const [cargando, setCargando] = useState(true);
   const [hayDatos, setHayDatos] = useState(true);
   const [datosRendimiento, setDatosRendimiento] = useState([]);
+  const [tokensSemanales, setTokensSemanales] = useState();
 
   const [datosPorDia, setDatosPorDia] = useState([]);
 
@@ -53,13 +54,26 @@ const GraficoSemanal = () => {
     console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
     console.log("Fecha fin ISO:", nuevoRango.finIso);
     getRendimientoMedio(PERSONA_ID, nuevoRango.inicioIso, nuevoRango.finIso);
+    getTokensPersonaPorFecha(
+      PERSONA_ID,
+      nuevoRango.inicioIso,
+      nuevoRango.finIso
+    );
 
     // Si hay un cambio de semana, actualizar el estado del botón
     if (datosRendimiento.length > 0) {
       setHayDatos(true);
     }
   }, [semanaSeleccionada]);
-
+  const getTokensPersonaPorFecha = async (idPersona, fechaInicio, fechaFin) => {
+    const datos = await rendimientoPersonasService.getTokensPersonaPorFecha(
+      idPersona,
+      fechaInicio,
+      fechaFin
+    );
+    console.log("getTokensPorFecha", fechaInicio, fechaFin, idPersona, datos);
+    setTokensSemanales(datos.TokensGanados);
+  };
   const getRendimientoMedio = async (idPersona, fechaInicio, fechaFin) => {
     try {
       const datos =
@@ -192,7 +206,7 @@ const GraficoSemanal = () => {
         <View style={styles.datosContainer}>
           <View style={styles.datoItem}>
             <Text style={styles.datoLabel}>Tokens</Text>
-            <Text style={styles.datoValor}>666</Text>
+            <Text style={styles.datoValor}>{tokensSemanales}</Text>
           </View>
         </View>
 

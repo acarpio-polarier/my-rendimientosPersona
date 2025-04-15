@@ -74,6 +74,7 @@ export default function DetalleRendimientoSelector({
     return cache;
   });
 
+  const [datosMensualesCompletos, setDatosMensualesCompletos] = useState([]);
   const [datosAnuales, setDatosAnuales] = useState(datosAnualesIniciales || []);
   const [cargandoDatosAnuales, setCargandoDatosAnuales] = useState(false);
 
