@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from "react-native";
 import styles from "../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HeaderCanje from "./components/headerCanje";
-import BarraFiltro from "./components/barraFiltro";
+import ComponenteFiltro from "./components/componenteFiltro";
 import data from "./data/data.json";
 import dataTokens from "./data/dataTokens.json";
 
@@ -18,7 +18,7 @@ const Index = () => {
       </View>
       <View>
         <HeaderCanje dataTokens={dataTokens} />
-        <BarraFiltro dataTokens={dataTokens} data={data} />
+        <ComponenteFiltro dataTokens={dataTokens} data={data} />
       </View>
     </ScrollView>
   );

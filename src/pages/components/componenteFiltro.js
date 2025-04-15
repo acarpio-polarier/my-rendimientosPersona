@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import ContenedorFiltro from "./contenedorFiltro";
-import Productos from "./productos";
+import ModalFiltro from "./modalFiltro";
+import ProductosCards from "./productosCards";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const BarraFiltro = ({ data, dataTokens }) => {
+const ComponenteFiltro = ({ data, dataTokens }) => {
   const [visible, setVisible] = useState(false);
   const [filtros, setFiltros] = useState({
     categoria: null,
@@ -14,7 +14,7 @@ const BarraFiltro = ({ data, dataTokens }) => {
   });
 
   const aplicarFiltros = (valores) => {
-    console.log("Filtros recibidos a barraFiltro:", valores);
+    console.log("Filtros recibidos a ComponenteFiltro:", valores);
     setFiltros(valores);
   };
 
@@ -80,12 +80,12 @@ const BarraFiltro = ({ data, dataTokens }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.linea}></View>
-      <ContenedorFiltro
+      <ModalFiltro
         visible={visible}
         cerrarPopup={cerrarPopup}
         onAplicarFiltros={aplicarFiltros}
       />
-      <Productos data={productosFiltrados} />
+      <ProductosCards data={productosFiltrados} />
     </View>
   );
 };
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BarraFiltro;
+export default ComponenteFiltro;

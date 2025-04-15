@@ -21,7 +21,7 @@ const imageMap = {
   "noimage.png": noimage,
 };
 
-const Productos = ({ data }) => {
+const ProductosCards = ({ data }) => {
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
 
   const abrirPopup = (id) => {
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Productos;
+export default ProductosCards;

@@ -6,7 +6,7 @@ import FiltroPrecio from "./filtro/filtroPrecio";
 import FiltroBotonCanjeable from "./filtro/filtroBotonCanjeable";
 import ModalRendimiento from "./../../components/ModalRendimiento";
 
-const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
+const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [orden, setOrden] = useState(0);
   const [categoria, setCategoria] = useState(0);
   const [precioRango, setPrecioRango] = useState([10, 500]);
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContenedorFiltro;
+export default ModalFiltro;
