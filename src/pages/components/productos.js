@@ -85,18 +85,24 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   title: {
+    fontSize: 23,
     marginTop: 3,
     marginLeft: 5,
     marginBottom: 3,
+    color: "rgb(64,64,64)",
   },
   description: {
     marginLeft: 5,
     marginBottom: 3,
-    fontSize: 10,
+    fontSize: 14,
+    color: "rgb(129, 129, 129)",
   },
   tokenLabel: {
     marginBottom: 3,
     marginLeft: 5,
+    marginTop: 10,
+    fontSize: 20,
+    color: "rgb(64,64,64)",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: "orange",
+    backgroundColor: "#EDB637",
     width: 60,
     height: 30,
     borderRadius: 5,
@@ -119,7 +125,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    borderColor: "orange",
+    borderColor: "#EDB637",
     width: "100%",
     height: 120,
   },

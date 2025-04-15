@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const FiltroOrdenarPor = ({ onChange }) => {
-  const [seleccionado, setSeleccionado] = useState(0);
+  const [seleccionado, setSeleccionado] = useState(null);
 
   const opciones = [
     { id: 1, label: "Novedades" },
-    { id: 2, label: "Precio As." },
-    { id: 3, label: "Precio Des." },
+    { id: 2, label: "Precio Des." },
+    { id: 3, label: "Precio As." },
   ];
 
   const handleSeleccion = (id) => {

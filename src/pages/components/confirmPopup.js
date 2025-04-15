@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
   confirmar: {
-    backgroundColor: "orange",
+    backgroundColor: "#EDB637",
   },
   textoBotones: {
     color: "#fff",

@@ -7,10 +7,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 const BarraFiltro = ({ data, dataTokens }) => {
   const [visible, setVisible] = useState(false);
   const [filtros, setFiltros] = useState({
-    categoria: 0,
+    categoria: null,
     orden: null,
     precioRango: [0, 1000],
-    canjebale: false,
+    canjeable: false,
   });
 
   const aplicarFiltros = (valores) => {
@@ -23,6 +23,13 @@ const BarraFiltro = ({ data, dataTokens }) => {
 
     const categoria = parseInt(filtros.categoria);
     const [minPrecio, maxPrecio] = filtros.precioRango;
+    const canjeable = filtros.canjeable;
+
+    if (filtros.orden === 2) {
+      filtrado = [...filtrado].sort((a, b) => a.price - b.price);
+    } else if (filtros.orden === 3) {
+      filtrado = [...filtrado].sort((a, b) => b.price - a.price);
+    }
 
     if (!isNaN(categoria) && categoria !== 0) {
       filtrado = filtrado.filter((item) => item.categoria === categoria);
@@ -34,7 +41,7 @@ const BarraFiltro = ({ data, dataTokens }) => {
       });
     }
 
-    if (filtros.canjebale && dataTokens?.length > 0) {
+    if (canjeable) {
       const tokensDisponibles = dataTokens[0].tokens;
       filtrado = filtrado.filter((item) => item.price <= tokensDisponibles);
     }
@@ -54,7 +61,12 @@ const BarraFiltro = ({ data, dataTokens }) => {
   };
 
   const reiniciarFiltros = () => {
-    setFiltros({ categoria: 0, orden: null, precioRango: [0, 1000] });
+    setFiltros({
+      categoria: 0,
+      orden: null,
+      precioRango: [0, 1000],
+      canjeable: false,
+    });
   };
 
   return (
@@ -95,7 +107,7 @@ const styles = StyleSheet.create({
   },
 
   boton: {
-    backgroundColor: "orange",
+    backgroundColor: "#EDB637",
     width: "20%",
     height: 30,
     borderRadius: 5,
@@ -106,7 +118,7 @@ const styles = StyleSheet.create({
   },
 
   botonFilter: {
-    backgroundColor: "orange",
+    backgroundColor: "#EDB637",
     width: "10%",
     height: 30,
     borderRadius: 5,

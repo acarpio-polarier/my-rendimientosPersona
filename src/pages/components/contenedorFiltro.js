@@ -9,7 +9,7 @@ import ModalRendimiento from "./../../components/ModalRendimiento";
 const ContenedorFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [orden, setOrden] = useState(0);
   const [categoria, setCategoria] = useState(0);
-  const [precioRango, setPrecioRango] = useState([100, 500]);
+  const [precioRango, setPrecioRango] = useState([10, 500]);
   const [modalVisible, setModalVisible] = useState(visible);
   const [canjeable, setCanjeable] = useState(false);
 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   botonAtras: {
-    backgroundColor: "orange",
+    backgroundColor: "#EDB637",
     width: 30,
     height: 30,
     borderRadius: 5,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   botonAplicar: {
-    backgroundColor: "orange",
+    backgroundColor: "#EDB637",
     width: 200,
     height: 30,
     borderRadius: 5,
