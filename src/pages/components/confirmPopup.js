@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   cancelar: {
-    backgroundColor: colors.lightBlack,
+    backgroundColor: colors.gray,
   },
   confirmar: {
     backgroundColor: colors.primary,
   },
   textoBotones: {
-    color: colors.lightGray,
+    color: colors.white,
     fontWeight: "bold",
   },
 });
