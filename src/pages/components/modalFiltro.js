@@ -155,6 +155,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
             style={styles.switch}
             value={canjeable}
             onValueChange={onSwitchPulsado}
+            color={colors.primary}
           />
         </View>
       </View>
