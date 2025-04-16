@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { colors, fontFamily } from "../../../../styles/base";
 
-const FiltroOrdenarPor = ({ onChange }) => {
-  const [seleccionado, setSeleccionado] = useState(null);
+const FiltroOrdenarPor = ({ onChange, orden }) => {
+  const [seleccionado, setSeleccionado] = useState(orden);
 
   const opciones = [
     { id: 1, label: "Novedades" },
@@ -19,7 +19,7 @@ const FiltroOrdenarPor = ({ onChange }) => {
   return (
     <View style={styles.contenedor}>
       <View style={styles.label}>
-        <Text>Ordenar por:</Text>
+        <Text style={{ fontWeight: "bold" }}>Ordenar por:</Text>
       </View>
       <View style={styles.contenedorBotones}>
         {opciones.map((opcion) => (
@@ -44,11 +44,10 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     marginVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
   },
   label: {
     marginLeft: 10,
+    marginBottom: 5,
   },
   contenedorBotones: {
     flexDirection: "row",

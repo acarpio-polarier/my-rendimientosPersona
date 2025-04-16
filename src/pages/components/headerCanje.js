@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import token from "../fotos/token.png";
+import { colors } from "../../../styles/base";
 
 const HeaderCanje = ({ dataTokens }) => {
   return (
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "end",
     alignItems: "center",
     right: 10,
-    color: "rgb(160,160,160)",
+    color: colors.lightBlack,
     fontSize: 15,
   },
 });

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ModalFiltro from "./modalFiltro";
 import ProductosCards from "./productosCards";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "../../../styles/base";
 
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
   const [visible, setVisible] = useState(false);
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   boton: {
-    backgroundColor: "#EDB637",
+    backgroundColor: colors.primary,
     width: "20%",
     height: 30,
     borderRadius: 5,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
 
   botonFilter: {
-    backgroundColor: "#EDB637",
+    backgroundColor: colors.primary,
     width: "10%",
     height: 30,
     borderRadius: 5,

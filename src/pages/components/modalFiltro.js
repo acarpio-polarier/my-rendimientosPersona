@@ -5,6 +5,7 @@ import FiltroCategoria from "./filtro/filtroCategoria";
 import FiltroPrecio from "./filtro/filtroPrecio";
 import FiltroBotonCanjeable from "./filtro/filtroBotonCanjeable";
 import ModalRendimiento from "./../../components/ModalRendimiento";
+import { colors } from "../../../styles/base";
 
 const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [orden, setOrden] = useState(0);
@@ -50,7 +51,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
               precioRango={precioRango}
               setPrecioRango={setPrecioRango}
             />
-            <FiltroBotonCanjeable onChange={(valor) => setCanjeable(valor)} />
+            <FiltroBotonCanjeable
+              canjeable={canjeable}
+              onChange={(valor) => setCanjeable(valor)}
+            />
           </View>
           <View style={styles.barraInferior}>
             <TouchableOpacity
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   botonAtras: {
-    backgroundColor: "#EDB637",
+    backgroundColor: colors.primary,
     width: 30,
     height: 30,
     borderRadius: 5,
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   botonAplicar: {
-    backgroundColor: "#EDB637",
+    backgroundColor: colors.primary,
     width: 200,
     height: 50,
     borderRadius: 5,
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconoBoton: {
-    color: "white",
+    color: colors.white,
     fontWeight: "bold",
     fontSize: 20,
   },

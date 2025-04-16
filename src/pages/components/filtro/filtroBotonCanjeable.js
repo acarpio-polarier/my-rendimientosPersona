@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Switch } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Switch } from "react-native-paper";
 
-const FiltroBotonCanjeable = ({ onChange }) => {
-  const [switchPulsado, setSwitchPulsado] = useState(false);
+const FiltroBotonCanjeable = ({ onChange, canjeable }) => {
+  const [switchPulsado, setSwitchPulsado] = useState(canjeable);
 
   const onSwitchPulsado = () => {
     const nuevoValor = !switchPulsado;
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
   label: {
     marginLeft: 10,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   contenedorItems: {
     flexDirection: "row",

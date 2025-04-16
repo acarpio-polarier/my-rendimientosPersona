@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { colors } from "../../../styles/base";
 
 const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
   if (!visible) return null;
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   },
   popup: {
     width: 300,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     borderRadius: 10,
     padding: 20,
   },
@@ -98,13 +99,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   cancelar: {
-    backgroundColor: "#ccc",
+    backgroundColor: colors.lightBlack,
   },
   confirmar: {
-    backgroundColor: "#EDB637",
+    backgroundColor: colors.primary,
   },
   textoBotones: {
-    color: "#fff",
+    color: colors.lightGray,
     fontWeight: "bold",
   },
 });

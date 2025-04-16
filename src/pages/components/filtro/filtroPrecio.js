@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import token from "../../fotos/token.png";
+import { colors } from "../../../../styles/base";
 
 const FiltroPrecio = ({ precioRango, setPrecioRango }) => {
   return (
@@ -36,8 +37,8 @@ const FiltroPrecio = ({ precioRango, setPrecioRango }) => {
           step={10}
           allowOverlap={false}
           snapped
-          selectedStyle={{ backgroundColor: "orange" }}
-          markerStyle={{ backgroundColor: "orange" }}
+          selectedStyle={{ backgroundColor: colors.primary }}
+          markerStyle={{ backgroundColor: colors.primary }}
         />
       </View>
     </View>
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   labelText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
   contenedorTexto: {
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
   },
   sliderContainer: {
     alignSelf: "center",
+    marginBottom: 5,
   },
   tokenIcono: {
     width: 20,

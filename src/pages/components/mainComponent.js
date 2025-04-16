@@ -45,9 +45,9 @@ const MainComponent = () => {
 
   return (
     <View>
-      <HeaderCanje dataTokens={dataTokens.TokensDisponibles} />
+      <HeaderCanje dataTokens={dataTokens?.TokensDisponibles} />
       <ComponenteFiltro
-        dataTokens={dataTokens.TokensDisponibles}
+        dataTokens={dataTokens?.TokensDisponibles}
         data={data}
         ID_PERSONA={ID_PERSONA}
       />
