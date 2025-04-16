@@ -64,6 +64,22 @@ const RendimientoUtils = {
    * @param {string} fechaFin - Fecha del final del turno
    * @returns {Object} Objeto con estadísticas
    */
+  getTokensPersona: async (idPersona, fechaInicio, fechaFinal) => {
+    try {
+      const fechaIni = new Date(fechaInicio).toISOString().split("T")[0];
+      const fechaFin = new Date(fechaFinal).toISOString().split("T")[0];
+      console.log("rendimiento utils fecha", idPersona, fechaIni, fechaFin);
+      const datos = await rendimientoPersonasService.getTokensPersona(
+        idPersona,
+        fechaIni,
+        fechaFin
+      );
+      console.log("rendimiento utils TP", datos);
+      return datos;
+    } catch (error) {
+      console.log("Error obteniendo tokens", error);
+    }
+  },
 
   getTokensPersonaPorFecha: async (idPersona, fechaInicio, fechaFin) => {
     try {

@@ -17,18 +17,15 @@ export const rendimientoPersonasService = {
 };
 
 function getTokensPersona(idPersona, fechaIni, fechaFin) {
-  const fechaIni_ = new Date(fechaIni).toISOString();
-  const fechaFin_ = new Date(fechaFin).toISOString();
-
   console.log(
     connectionConstants.ODATA_URL +
       "getTokensPersona" +
       "?idPersona=" +
       idPersona +
       "&fechaIni=" +
-      fechaIni_ +
+      fechaIni +
       "&fechaFin=" +
-      fechaFin_,
+      fechaFin,
     requestOptions("GET")
   );
 
@@ -39,9 +36,9 @@ function getTokensPersona(idPersona, fechaIni, fechaFin) {
         "?idPersona=" +
         idPersona +
         "&fechaIni=" +
-        fechaIni_ +
+        fechaIni +
         "&fechaFin=" +
-        fechaFin_,
+        fechaFin,
       requestOptions("GET")
     )
       .then(handleResponse)

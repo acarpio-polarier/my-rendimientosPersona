@@ -4,12 +4,14 @@ import { DataTable } from "react-native-paper";
 import RendimientoUtils from "../../helpers/RendimientoUtils";
 import { colors } from "../../../styles/base";
 import { PERSONA_ID } from "../Index";
+import { fetchText } from "react-native-svg";
 
 const HEIGHT_HEADER = 48;
 const HEIGHT_ROW = 48;
 
 const DetalleRegistros = ({ dia = [] }) => {
   const [data, setData] = useState([]);
+  const [tokensRegistro, setTokensRegistro] = useState([]);
   console.log("dia", dia);
   const formatearHora = (fecha) => {
     const date = new Date(fecha);
@@ -19,42 +21,51 @@ const DetalleRegistros = ({ dia = [] }) => {
   };
 
   useEffect(() => {
+    console.log();
+
     const cargarDatos = async () => {
-      const datosConTokens = await Promise.all(
-        dia.map(async (item) => {
-          try {
-            const fechaIni = new Date(item?.fechaIni).toISOString();
-            const fechaFin = new Date(item?.fechaFin).toISOString();
+      const soloFecha = new Date(dia[0]?.fechaIni).toISOString().split("T")[0];
 
-            const datos = await RendimientoUtils.getTokensPersonaPorFecha(
-              PERSONA_ID,
-              fechaIni,
-              fechaFin
-            );
-            console.log("fechas registros", fechaIni, fechaFin, dia);
-            const tokens = datos?.TokensGanados ?? 0;
-
-            return {
-              ...item,
-              tokens,
-            };
-          } catch (error) {
-            console.error("Error al obtener tokens:", error);
-            return {
-              ...item,
-              tokens: 0,
-            };
-          }
-        })
+      const datos = await RendimientoUtils.getTokensPersona(
+        PERSONA_ID,
+        soloFecha,
+        soloFecha
       );
 
-      const dataFormateada = datosConTokens.map((item) => [
-        formatearHora(item.fechaIni),
-        formatearHora(item.fechaFin),
-        item.RendimientoGlobal + "%",
-        item.tokens,
-      ]);
-      setData(dataFormateada);
+      if (Array.isArray(datos)) {
+        const tokensPersona = datos.map((item) => ({
+          fecha: item.fecha ?? null,
+          tokens: item.tokens ?? null,
+        }));
+
+        console.log("array tokens getTokensPersona", tokensPersona);
+
+        const tokensGanados = tokensPersona?.[0]?.tokens ?? 0;
+        console.log("array tokens datos", datos);
+        console.log("array tokens tokensganados", tokensGanados);
+        console.log("array tokens dia", dia);
+
+        const datosTokens = dia.map((item) => {
+          const tokenCoincidente = tokensPersona.find(
+            (token) => token.fecha === item.fechaFin
+          );
+          if (tokenCoincidente) {
+            return { ...item, tokens: tokenCoincidente.tokens };
+          }
+          return { ...item, tokens: 0 };
+        });
+
+        console.log("array tokens datosTokens", datosTokens);
+
+        const dataFormateada = datosTokens.map((item) => [
+          formatearHora(item.fechaIni),
+          formatearHora(item.fechaFin),
+          item.RendimientoGlobal + "%",
+          item.tokens,
+        ]);
+
+        setData(dataFormateada);
+      }
     };
 
     cargarDatos();
