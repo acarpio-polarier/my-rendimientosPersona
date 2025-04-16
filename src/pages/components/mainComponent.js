@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import HeaderCanje from "./headerCanje";
 import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
+import { colors, fontFamily } from "../../../styles/base";
 
-export const ID_PERSONA = 6666;
+export const ID_PERSONA = 1392;
 
 const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);
@@ -32,8 +33,12 @@ const MainComponent = () => {
   if (loading) {
     return (
       <View>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Cargando datos...</Text>
+        <Text style={styles.loadingLabel}>Cargando datos...</Text>
+        <ActivityIndicator
+          style={styles.loadingCircle}
+          size="large"
+          color={colors.primary}
+        />
       </View>
     );
   }
@@ -41,9 +46,24 @@ const MainComponent = () => {
   return (
     <View>
       <HeaderCanje dataTokens={dataTokens.TokensDisponibles} />
-      <ComponenteFiltro dataTokens={dataTokens.TokensDisponibles} data={data} />
+      <ComponenteFiltro
+        dataTokens={dataTokens.TokensDisponibles}
+        data={data}
+        ID_PERSONA={ID_PERSONA}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingLabel: {
+    textAlign: "center",
+    marginTop: "50%",
+    color: colors.lightBlack,
+  },
+  loadingCircle: {
+    marginTop: "10%",
+  },
+});
 
 export default MainComponent;

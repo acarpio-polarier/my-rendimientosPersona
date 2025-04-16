@@ -1,12 +1,38 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const ConfirmPopup = ({ visible, cerrarPopup, product }) => {
+const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
   if (!visible) return null;
 
-  const confirmarPopup = () => {
-    console.log("Producto canjeado:", product.title);
-    cerrarPopup();
+  const confirmarPopup = async () => {
+    try {
+      const response = await fetch(
+        `https://localhost:7136/odata/solicitarCanje?idPersona=${ID_PERSONA}&tokensASolicitar=${product.price}`,
+
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ID_PERSONA,
+            productId: product.id,
+            token: product.price,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al canjear el producto");
+      }
+
+      const data = await response.json();
+      console.log("Canje exitoso:", data);
+
+      cerrarPopup();
+    } catch (error) {
+      console.error("Error en el canje:", error);
+    }
   };
 
   return (

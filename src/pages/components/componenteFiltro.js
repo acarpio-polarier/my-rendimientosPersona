@@ -4,7 +4,7 @@ import ModalFiltro from "./modalFiltro";
 import ProductosCards from "./productosCards";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const ComponenteFiltro = ({ data, dataTokens }) => {
+const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
   const [visible, setVisible] = useState(false);
   const [filtros, setFiltros] = useState({
     categoria: null,
@@ -85,7 +85,11 @@ const ComponenteFiltro = ({ data, dataTokens }) => {
         cerrarPopup={cerrarPopup}
         onAplicarFiltros={aplicarFiltros}
       />
-      <ProductosCards data={productosFiltrados} />
+      <ProductosCards
+        dataTokens={dataTokens}
+        data={productosFiltrados}
+        ID_PERSONA={ID_PERSONA}
+      />
     </View>
   );
 };

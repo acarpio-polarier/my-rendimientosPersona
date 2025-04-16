@@ -13,7 +13,7 @@ import foto2 from "../fotos/foto2.jpg";
 import foto3 from "../fotos/foto3.jpg";
 import noimage from "../fotos/noimage.png";
 import ConfirmPopup from "./confirmPopup";
-import { colors, fontFamily } from "../../../styles/base";
+import { colors } from "../../../styles/base";
 
 const imageMap = {
   "foto1.jpg": foto1,
@@ -22,7 +22,7 @@ const imageMap = {
   "noimage.png": noimage,
 };
 
-const ProductosCards = ({ data }) => {
+const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
 
   const abrirPopup = (id) => {
@@ -33,32 +33,54 @@ const ProductosCards = ({ data }) => {
     setIdProductoSeleccionado(null);
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.contenedor}>
-      <View style={styles.foto}>
-        <Image
-          source={imageMap[item.foto] || noimage}
-          style={styles.imagen}
-          resizeMode="cover"
-        />
-      </View>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.description}>{item.description}</Text>
-      <Text style={styles.tokenLabel}>Tokens: {item.price}</Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => abrirPopup(item.id)}
-        >
-          <Text style={styles.buttonText}>Canjear</Text>
-        </TouchableOpacity>
-      </View>
+  const renderItem = ({ item }) => {
+    const puedeCanjear = dataTokens >= item.price;
 
-      {idProductoSeleccionado === item.id && (
-        <ConfirmPopup visible={true} cerrarPopup={cerrarPopup} product={item} />
-      )}
-    </View>
-  );
+    return (
+      <View style={styles.contenedor}>
+        <View style={styles.foto}>
+          <Image
+            source={imageMap[item.foto] || noimage}
+            style={styles.imagen}
+            resizeMode="cover"
+          />
+        </View>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.tokenLabel}>Tokens: {item.price}</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              {
+                backgroundColor: puedeCanjear
+                  ? colors.primary
+                  : colors.darkGray,
+              },
+            ]}
+            onPress={() => {
+              if (puedeCanjear) {
+                console.log(`Boton pulsado: ${item.id}`);
+                abrirPopup(item.id);
+              }
+            }}
+            disabled={!puedeCanjear}
+          >
+            <Text style={styles.buttonText}>Canjear</Text>
+          </TouchableOpacity>
+        </View>
+
+        {idProductoSeleccionado === item.id && (
+          <ConfirmPopup
+            visible={true}
+            cerrarPopup={cerrarPopup}
+            product={item}
+            ID_PERSONA={ID_PERSONA}
+          />
+        )}
+      </View>
+    );
+  };
 
   return (
     <FlatList
