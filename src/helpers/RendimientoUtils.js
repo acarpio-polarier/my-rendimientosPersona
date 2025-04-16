@@ -83,6 +83,7 @@ const RendimientoUtils = {
 
   getTokensPersonaPorFecha: async (idPersona, fechaInicio, fechaFin) => {
     try {
+      console.log("rendimiento utils TPPF", idPersona, fechaInicio, fechaFin);
       const datos = await rendimientoPersonasService.getTokensPersonaPorFecha(
         idPersona,
         fechaInicio,

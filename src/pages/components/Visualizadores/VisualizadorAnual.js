@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,12 +11,16 @@ import { DataTable } from "react-native-paper";
 import FechaUtils from "../../../helpers/FechaUtils";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
+import { PERSONA_ID } from "../../Index";
 import { colors } from "../../../../styles/base";
 
 const { width, height } = Dimensions.get("window");
 
 const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   const mesesAbreviados = FechaUtils.nombresMesesCorto;
+  const [tokensDiarios, setTokensDiarios] = useState([]);
+  const [datos, setDatos] = useState([]);
 
   // Encuentra los datos del mes seleccionado
   const mesActual = data.infoPorMes.find(
@@ -31,6 +35,18 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
       </View>
     );
   }
+
+  // Uso de dos useEffect para asegurarse que no salgan los datos hasta que se hayan
+  // calculado los tokensDiarios
+  useEffect(() => {
+    getTokensPersona();
+  }, [mesSeleccionado]);
+
+  useEffect(() => {
+    if (tokensDiarios.length > 0) {
+      cargarDatos();
+    }
+  }, [tokensDiarios]);
 
   // Agrupar por día
   const groupedData = mesActual.info.reduce((acumulador, entrada) => {
@@ -59,27 +75,59 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     }
   );
 
-  // Convertir a tabla de datos
-  const tableData = Object.entries(groupedData).map(
-    ([diaCompleto, dayEntries]) => {
-      // Separar día y nombre del día
-      const [dia, diaSemana] = diaCompleto.split("-");
+  const cargarDatos = () => {
+    const tableData = Object.entries(groupedData).map(
+      ([diaCompleto, dayEntries]) => {
+        const [dia, diaSemana] = diaCompleto.split("-");
 
-      // Usar el último rendimiento acumulado del día
-      const rendimientoPromedio = (
-        dayEntries.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
-        dayEntries.length
-      ).toFixed(2);
+        const rendimientoPromedio = (
+          dayEntries.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
+          dayEntries.length
+        ).toFixed(2);
 
-      // Tokens para este día (aleatorio)
-      const tokens = Math.floor(Math.random() * 10) + 1;
+        const registros = dayEntries.length;
 
-      // Número de registros para el día
-      const registros = dayEntries.length;
-      console.log("registros por dia", dayEntries);
-      return [dia, registros, `${rendimientoPromedio}%`, tokens];
+        const tokensDelDia = tokensDiarios.filter((token) => {
+          const tokenDate = new Date(token.fecha);
+          return tokenDate.getDate() === parseInt(dia);
+        });
+
+        const cantidadTokens = tokensDelDia.reduce(
+          (acc, token) => acc + (token.tokens ?? 0),
+          0
+        );
+
+        return [dia, registros, `${rendimientoPromedio}%`, cantidadTokens];
+      }
+    );
+
+    setDatos(tableData);
+  };
+
+  // sacar array de tokens por mes
+  const getTokensPersona = async () => {
+    console.log("visual anual mes -1: ", mesSeleccionado);
+    const anio = data?.anio;
+    const mes = mesSeleccionado + 1;
+    const fechaIni = `${anio}-${mes}-01`;
+    const ultimoDia = new Date(anio, mes, 0).getDate();
+    const fechaFin = `${anio}-${mes}-${ultimoDia.toString().padStart(2, "0")}`;
+    console.log("visual anual fecha", fechaIni, fechaFin);
+    const datos = await RendimientoUtils.getTokensPersona(
+      PERSONA_ID,
+      fechaIni,
+      fechaFin
+    );
+    if (Array.isArray(datos)) {
+      const tokensPersona = datos.map((item) => ({
+        fecha: item.fecha ?? null,
+        tokens: item.tokens ?? null,
+      }));
+      setTokensDiarios(tokensPersona);
+
+      console.log("visual anual datos", tokensPersona);
     }
-  );
+  };
   // Crear objetos de datos de cada fila
   const handleRowPress = (rowData) => {
     console.log("Fila presionada", `Datos: ${rowData.join(", ")}`);
@@ -113,6 +161,8 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   const HEIGHT_ROW = 48;
   const tablaHeight = HEIGHT_HEADER + data.length * HEIGHT_ROW;
 
+  console.log("visual anual tokensDiarios", tokensDiarios);
+
   return (
     <View>
       <View style={styles.contenedorPrincipal}>
@@ -137,7 +187,7 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
           </DataTable>
 
           <DataTable style={{ height: "100%" }}>
-            {tableData.map((rowData, rowIndex) => (
+            {datos.map((rowData, rowIndex) => (
               <TouchableOpacity
                 key={rowIndex}
                 onPress={() => handleRowPress(rowData)}

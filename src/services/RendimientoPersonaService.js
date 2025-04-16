@@ -52,18 +52,15 @@ function getTokensPersona(idPersona, fechaIni, fechaFin) {
 }
 
 function getTokensPersonaPorFecha(idPersona, fechaIni, fechaFin) {
-  const fechaIni_ = new Date(fechaIni).toISOString();
-  const fechaFin_ = new Date(fechaFin).toISOString();
-
   console.log(
     connectionConstants.ODATA_URL +
       "getTokensPersonaPorFecha" +
       "?idPersona=" +
       idPersona +
       "&fechaIni=" +
-      fechaIni_ +
+      fechaIni +
       "&fechaFin=" +
-      fechaFin_,
+      fechaFin,
     requestOptions("GET")
   );
 
@@ -74,9 +71,9 @@ function getTokensPersonaPorFecha(idPersona, fechaIni, fechaFin) {
         "?idPersona=" +
         idPersona +
         "&fechaIni=" +
-        fechaIni_ +
+        fechaIni +
         "&fechaFin=" +
-        fechaFin_,
+        fechaFin,
       requestOptions("GET")
     )
       .then(handleResponse)

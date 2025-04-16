@@ -69,7 +69,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   // calcular los tokens por dia
   useEffect(() => {
     getTokensPersonaPorFecha();
-  }, [diaSeleccionado]);
+  }, [diaSeleccionado, cargando]);
 
   const getTokensPersonaPorFecha = async () => {
     const datosAgrupados = Array.isArray(data[0].data)
@@ -79,26 +79,13 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     const diaActual = datosAgrupados.find(
       (dia) => dia.dia === diaSeleccionado
     )?.dia;
-
-    if (!diaActual) {
-      console.warn("No se encontró el día actual para:", diaSeleccionado);
-      return;
-    }
-
-    const fechaActual = new Date(diaActual);
-
-    if (isNaN(fechaActual.getTime())) {
-      console.error("Fecha inválida:", diaActual);
-      return;
-    }
-
-    const datos = await rendimientoPersonasService.getTokensPersonaPorFecha(
+    console.log("Tarjeta llamada dia actual", diaActual);
+    const datos = await RendimientoUtils.getTokensPersonaPorFecha(
       PERSONA_ID,
       diaActual,
       diaActual
     );
-    console.log("token1 fechas", diaActual, diaActual);
-    console.log("token1", datos);
+    console.log("tarjeta llamada datos", datos);
     setTokensDia(datos?.TokensGanados ?? 0);
   };
 
