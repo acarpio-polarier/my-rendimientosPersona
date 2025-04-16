@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import ModalFiltro from "./modalFiltro";
 import ProductosCards from "./productosCards";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
+import token from "../fotos/token.png";
 
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
   const [visible, setVisible] = useState(false);
@@ -72,6 +73,10 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
 
   return (
     <View style={styles.contenedor}>
+      <View style={styles.contenedorToken}>
+        <Image style={styles.tokenIcono} source={token} />
+        <Text style={styles.tokenLabel}>Tokens: {dataTokens}</Text>
+      </View>
       <View style={styles.contenedorBotones}>
         <TouchableOpacity style={styles.boton} onPress={abrirPopup}>
           <Text style={styles.labelBoton}>Filtros</Text>
@@ -135,6 +140,27 @@ const styles = StyleSheet.create({
 
   labelBoton: {
     color: "white",
+  },
+
+  contenedorToken: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "end",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  tokenIcono: {
+    width: 20,
+    height: 20,
+    marginRight: 15,
+  },
+  tokenLabel: {
+    display: "flex",
+    justifyContent: "end",
+    alignItems: "center",
+    right: 10,
+    color: colors.lightBlack,
+    fontSize: 15,
   },
 });
 

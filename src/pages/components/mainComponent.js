@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import HeaderCanje from "./headerCanje";
 import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
 import { colors, fontFamily } from "../../../styles/base";
@@ -45,7 +44,6 @@ const MainComponent = () => {
 
   return (
     <View>
-      <HeaderCanje dataTokens={dataTokens?.TokensDisponibles} />
       <ComponenteFiltro
         dataTokens={dataTokens?.TokensDisponibles}
         data={data}
