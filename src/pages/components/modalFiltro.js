@@ -20,7 +20,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   ];
 
   const handleSeleccionOrden = (id) => {
-    setOrden(id);
+    setOrden((prev) => (prev === id ? 0 : id));
   };
 
   const opcionesCategoria = [
@@ -30,7 +30,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   ];
 
   const handleSeleccionCategoria = (id) => {
-    setCategoria(id);
+    setCategoria((prev) => (prev === id ? 0 : id));
   };
 
   const onSwitchPulsado = () => {
