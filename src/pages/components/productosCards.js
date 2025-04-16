@@ -40,14 +40,16 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
     return (
       <View style={styles.contenedor}>
         {!puedeCanjear && (
-          <View style={styles.etiquetaSaldoInsuficiente}>
-            <MaterialCommunityIcons
-              name="alert"
-              size={20}
-              color={"white"}
-              style={styles.etiquetaIcono}
-            />
-            <Text style={styles.etiquetaTexto}>Saldo Insuficiente</Text>
+          <View style={styles.etiquetaBackground}>
+            <View style={styles.etiquetaSaldoInsuficiente}>
+              <MaterialCommunityIcons
+                name="alert"
+                size={20}
+                color={"white"}
+                style={styles.etiquetaIcono}
+              />
+              <Text style={styles.etiquetaTexto}>Saldo Insuficiente</Text>
+            </View>
           </View>
         )}
 
@@ -165,13 +167,25 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 120,
   },
+  etiquetaBackground: {
+    backgroundColor: " rgba(0, 0, 0, 0.5)",
+    borderRadius: 10,
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    height: "100%",
+    shadowColor: "black",
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
   etiquetaSaldoInsuficiente: {
     backgroundColor: colors.primary,
     borderRadius: 10,
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1,
+    zIndex: 2,
     padding: 30,
     left: "25%",
     top: "30%",
