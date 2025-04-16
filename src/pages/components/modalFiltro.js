@@ -64,11 +64,12 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
       title={"Filtros"}
       blurIntensity="light"
     >
-      {/* ----------------------- */}
+      {/* FILTRO ORDEN */}
       <View style={styles.contenedorFiltro}>
         <View style={styles.label}>
           <Text style={{ fontWeight: "bold" }}>Ordenar por:</Text>
         </View>
+
         <View style={styles.contenedorBotones}>
           {opcionesOrden.map((opcion) => (
             <TouchableOpacity
@@ -84,11 +85,13 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
           ))}
         </View>
       </View>
-      {/* ----------------------- */}
+
+      {/* FILTRO CATEGORIA */}
       <View style={styles.contenedorFiltro}>
         <View style={styles.label}>
           <Text style={{ fontWeight: "bold" }}>Filtrar por:</Text>
         </View>
+
         <View style={styles.contenedorBotones}>
           {opcionesCategoria.map((opcion) => (
             <TouchableOpacity
@@ -104,7 +107,8 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
           ))}
         </View>
       </View>
-      {/* ----------------------- */}
+
+      {/* FILTRO PRECIO */}
       <View style={styles.contenedorFiltroPrecio}>
         <View style={styles.label}>
           <Text style={styles.labelText}>Precio:</Text>
@@ -118,6 +122,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
               <Text style={styles.valor}>{precioRango[0]}</Text>
             </View>
           </View>
+
           <View style={styles.contenedorPrecio}>
             <Text>Precio más alto</Text>
             <View style={styles.contenedorTextoIcono}>
@@ -141,8 +146,8 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
           />
         </View>
       </View>
-      {/* ----------------------- */}
 
+      {/* FILTRO SWITCH */}
       <View style={styles.contenedorCanjeableFiltro}>
         <View style={styles.contenedorItems}>
           <Text style={styles.label}>Canjeable: </Text>
@@ -154,10 +159,11 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
         </View>
       </View>
 
-      {/* ----------------------- */}
+      {/* CONTENEDOR PRINCIPAL */}
       <View style={styles.fondo}>
         <View style={styles.contenedor}>
           <View style={styles.linea} />
+
           <View style={styles.barraInferior}>
             <TouchableOpacity
               style={styles.botonAplicar}
@@ -296,6 +302,7 @@ const styles = StyleSheet.create({
   contenedorItems: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 5,
   },
   switch: {
     height: 20,
