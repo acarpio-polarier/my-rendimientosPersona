@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     right: 10,
     color: "rgb(160,160,160)",
+    fontSize: 15,
   },
 });
 
