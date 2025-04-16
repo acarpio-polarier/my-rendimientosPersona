@@ -1,14 +1,14 @@
 [
 	{ "id": 1, "categoria": 1, "foto": "foto1.jpg", "title": "Restaurante X" , 
     "description": "Restaurante x en puerto de Alcudia para dos personas", 
-    "price": 100},
+    "price": 100, "destacado": 0},
     { "id": 2, "categoria": 1, "foto": "foto2.jpg", "title": "Restaurante Y" , 
     "description": "Restaurante y en Campos para dos personas", 
-    "price": 150},
+    "price": 150, "destacado": 1},
     { "id": 4, "categoria": 2, "foto": "foto3.jpg", "title": "Refresco" , 
     "description": "Bono para gastar en máquina expendedora", 
-    "price": 10},
+    "price": 10, "destacado": 0},
     { "id": 5, "categoria": 1, "foto": "foto4.jpg", "title": "Restaurante A" , 
     "description": "Restaurante a en Calle Indrustria para dos personas", 
-    "price": 180}
+    "price": 180, "destacado": 0}
 ]

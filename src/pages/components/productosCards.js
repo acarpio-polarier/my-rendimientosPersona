@@ -37,9 +37,15 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
 
   const renderItem = ({ item }) => {
     const puedeCanjear = dataTokens >= item.price;
+    const esNuevo = item.destacado == 1;
 
     return (
       <View style={styles.contenedor}>
+        {esNuevo && (
+          <View style={styles.esNuevoContenedor}>
+            <Text style={styles.esNuevoLabel}>Nuevo</Text>
+          </View>
+        )}
         {!puedeCanjear && (
           <View style={styles.etiquetaBackground}>
             <View style={styles.etiquetaSaldoInsuficiente}>
@@ -53,7 +59,6 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
             </View>
           </View>
         )}
-
         <View style={styles.foto}>
           <Image
             source={imageMap[item.foto] || noimage}
@@ -67,7 +72,6 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
           <Text style={styles.tokenLabel}>{item.price}</Text>
           <Image style={styles.tokenIcono} source={token} />
         </View>
-
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[
@@ -89,7 +93,6 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
             <Text style={styles.buttonText}>Canjear</Text>
           </TouchableOpacity>
         </View>
-
         {idProductoSeleccionado === item.id && (
           <ConfirmPopup
             visible={true}
@@ -234,6 +237,21 @@ const styles = StyleSheet.create({
   tokenIcono: {
     width: 20,
     height: 20,
+  },
+  esNuevoContenedor: {
+    zIndex: 1,
+    position: "absolute",
+    backgroundColor: colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "20%",
+    height: "10%",
+    borderBottomRightRadius: 10,
+    fontFamily: "Arial",
+  },
+  esNuevoLabel: {
+    color: "white",
+    fontSize: 15,
   },
 });
 

@@ -13,6 +13,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
     orden: null,
     precioRango: [0, 1000],
     canjeable: false,
+    destacado: 0,
   });
 
   const aplicarFiltros = (valores) => {
