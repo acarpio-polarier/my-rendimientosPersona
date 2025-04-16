@@ -15,6 +15,7 @@ import noimage from "../fotos/noimage.png";
 import ConfirmPopup from "./confirmPopup";
 import { colors } from "../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import token from "../fotos/token.png";
 
 const imageMap = {
   "foto1.jpg": foto1,
@@ -62,7 +63,10 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
         </View>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
-        <Text style={styles.tokenLabel}>Tokens: {item.price}</Text>
+        <View style={styles.contenedorTextoIcono}>
+          <Text style={styles.tokenLabel}>{item.price}</Text>
+          <Image style={styles.tokenIcono} source={token} />
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -129,23 +133,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 23,
     marginTop: 3,
-    marginLeft: 5,
-    marginBottom: 3,
+    padding: 10,
     color: colors.lightBlack,
     fontWeight: "bold",
   },
   description: {
-    marginLeft: 5,
-    marginBottom: 3,
+    paddingLeft: 10,
     fontSize: 14,
     color: colors.darkGray,
   },
   tokenLabel: {
-    marginBottom: 3,
-    marginLeft: 5,
-    marginTop: 10,
+    paddingLeft: 10,
     fontSize: 20,
     color: colors.lightBlack,
+    marginRight: 5,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -223,6 +224,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: colors.darkGray,
     textAlign: "center",
+  },
+  contenedorTextoIcono: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: 5,
+  },
+  tokenIcono: {
+    width: 20,
+    height: 20,
   },
 });
 
