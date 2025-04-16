@@ -41,7 +41,7 @@ const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
         <View style={styles.popup}>
           <Text style={styles.titulo}>Confirmar Canje</Text>
           <Text style={styles.mensaje}>
-            Estás apunto de canjear {product.title} por {product.price} tokens
+            Estás a punto de canjear {product.title} por {product.price} tokens
           </Text>
           <View style={styles.contenedorBotones}>
             <TouchableOpacity

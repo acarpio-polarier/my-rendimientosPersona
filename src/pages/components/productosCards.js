@@ -14,6 +14,7 @@ import foto3 from "../fotos/foto3.jpg";
 import noimage from "../fotos/noimage.png";
 import ConfirmPopup from "./confirmPopup";
 import { colors } from "../../../styles/base";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const imageMap = {
   "foto1.jpg": foto1,
@@ -38,6 +39,18 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
 
     return (
       <View style={styles.contenedor}>
+        {!puedeCanjear && (
+          <View style={styles.etiquetaSaldoInsuficiente}>
+            <MaterialCommunityIcons
+              name="alert"
+              size={20}
+              color={"white"}
+              style={styles.etiquetaIcono}
+            />
+            <Text style={styles.etiquetaTexto}>Saldo Insuficiente</Text>
+          </View>
+        )}
+
         <View style={styles.foto}>
           <Image
             source={imageMap[item.foto] || noimage}
@@ -48,6 +61,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
         <Text style={styles.tokenLabel}>Tokens: {item.price}</Text>
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[
@@ -150,6 +164,30 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     width: "100%",
     height: 120,
+  },
+  etiquetaSaldoInsuficiente: {
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
+    padding: 30,
+    left: "25%",
+    top: "30%",
+    shadowColor: "black",
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+
+  etiquetaTexto: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  etiquetaIcono: {
+    fontSize: 30,
   },
 });
 
