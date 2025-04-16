@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
-import { colors, fontFamily } from "../../../styles/base";
+import { colors } from "../../../styles/base";
 
 export const ID_PERSONA = 1392;
 
@@ -11,7 +11,7 @@ const MainComponent = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchResumenTokens = async () => {
+    const datasourceTokens = async () => {
       try {
         const response = await fetch(
           `https://localhost:7136/odata/getResumenTokensPersona?idPersona=${ID_PERSONA}`
@@ -26,7 +26,7 @@ const MainComponent = () => {
       }
     };
 
-    fetchResumenTokens();
+    datasourceTokens();
   }, []);
 
   if (loading) {
