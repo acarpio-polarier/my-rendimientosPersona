@@ -98,13 +98,18 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
     );
   };
 
-  return (
+  return data && data.length > 0 ? (
     <FlatList
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
       contentContainerStyle={{ paddingBottom: 20 }}
     />
+  ) : (
+    <View style={styles.emptyContainer}>
+      <MaterialCommunityIcons name="alert" style={styles.emptyIcon} />
+      <Text style={styles.emptyText}>No hay productos disponibles.</Text>
+    </View>
   );
 };
 
@@ -202,6 +207,22 @@ const styles = StyleSheet.create({
   },
   etiquetaIcono: {
     fontSize: 30,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "30%",
+  },
+  emptyText: {
+    fontSize: 18,
+    color: colors.darkGray,
+    textAlign: "center",
+  },
+  emptyIcon: {
+    fontSize: 40,
+    color: colors.darkGray,
+    textAlign: "center",
   },
 });
 

@@ -292,8 +292,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     marginVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
   },
   contenedorItems: {
     flexDirection: "row",
