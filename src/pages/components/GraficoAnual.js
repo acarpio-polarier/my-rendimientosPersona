@@ -107,6 +107,14 @@ const GraficoAnual = () => {
     }
   };
 
+  const calcularMediaGrafica = () => {
+    const minValue = Math.min(...data);
+    const maxValue = Math.max(...data);
+    const midValue = (minValue + maxValue) / 2;
+
+    return midValue;
+  };
+
   const renderizarContindoGrafico = () => {
     if (cargando) {
       return (
@@ -131,7 +139,7 @@ const GraficoAnual = () => {
     } else {
       return (
         <TouchableOpacity onPress={mostrarDetalles}>
-          <View style={{ flexDirection: "row", height: 220, padding: 20 }}>
+          <View style={{ flexDirection: "row", height: 220, padding: 10 }}>
             <YAxis
               data={data}
               contentInset={{ top: 10, bottom: 10 }}
@@ -143,17 +151,20 @@ const GraficoAnual = () => {
               <BarChart
                 style={styles.tabla}
                 data={data}
-                gridMin={0}
-                contentInset={{ top: 10, bottom: 10 }}
-                svg={{ fill: "rgb(237, 182, 55)" }}
+                gridMin={Math.min(...data)}
+                gridMax={Math.max(...data)}
+                contentInset={{ top: 0, bottom: 0 }}
+                svg={{ fill: colors.primary }}
+                spacingInner={0.3}
+                spacingOuter={0.3}
               >
                 <Grid />
 
                 <Line
                   x1="2%"
                   x2="98%"
-                  y1={`${50}%`}
-                  y2={`${50}%`}
+                  y1={calcularMediaGrafica()}
+                  y2={calcularMediaGrafica()}
                   stroke="grey"
                   strokeDasharray={[4, 7]}
                   strokeWidth={2}
