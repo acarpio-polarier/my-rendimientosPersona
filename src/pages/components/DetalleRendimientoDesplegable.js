@@ -1,53 +1,53 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { colors } from "../../../styles/base";
+import { PERSONA_ID } from "../Index";
+import RendimientoUtils from "../../helpers/RendimientoUtils";
 
 const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
-  // Usar useMemo para memorizar los datos y evitar recálculos innecesarios
-  const rendimientoMemoizado = useMemo(() => {
-    // Si hay datos, usa el último conjunto
-    if (datos && datos.length > 0) {
-      const acumulados = datos[datos.length - 1];
-      return {
-        HorasTrabajoAcumuladas: acumulados.HorasTrabajadasAcumuladas ?? 0,
-        totalPrendas: acumulados.TotalPrendasAcumuladas ?? 0,
-        mediaPrendasPorHora: acumulados.MediaPrendasPorHoraAcumulada ?? 0,
-      };
-    }
+  const [horasTrabajadas, setHorasTrabajadas] = useState(0);
+  const [totalPrendas, setTotalPrendas] = useState(0);
+  const [mediaPrendasHora, setMediaPrendasHora] = useState(0);
 
-    // Si no hay datos, retorna valores por defecto
-    return {
-      HorasTrabajoAcumuladas: 0,
-      totalPrendas: 0,
-      mediaPrendasPorHora: 0,
-    };
-  }, [datos]);
+  useEffect(() => {
+    console.log("detalles datos", datos);
+    cargarDatos(PERSONA_ID, datos.inicioIso, datos.finIso);
+  });
+  const cargarDatos = async (idPersona, fechaIni, fechaFin) => {
+    const fechaInicio = new Date(fechaIni).toISOString().split("T")[0];
+    const fechaFinal = new Date(fechaFin).toISOString().split("T")[0];
+
+    const datos = await RendimientoUtils.getDetallesPersona(
+      idPersona,
+      fechaInicio,
+      fechaFinal
+    );
+
+    console.log("DRD getDetallesPersona", datos);
+    setHorasTrabajadas(datos.TiempoTrabajado || 0);
+    setTotalPrendas(datos.TotalPrendas || 0);
+    setMediaPrendasHora(datos.MediaPrendasHora || 0);
+  };
 
   return (
     <View style={[styles.contenidoVisualizacion, cargando && styles.cargando]}>
       <View style={styles.seccionMetrica}>
         <Text style={styles.tituloMetrica}>Horas Trabajadas</Text>
-        <Text style={styles.valorMetrica}>
-          {rendimientoMemoizado.HorasTrabajoAcumuladas.toFixed(1)} hrs
-        </Text>
+        <Text style={styles.valorMetrica}>{horasTrabajadas} hrs</Text>
       </View>
 
       <View style={styles.divisor} />
 
       <View style={styles.seccionMetrica}>
         <Text style={styles.tituloMetrica}>Total Prendas</Text>
-        <Text style={styles.valorMetrica}>
-          {rendimientoMemoizado.totalPrendas}
-        </Text>
+        <Text style={styles.valorMetrica}>{totalPrendas}</Text>
       </View>
 
       <View style={styles.divisor} />
 
       <View style={styles.seccionMetrica}>
         <Text style={styles.tituloMetrica}>Media Prendas/Hora</Text>
-        <Text style={styles.valorMetrica}>
-          {rendimientoMemoizado.mediaPrendasPorHora.toFixed(1)}
-        </Text>
+        <Text style={styles.valorMetrica}>{mediaPrendasHora}</Text>
       </View>
     </View>
   );

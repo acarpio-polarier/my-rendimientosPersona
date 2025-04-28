@@ -50,7 +50,12 @@ const GraficoSemanal = () => {
     setRangoSemana(nuevoRango);
     setCargando(true);
 
-    console.log("Rango de semana actualizado:", nuevoRango);
+    console.log(
+      "Rango de semana actualizado:",
+      nuevoRango,
+      "rangoSemana",
+      rangoSemana
+    );
     console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
     console.log("Fecha fin ISO:", nuevoRango.finIso);
     getRendimientoMedio(PERSONA_ID, nuevoRango.inicioIso, nuevoRango.finIso);
@@ -279,7 +284,12 @@ const GraficoSemanal = () => {
 
       {/* Barra expandible */}
       <BarraExpandible hayDatos={!cargando && hayDatos}>
-        <DetalleRendimientoDesplegable datos={datosRendimiento} />
+        <DetalleRendimientoDesplegable
+          datos={{
+            inicioIso: rangoSemana?.inicioIso,
+            finIso: rangoSemana?.finIso,
+          }}
+        />
       </BarraExpandible>
 
       {/* Modal para DetalleRendimientoSelector */}

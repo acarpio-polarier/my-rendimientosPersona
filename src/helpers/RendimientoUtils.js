@@ -105,6 +105,8 @@ const RendimientoUtils = {
    */
 
   getDetallesPersona: async (idPersona, fechaInicio, fechaFin) => {
+    console.log("rendimiento utils DP", idPersona, fechaInicio, fechaFin);
+
     try {
       console.log("rendimiento utils DP", idPersona, fechaInicio, fechaFin);
       const datos = await rendimientoPersonasService.getDetallesPersona(
