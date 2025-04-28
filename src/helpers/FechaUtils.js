@@ -114,6 +114,7 @@ const FechaUtils = {
   obtenerRangoMes: (año, mes) => {
     const primerDiaMes = new Date(año, mes, 1);
     const ultimoDiaMes = new Date(año, mes + 1, 0);
+    console.log("fechautils", primerDiaMes, ultimoDiaMes);
 
     return {
       inicio: primerDiaMes.toLocaleDateString("es-ES", {

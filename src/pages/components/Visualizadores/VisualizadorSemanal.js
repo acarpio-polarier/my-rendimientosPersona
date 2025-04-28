@@ -13,14 +13,11 @@ import { colors } from "../../../../styles/base";
 import FechaUtils from "../../../helpers/FechaUtils";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 import DetalleRegistros from "../DetalleRegistros";
-import { rendimientoPersonasService } from "../../../services/RendimientoPersonaService";
 import { PERSONA_ID } from "../../Index";
 
 // Constantes
 
-const TOKENS_DISPONIBLES = Math.floor(Math.random() * 100);
 const UMBRAL_DIFERENCIA_RENDIMIENTO = 0.01;
-const screen_height = Dimensions.get("window").height;
 
 /**
  * Componente que visualiza el rendimiento en una vista semanal
@@ -51,12 +48,15 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       rangoPeriodo
     );
 
-    if (!data || data.length === 0) {
-      setDiasSemana([]);
-      setDiaSeleccionado(null);
-      setCargando(false);
-      return;
-    }
+    console.log(
+      "VS const",
+      "diasSemana",
+      diasSemana,
+      "cargando",
+      cargando,
+      "tokensDia",
+      tokensDia
+    );
 
     const datosAgrupados = Array.isArray(data[0].data)
       ? data
@@ -64,7 +64,13 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
 
     setDatosPorDia(datosAgrupados);
     procesarDatosSemana(datosAgrupados);
-  }, [data, semanaActual, rangoPeriodo]);
+    console.log(
+      "datosAgrupados",
+      datosAgrupados,
+      "semana Actual",
+      semanaActual
+    );
+  }, [data, semanaActual]);
 
   // calcular los tokens por dia
   useEffect(() => {
@@ -96,6 +102,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
    */
   const obtenerEstadisticasDia = (datosDia) => {
     if (!datosDia || !datosDia.data || datosDia.data.length === 0) {
+      console.log("VS datosDia", datosDia);
       return null;
     }
 
@@ -162,6 +169,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
    */
   const procesarDatosSemana = (datosAgrupados) => {
     setCargando(true);
+    console.log("VS procesandoDatos datosAgrupados", datosAgrupados);
 
     try {
       const dias = generarDiasSemana(datosAgrupados);
@@ -178,6 +186,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       if (primerDiaConDatos) {
         setDiaSeleccionado(primerDiaConDatos.fechaFormateada);
       }
+      console.log("VS procesandoDatos DiasSemana", diasConMejorMarcado);
     } catch (error) {
       console.error("Error al procesar datos de la semana:", error);
       setDiasSemana([]);
@@ -319,6 +328,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
 
   // Componente para mostrar detalles de un día seleccionado
   const DetallesDia = ({ dia }) => {
+    console.log("VS dia", dia);
     if (!dia || !dia.tieneDatos) {
       return <MensajeSinDatos mensaje="No hay datos para este día" />;
     }
@@ -430,15 +440,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
 
       {/* Detalles del día seleccionado */}
       <View style={styles.detalleContainer}>
-        {diaSeleccionado &&
-        diasSemana.find((dia) => dia.fechaFormateada === diaSeleccionado) ? (
-          <DetallesDia
-            dia={diasSemana.find(
-              (dia) => dia.fechaFormateada === diaSeleccionado
-            )}
-          />
-        ) : (
-          //aqui
+        {diasSemana.length > 0 && diaSeleccionado && (
           <DetallesDia
             dia={diasSemana.find(
               (dia) => dia.fechaFormateada === diaSeleccionado

@@ -14,9 +14,10 @@ const DetalleRegistros = ({ dia = [] }) => {
   const [tokensRegistro, setTokensRegistro] = useState([]);
   console.log("dia", dia);
   const formatearHora = (fecha) => {
+    console.log("DetalleRegistros fecha", fecha);
     const date = new Date(fecha);
-    const horas = date.getHours().toString().padStart(2, "0");
-    const minutos = date.getMinutes().toString().padStart(2, "0");
+    const horas = date.getUTCHours().toString().padStart(1, "0");
+    const minutos = date.getUTCMinutes().toString().padStart(2, "0");
     return `${horas}:${minutos}`;
   };
 
@@ -25,6 +26,7 @@ const DetalleRegistros = ({ dia = [] }) => {
 
     const cargarDatos = async () => {
       const soloFecha = new Date(dia[0]?.fechaIni).toISOString().split("T")[0];
+      console.log("DetalleRegistros soloFecha", soloFecha);
 
       const datos = await RendimientoUtils.getTokensPersona(
         PERSONA_ID,

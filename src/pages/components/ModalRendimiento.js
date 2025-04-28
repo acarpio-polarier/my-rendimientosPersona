@@ -14,7 +14,7 @@ import {
 import Modal from "react-native-modal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../styles/base";
-import { BlurView } from "expo-blur"; // Importación correcta de BlurView
+// import { BlurView } from "expo-blur"; // Importación correcta de BlurView
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const deviceWidth = Dimensions.get("window").width;
@@ -37,7 +37,7 @@ const ModalRendimiento = ({
   containerStyle,
   headerBackgroundColor = colors.primary,
   headerTextColor = "white",
-  blurIntensity = "light",
+  // blurIntensity = "light",
 }) => {
   // Creamos un valor animado para el deslizamiento
   const pan = useRef(new Animated.ValueXY()).current;

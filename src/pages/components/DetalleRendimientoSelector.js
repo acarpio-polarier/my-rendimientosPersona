@@ -97,7 +97,7 @@ export default function DetalleRendimientoSelector({
     } else {
       nuevoRango = DateUtils.obtenerRangoMes(anioSeleccionado, mesSeleccionado);
 
-      // Caché medio fake para no hacer llamadas a la api cada dos por tres
+      // Caché para no hacer llamadas a la api cada dos por tres
       if (datosCache[anioSeleccionado]) {
         console.log(`Usando datos en caché para el año ${anioSeleccionado}`);
         setDatosAnuales(datosCache[anioSeleccionado]);
@@ -211,6 +211,7 @@ export default function DetalleRendimientoSelector({
     }
 
     if (!rangoPeriodo || !rangoPeriodo.inicioIso) {
+      console.log("rangoPeriodo", rangoPeriodo);
       return FechaUtils.nombresMesesCorto[new Date().getMonth()];
     }
 
@@ -289,6 +290,8 @@ export default function DetalleRendimientoSelector({
     if (modo === "semanal") {
       if (seleccionActual > 0) {
         const nuevaSeleccion = seleccionActual - 1;
+        console.log("seleccion actual", seleccionActual, nuevaSeleccion);
+        console.log("nuevaSeleccion", nuevaSeleccion);
         setSeleccionActual(nuevaSeleccion);
         // Notificar al componente padre del cambio
       }
@@ -375,7 +378,6 @@ export default function DetalleRendimientoSelector({
       );
     } else {
       // Modo anual (ahora por mes)
-
       if (detalleRegistrosVisible && selectedDia) {
         return <DetalleRegistros dia={registroDia} />;
       }
@@ -497,7 +499,7 @@ export default function DetalleRendimientoSelector({
   );
 
   // calcular el rendimiento por mes
-  const rendimientoAcumuladoPorMes = (intervalo) => {
+  const rendimientoAcumulado = (intervalo) => {
     if (intervalo === "mensual") {
       const infoPorMes = datosPorMes.infoPorMes;
       const infoMesActual = infoPorMes?.[mesSeleccionado]?.info;
@@ -509,7 +511,6 @@ export default function DetalleRendimientoSelector({
       console.log("infoPorMes", infoPorMes);
       console.log("infoMesActual", infoMesActual);
       console.log("rendimiento Mensual", rendimientoMensual);
-      // console.log("rendimientoAcumuladoPorMes", rendimientoAcumuladoPorMes);
       if (rendimientoMensual === "NaN") return 0;
       return rendimientoMensual;
     }
@@ -542,10 +543,10 @@ export default function DetalleRendimientoSelector({
     return 0;
   };
   const colorProgreso = RendimientoUtils.determinarColorProgreso(
-    rendimientoAcumuladoPorMes()
+    rendimientoAcumulado()
   );
   const textoEstado = RendimientoUtils.determinarTextoEstado(
-    rendimientoAcumuladoPorMes()
+    rendimientoAcumulado()
   );
   const getColor = (valor) => {
     console.log("valor", valor);
@@ -553,7 +554,7 @@ export default function DetalleRendimientoSelector({
     if (valor >= 90) return colors.success;
     return colors.danger;
   };
-  const rendimientoTargeta = rendimientoAcumuladoPorMes(intervalo);
+  const rendimientoTargeta = rendimientoAcumulado(intervalo);
 
   const renderizadoTargetasInfo = () => {
     console.log("intervalo", intervalo);
@@ -618,6 +619,9 @@ export default function DetalleRendimientoSelector({
 }
 
 const styles = StyleSheet.create({
+  backgroundColorRed: {
+    backgroundColor: "red",
+  },
   contenedor: {
     width: "100%",
     alignSelf: "center",
