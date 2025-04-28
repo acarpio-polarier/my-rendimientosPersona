@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
-        <Text style={styles.headerText}>myRendimiento</Text>
+        <Text style={styles.headerText}>misTokens</Text>
       </View>
       <ScrollView style={{ height: "92%", paddingBottom: 100 }}>
         <View>
