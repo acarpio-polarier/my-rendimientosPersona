@@ -97,6 +97,29 @@ const RendimientoUtils = {
   },
 
   /**
+   * Calcula los detalles de una persona por fecha
+   * @param {string} idPersona - Id de la persona
+   * @param {string} fechaInicio - Fecha de inicio del filtro
+   * @param {string} fechaFin - Fecha del final del turno
+   * @returns {Object} Objeto con estadísticas {TiempoTrabajado, TotalPrendas, MediaPrendasHora}
+   */
+
+  getDetallesPersona: async (idPersona, fechaInicio, fechaFin) => {
+    try {
+      console.log("rendimiento utils DP", idPersona, fechaInicio, fechaFin);
+      const datos = await rendimientoPersonasService.getDetallesPersona(
+        idPersona,
+        fechaInicio,
+        fechaFin
+      );
+      console.log("rendimiento utils detallesPersona", datos);
+      return datos;
+    } catch (error) {
+      console.log("Error al obtener DetallesPersona", error);
+    }
+  },
+
+  /**
    * Calcula estadísticas básicas para un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento
    * @param {string} campoRendimiento - Nombre del campo que contiene el valor de rendimiento en el visualizador.
