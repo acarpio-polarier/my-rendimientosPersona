@@ -49,10 +49,10 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
   };
 
   if (!horaCargada) {
-    return null;
+    return <View></View>;
   }
   return (
-    <View style={[styles.contenidoVisualizacion, cargando && styles.cargando]}>
+    <View style={styles.contenidoVisualizacion}>
       <View style={styles.seccionMetrica}>
         <Text style={styles.tituloMetrica}>Horas Trabajadas</Text>
         <Text style={styles.valorMetrica}>{mostrarHoras()}</Text>
