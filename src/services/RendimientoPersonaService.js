@@ -12,6 +12,7 @@ export const rendimientoPersonasService = {
   getTokensPersona,
   getTokensPersonaPorFecha,
   getResumenTokensPersona,
+  getDetallesPersona,
 
   //Llamada
 };
@@ -144,6 +145,40 @@ function getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin) {
       .then(handleResponse)
       .then((data) => {
         // resolve(data);
+        resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function getDetallesPersona(idPersona, fechaIni, fechaFin) {
+  console.log(
+    connectionConstants.ODATA_URL +
+      "getDetallesPersona" +
+      "?idPersona=" +
+      idPersona +
+      "&fechaIni=" +
+      fechaIni +
+      "&fechaFin=" +
+      fechaFin,
+    requestOptions("GET")
+  );
+  return new Promise((resolve, reject) => {
+    fetchWithTimeout(
+      connectionConstants.ODATA_URL +
+        "getDetallesPersona" +
+        "?idPersona=" +
+        idPersona +
+        "&fechaIni=" +
+        fechaIni +
+        "&fechaFin=" +
+        fechaFin,
+      requestOptions("GET")
+    )
+      .then(handleResponse)
+      .then((data) => {
         resolve(data);
       })
       .catch((ex) => {
