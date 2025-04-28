@@ -54,7 +54,7 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
   return (
     <View style={styles.contenidoVisualizacion}>
       <View style={styles.seccionMetrica}>
-        <Text style={styles.tituloMetrica}>Horas Trabajadas</Text>
+        <Text style={styles.tituloMetrica}>Tiempo en máquina</Text>
         <Text style={styles.valorMetrica}>{mostrarHoras()}</Text>
       </View>
 
@@ -62,14 +62,14 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
 
       <View style={styles.seccionMetrica}>
         <Text style={styles.tituloMetrica}>Total Prendas</Text>
-        <Text style={styles.valorMetrica}>{totalPrendas}</Text>
+        <Text style={styles.valorMetrica}>{`${totalPrendas}`}</Text>
       </View>
 
       <View style={styles.divisor} />
 
       <View style={styles.seccionMetrica}>
         <Text style={styles.tituloMetrica}>Media Prendas/Hora</Text>
-        <Text style={styles.valorMetrica}>{mediaPrendasHora}</Text>
+        <Text style={styles.valorMetrica}>{`${mediaPrendasHora}`}</Text>
       </View>
     </View>
   );
@@ -77,10 +77,12 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
 
 const styles = StyleSheet.create({
   contenidoVisualizacion: {
-    padding: 15,
+    padding: "5%",
     opacity: 1,
     transition: "opacity 0.3s ease-in-out",
-    width: "100%",
+    width: "95%",
+    display: "flex",
+    alignSelf: "center",
   },
   cargando: {
     opacity: 0.5,
@@ -97,12 +99,12 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   tituloMetrica: {
-    fontSize: 20,
+    fontSize: 17,
     color: "#333",
     fontWeight: "500",
   },
   valorMetrica: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "bold",
     color: colors.primary,
   },
