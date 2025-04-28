@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   contenido: {
-    padding: 10,
+    paddingTop: 10,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -403,8 +403,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    marginVertical: 5,
-    paddingVertical: 10,
+    marginVertical: 0,
+    paddingTop: 10,
   },
   progressCircleContainer: {
     height: 120,

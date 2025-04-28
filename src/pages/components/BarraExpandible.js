@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   contenidoExpandible: {
     backgroundColor: "white",
-    maxHeight: 300,
+    maxHeight: 250,
     padding: 0,
   },
   mensajeSinDatos: {
