@@ -233,31 +233,21 @@ export default function DetalleRendimientoSelector({
     try {
       console.log(`Cargando datos: ${fechaInicio} - ${fechaFin}`);
 
-      // Si tenemos datos iniciales y estamos en la semana actual, los usamos
-      if (
-        seleccionActual === 0 &&
-        datosInicialesPorDia &&
-        datosInicialesPorDia.length > 0
-      ) {
-        setDatosPorDia(datosInicialesPorDia);
-      } else {
-        // En otro caso, cargar datos para la semana seleccionada
-        const datos =
-          await rendimientoPersonasService.getRendimientoPersonaMaquina(
-            PERSONA_ID,
-            fechaInicio,
-            fechaFin
-          );
+      // Cargar datos para la semana seleccionada desde la API
+      const datos =
+        await rendimientoPersonasService.getRendimientoPersonaMaquina(
+          PERSONA_ID,
+          fechaInicio,
+          fechaFin
+        );
 
-        if (datos && datos.length > 0) {
-          // Agrupar datos por día
-          const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
-          console.log("Datos agrupados:", datosAgrupados.length, "días");
-          setDatosPorDia(datosAgrupados);
-        } else {
-          console.log("No hay datos para esta semana");
-          setDatosPorDia([]);
-        }
+      if (datos && datos.length > 0) {
+        const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
+        console.log("Datos agrupados:", datosAgrupados.length, "días");
+        setDatosPorDia(datosAgrupados);
+      } else {
+        console.log("No hay datos para esta semana");
+        setDatosPorDia([]);
       }
     } catch (error) {
       console.error("Error al cargar datos:", error);
