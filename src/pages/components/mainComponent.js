@@ -4,7 +4,7 @@ import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
 import { colors } from "../../../styles/base";
 
-export const ID_PERSONA = 1526;
+export const ID_PERSONA = 6666;
 
 const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);

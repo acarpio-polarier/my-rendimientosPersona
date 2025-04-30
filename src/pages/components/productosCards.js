@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
+  Animated,
   View,
   StyleSheet,
   Text,
@@ -25,6 +26,40 @@ const imageMap = {
   "noimage.png": noimage,
 };
 
+const EtiquetaAnimada = () => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 150,
+      useNativeDriver: true,
+    }).start();
+
+    return () => {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    };
+  }, []);
+
+  return (
+    <Animated.View style={[styles.etiquetaBackground, { opacity: fadeAnim }]}>
+      <View style={styles.etiquetaSaldoInsuficiente}>
+        <MaterialCommunityIcons
+          name="alert"
+          size={20}
+          color={"white"}
+          style={styles.etiquetaIcono}
+        />
+        <Text style={styles.etiquetaTexto}>Saldo Insuficiente</Text>
+      </View>
+    </Animated.View>
+  );
+};
+
 const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
 
@@ -47,19 +82,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
             <Text style={styles.esNuevoLabel}>Nuevo</Text>
           </View>
         )}
-        {!puedeCanjear && (
-          <View style={styles.etiquetaBackground}>
-            <View style={styles.etiquetaSaldoInsuficiente}>
-              <MaterialCommunityIcons
-                name="alert"
-                size={20}
-                color={"white"}
-                style={styles.etiquetaIcono}
-              />
-              <Text style={styles.etiquetaTexto}>Saldo Insuficiente</Text>
-            </View>
-          </View>
-        )}
+        {!puedeCanjear && <EtiquetaAnimada />}
         <View style={styles.foto}>
           <Image
             source={imageMap[item.foto] || noimage}
