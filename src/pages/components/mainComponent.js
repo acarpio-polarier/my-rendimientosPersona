@@ -10,6 +10,7 @@ const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  //Llamada a la API ( Pendiente de externalizar )
   useEffect(() => {
     const datasourceTokens = async () => {
       try {
@@ -27,7 +28,7 @@ const MainComponent = () => {
     };
 
     datasourceTokens();
-  }, []);
+  }, [dataTokens]);
 
   if (loading) {
     return (

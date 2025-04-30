@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import ModalFiltro from "./modalFiltro";
 import ProductosCards from "./productosCards";
@@ -8,6 +8,7 @@ import token from "../fotos/token.png";
 
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
   const [visible, setVisible] = useState(false);
+  const [tokens, setTokens] = useState(dataTokens);
   const [filtros, setFiltros] = useState({
     categoria: null,
     orden: null,
@@ -16,11 +17,13 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
     destacado: 0,
   });
 
+  //El componente recibe desde modalFiltro un objeto con las props de los filtros
   const aplicarFiltros = (valores) => {
     console.log("Filtros recibidos a ComponenteFiltro:", valores);
     setFiltros(valores);
   };
 
+  //Aqui recoge los datos y aplica los filtros, los cuales pasa a productosCards
   const filtrarDatos = () => {
     let filtrado = data;
 
@@ -28,9 +31,11 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
     const [minPrecio, maxPrecio] = filtros.precioRango;
     const canjeable = filtros.canjeable;
 
-    if (filtros.orden === 2) {
+    if (filtros.orden === 1) {
+      filtrado = filtrado.filter((item) => item.destacado === 1);
+    } else if (filtros.orden === 2) {
       filtrado = [...filtrado].sort((a, b) => a.price - b.price);
-    } else if (filtros.orden === 3) {
+    } else if (filtros.orden == 3) {
       filtrado = [...filtrado].sort((a, b) => b.price - a.price);
     }
 
@@ -69,14 +74,19 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
       orden: null,
       precioRango: [0, 1000],
       canjeable: false,
+      destacado: 0,
     });
   };
+
+  useEffect(() => {
+    setTokens(dataTokens);
+  }, [dataTokens]);
 
   return (
     <View style={styles.contenedor}>
       <View style={styles.contenedorToken}>
         <Image style={styles.tokenIcono} source={token} />
-        <Text style={styles.tokenLabel}>Tokens: {dataTokens}</Text>
+        <Text style={styles.tokenLabel}>Tokens: {tokens}</Text>
       </View>
       <View style={styles.contenedorBotones}>
         <TouchableOpacity style={styles.boton} onPress={abrirPopup}>

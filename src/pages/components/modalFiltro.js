@@ -12,22 +12,26 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [precioRango, setPrecioRango] = useState([10, 500]);
   const [modalVisible, setModalVisible] = useState(visible);
   const [canjeable, setCanjeable] = useState(false);
+  const [destacado, setDestacado] = useState(0);
 
+  //Opciones de ordenes ( ampliable )
   const opcionesOrden = [
     { id: 1, label: "Novedades" },
     { id: 2, label: "Precio As." },
     { id: 3, label: "Precio Des." },
   ];
 
-  const handleSeleccionOrden = (id) => {
-    setOrden((prev) => (prev === id ? 0 : id));
-  };
-
+  //Opciones de categorias ( se podria hacer mas optimo, recogiendo solo los datos de cat que llegan de la db )
   const opcionesCategoria = [
     { id: 1, label: "Experiencias" },
     { id: 2, label: "Servicios" },
     { id: 3, label: "Otros" },
   ];
+
+  //Handlers para desmarcar con doble pulsacion
+  const handleSeleccionOrden = (id) => {
+    setOrden((prev) => (prev === id ? 0 : id));
+  };
 
   const handleSeleccionCategoria = (id) => {
     setCategoria((prev) => (prev === id ? 0 : id));
@@ -37,6 +41,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
     setCanjeable(!canjeable);
   };
 
+  //Visibilidad del modal ( el popup de filtros )
   useEffect(() => {
     if (visible) {
       setModalVisible(true);
@@ -50,8 +55,9 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
     }, 300);
   };
 
+  //Funcion para el boton de confirmar ( aplica filtros )
   const confirmarFiltro = () => {
-    const filtros = { orden, categoria, precioRango, canjeable };
+    const filtros = { orden, categoria, precioRango, canjeable, destacado };
     console.log("Filtro aplicado en popup:", filtros);
     onAplicarFiltros(filtros);
     handleClose();

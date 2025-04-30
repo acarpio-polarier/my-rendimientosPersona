@@ -6,6 +6,7 @@ const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
   if (!visible) return null;
 
   const confirmarPopup = async () => {
+    //Llamada a la API para el canjeo de Tokens
     try {
       const response = await fetch(
         `https://localhost:7136/odata/solicitarCanje?idPersona=${ID_PERSONA}&tokensASolicitar=${product.price}`,

@@ -17,6 +17,7 @@ import { colors } from "../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import token from "../fotos/token.png";
 
+//Añadir logica de cambio de base 64 a imagen
 const imageMap = {
   "foto1.jpg": foto1,
   "foto2.jpg": foto2,
