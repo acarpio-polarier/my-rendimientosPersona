@@ -31,7 +31,7 @@ function getTokensPersona(idPersona, fechaIni, fechaFin) {
   );
 
   return new Promise((resolve, reject) => {
-    fetchWithTimeout(
+    fetch(
       connectionConstants.ODATA_URL +
         "getTokensPersona" +
         "?idPersona=" +
@@ -66,7 +66,7 @@ function getTokensPersonaPorFecha(idPersona, fechaIni, fechaFin) {
   );
 
   return new Promise((resolve, reject) => {
-    fetchWithTimeout(
+    fetch(
       connectionConstants.ODATA_URL +
         "getTokensPersonaPorFecha" +
         "?idPersona=" +
@@ -97,7 +97,7 @@ function getResumenTokensPersona(idPersona) {
   );
 
   return new Promise((resolve, reject) => {
-    fetchWithTimeout(
+    fetch(
       connectionConstants.ODATA_URL +
         "getTokensPersona" +
         "?idPersona=" +
@@ -131,7 +131,7 @@ function getRendimientoPersonaMaquina(idPersona, fechaIni, fechaFin) {
   );
 
   return new Promise((resolve, reject) => {
-    fetchWithTimeout(
+    fetch(
       connectionConstants.ODATA_URL +
         "getRendimientoPersonaMaquinav3" +
         "?idPersona=" +
@@ -166,7 +166,7 @@ function getDetallesPersona(idPersona, fechaIni, fechaFin) {
     requestOptions("GET")
   );
   return new Promise((resolve, reject) => {
-    fetchWithTimeout(
+    fetch(
       connectionConstants.ODATA_URL +
         "getDetallesPersona" +
         "?idPersona=" +
