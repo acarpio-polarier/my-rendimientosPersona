@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Switch } from "react-native-paper";
-import MultiSlider from "@ptomasroos/react-native-multi-slider";
-import ModalRendimiento from "./../../components/ModalRendimiento";
+import { modalFiltro } from "../../../styles/paginaCanjePuntos";
 import { colors } from "../../../styles/base";
 import token from "../fotos/token.png";
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import ModalRendimiento from "./../../components/ModalRendimiento";
 
 const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [orden, setOrden] = useState(0);
@@ -71,74 +72,74 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
       blurIntensity="light"
     >
       {/* FILTRO ORDEN */}
-      <View style={styles.contenedorFiltro}>
-        <View style={styles.label}>
+      <View style={modalFiltro.contenedorFiltro}>
+        <View style={modalFiltro.label}>
           <Text style={{ fontWeight: "bold" }}>Ordenar por:</Text>
         </View>
 
-        <View style={styles.contenedorBotones}>
+        <View style={modalFiltro.contenedorBotones}>
           {opcionesOrden.map((opcion) => (
             <TouchableOpacity
               key={opcion.id}
               style={[
-                styles.botonFiltro,
-                orden === opcion.id && styles.botonActivo,
+                modalFiltro.botonFiltro,
+                orden === opcion.id && modalFiltro.botonActivo,
               ]}
               onPress={() => handleSeleccionOrden(opcion.id)}
             >
-              <Text style={styles.labelBoton}>{opcion.label}</Text>
+              <Text style={modalFiltro.labelBoton}>{opcion.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
 
       {/* FILTRO CATEGORIA */}
-      <View style={styles.contenedorFiltro}>
-        <View style={styles.label}>
+      <View style={modalFiltro.contenedorFiltro}>
+        <View style={modalFiltro.label}>
           <Text style={{ fontWeight: "bold" }}>Filtrar por:</Text>
         </View>
 
-        <View style={styles.contenedorBotones}>
+        <View style={modalFiltro.contenedorBotones}>
           {opcionesCategoria.map((opcion) => (
             <TouchableOpacity
               key={opcion.id}
               style={[
-                styles.botonFiltro,
-                categoria === opcion.id && styles.botonActivo,
+                modalFiltro.botonFiltro,
+                categoria === opcion.id && modalFiltro.botonActivo,
               ]}
               onPress={() => handleSeleccionCategoria(opcion.id)}
             >
-              <Text style={styles.labelBoton}>{opcion.label}</Text>
+              <Text style={modalFiltro.labelBoton}>{opcion.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
 
       {/* FILTRO PRECIO */}
-      <View style={styles.contenedorFiltroPrecio}>
-        <View style={styles.label}>
-          <Text style={styles.labelText}>Precio:</Text>
+      <View style={modalFiltro.contenedorFiltroPrecio}>
+        <View style={modalFiltro.label}>
+          <Text style={modalFiltro.labelText}>Precio:</Text>
         </View>
 
-        <View style={styles.contenedorTexto}>
-          <View style={styles.contenedorPrecio}>
+        <View style={modalFiltro.contenedorTexto}>
+          <View style={modalFiltro.contenedorPrecio}>
             <Text>Precio más bajo</Text>
-            <View style={styles.contenedorTextoIcono}>
-              <Image style={styles.tokenIcono} source={token} />
-              <Text style={styles.valor}>{precioRango[0]}</Text>
+            <View style={modalFiltro.contenedorTextoIcono}>
+              <Image style={modalFiltro.tokenIcono} source={token} />
+              <Text style={modalFiltro.valor}>{precioRango[0]}</Text>
             </View>
           </View>
 
-          <View style={styles.contenedorPrecio}>
+          <View style={modalFiltro.contenedorPrecio}>
             <Text>Precio más alto</Text>
-            <View style={styles.contenedorTextoIcono}>
-              <Image style={styles.tokenIcono} source={token} />
-              <Text style={styles.valor}>{precioRango[1]}</Text>
+            <View style={modalFiltro.contenedorTextoIcono}>
+              <Image style={modalFiltro.tokenIcono} source={token} />
+              <Text style={modalFiltro.valor}>{precioRango[1]}</Text>
             </View>
           </View>
         </View>
 
-        <View style={styles.sliderContainer}>
+        <View style={modalFiltro.sliderContainer}>
           <MultiSlider
             values={precioRango}
             onValuesChange={setPrecioRango}
@@ -154,11 +155,11 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
       </View>
 
       {/* FILTRO SWITCH */}
-      <View style={styles.contenedorCanjeableFiltro}>
-        <View style={styles.contenedorItems}>
-          <Text style={styles.label}>Canjeable: </Text>
+      <View style={modalFiltro.contenedorCanjeableFiltro}>
+        <View style={modalFiltro.contenedorItems}>
+          <Text style={modalFiltro.label}>Canjeable: </Text>
           <Switch
-            style={styles.switch}
+            style={modalFiltro.switch}
             value={canjeable}
             onValueChange={onSwitchPulsado}
             color={colors.primary}
@@ -167,16 +168,16 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
       </View>
 
       {/* CONTENEDOR PRINCIPAL */}
-      <View style={styles.fondo}>
-        <View style={styles.contenedor}>
-          <View style={styles.linea} />
+      <View style={modalFiltro.fondo}>
+        <View style={modalFiltro.contenedor}>
+          <View style={modalFiltro.linea} />
 
-          <View style={styles.barraInferior}>
+          <View style={modalFiltro.barraInferior}>
             <TouchableOpacity
-              style={styles.botonAplicar}
+              style={modalFiltro.botonAplicar}
               onPress={confirmarFiltro}
             >
-              <Text style={styles.iconoBoton}>Aplicar Filtros</Text>
+              <Text style={modalFiltro.iconoBoton}>Aplicar Filtros</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -184,140 +185,5 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
     </ModalRendimiento>
   );
 };
-
-const styles = StyleSheet.create({
-  barraSuperior: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-  barraInferior: {
-    flexDirection: "row",
-    justifyContent: "center",
-    padding: 10,
-  },
-  botonAtras: {
-    backgroundColor: colors.primary,
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  botonReiniciar: {
-    backgroundColor: "brown",
-    width: 70,
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  botonAplicar: {
-    backgroundColor: colors.primary,
-    width: 200,
-    height: 50,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  iconoBoton: {
-    color: colors.white,
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  linea: {
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
-  },
-  // FiltroOrdenar y FiltroCategoria
-  contenedorFiltro: {
-    width: "100%",
-    alignSelf: "center",
-    marginVertical: 10,
-  },
-  label: {
-    marginLeft: 10,
-    marginBottom: 5,
-  },
-  contenedorBotones: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-  },
-  botonFiltro: {
-    backgroundColor: colors.primary_light,
-    width: "33%",
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.6,
-  },
-  botonActivo: {
-    backgroundColor: colors.primary,
-    opacity: 1,
-  },
-  labelBoton: {
-    color: "white",
-  },
-  // FiltroPrecio
-  contenedorFiltroPrecio: {
-    width: "100%",
-    alignSelf: "center",
-    marginVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
-    paddingHorizontal: 10,
-  },
-  labelText: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  contenedorTexto: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  contenedorPrecio: {
-    alignItems: "center",
-  },
-  contenedorTextoIcono: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "end",
-    marginTop: 5,
-  },
-  valor: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  sliderContainer: {
-    alignSelf: "center",
-    marginBottom: 5,
-  },
-  tokenIcono: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-  },
-  // Switch canjeable
-  contenedorCanjeableFiltro: {
-    width: "100%",
-    alignSelf: "center",
-    marginVertical: 10,
-  },
-  contenedorItems: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 5,
-  },
-  switch: {
-    height: 20,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 15,
-  },
-});
 
 export default ModalFiltro;

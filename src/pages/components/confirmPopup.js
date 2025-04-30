@@ -1,6 +1,6 @@
 import React from "react";
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { colors } from "../../../styles/base";
+import { Modal, View, Text, TouchableOpacity } from "react-native";
+import { confirmPopup } from "../../../styles/paginaCanjePuntos";
 
 const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
   if (!visible) return null;
@@ -39,24 +39,24 @@ const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
 
   return (
     <Modal transparent visible={visible} animationType="fade">
-      <View style={styles.contenedorMain}>
-        <View style={styles.popup}>
-          <Text style={styles.titulo}>Confirmar Canje</Text>
-          <Text style={styles.mensaje}>
+      <View style={confirmPopup.contenedorMain}>
+        <View style={confirmPopup.popup}>
+          <Text style={confirmPopup.titulo}>Confirmar Canje</Text>
+          <Text style={confirmPopup.mensaje}>
             Estás a punto de canjear {product.title} por {product.price} tokens
           </Text>
-          <View style={styles.contenedorBotones}>
+          <View style={confirmPopup.contenedorBotones}>
             <TouchableOpacity
               onPress={cerrarPopup}
-              style={[styles.botonBase, styles.cancelar]}
+              style={[confirmPopup.botonBase, confirmPopup.cancelar]}
             >
-              <Text style={styles.textoBotones}>Cancelar</Text>
+              <Text style={confirmPopup.textoBotones}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={confirmarPopup}
-              style={[styles.botonBase, styles.confirmar]}
+              style={[confirmPopup.botonBase, confirmPopup.confirmar]}
             >
-              <Text style={styles.textoBotones}>Confirmar</Text>
+              <Text style={confirmPopup.textoBotones}>Confirmar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -64,51 +64,5 @@ const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  contenedorMain: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  popup: {
-    width: 300,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 20,
-  },
-  titulo: {
-    fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  mensaje: {
-    marginBottom: 20,
-    fontSize: 14,
-    textAlign: "center",
-  },
-  contenedorBotones: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  botonBase: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginLeft: 10,
-  },
-  cancelar: {
-    backgroundColor: colors.gray,
-  },
-  confirmar: {
-    backgroundColor: colors.primary,
-  },
-  textoBotones: {
-    color: colors.white,
-    fontWeight: "bold",
-  },
-});
 
 export default ConfirmPopup;

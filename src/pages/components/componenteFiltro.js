@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { componenteFiltro } from "../../../styles/paginaCanjePuntos";
 import ModalFiltro from "./modalFiltro";
 import ProductosCards from "./productosCards";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
 import token from "../fotos/token.png";
 
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
@@ -83,20 +83,23 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
   }, [dataTokens]);
 
   return (
-    <View style={styles.contenedor}>
-      <View style={styles.contenedorToken}>
-        <Image style={styles.tokenIcono} source={token} />
-        <Text style={styles.tokenLabel}>Tokens: {tokens}</Text>
+    <View style={componenteFiltro.contenedor}>
+      <View style={componenteFiltro.contenedorToken}>
+        <Image style={componenteFiltro.tokenIcono} source={token} />
+        <Text style={componenteFiltro.tokenLabel}>Tokens: {tokens}</Text>
       </View>
-      <View style={styles.contenedorBotones}>
-        <TouchableOpacity style={styles.boton} onPress={abrirPopup}>
-          <Text style={styles.labelBoton}>Filtros</Text>
+      <View style={componenteFiltro.contenedorBotones}>
+        <TouchableOpacity style={componenteFiltro.boton} onPress={abrirPopup}>
+          <Text style={componenteFiltro.labelBoton}>Filtros</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botonFilter} onPress={reiniciarFiltros}>
+        <TouchableOpacity
+          style={componenteFiltro.botonFilter}
+          onPress={reiniciarFiltros}
+        >
           <MaterialCommunityIcons name="filter-off" size={20} color={"white"} />
         </TouchableOpacity>
       </View>
-      <View style={styles.linea}></View>
+      <View style={componenteFiltro.linea}></View>
       <ModalFiltro
         visible={visible}
         cerrarPopup={cerrarPopup}
@@ -110,69 +113,5 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  contenedor: {
-    width: "100%",
-    alignSelf: "center",
-    marginTop: -5,
-  },
-
-  contenedorBotones: {
-    flexDirection: "row",
-  },
-
-  linea: {
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
-  },
-
-  boton: {
-    backgroundColor: colors.primary,
-    width: "20%",
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    marginLeft: 20,
-  },
-
-  botonFilter: {
-    backgroundColor: colors.primary,
-    width: "10%",
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    marginLeft: 5,
-  },
-
-  labelBoton: {
-    color: "white",
-  },
-
-  contenedorToken: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "end",
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  tokenIcono: {
-    width: 20,
-    height: 20,
-    marginRight: 15,
-  },
-  tokenLabel: {
-    display: "flex",
-    justifyContent: "end",
-    alignItems: "center",
-    right: 10,
-    color: colors.lightBlack,
-    fontSize: 15,
-  },
-});
 
 export default ComponenteFiltro;

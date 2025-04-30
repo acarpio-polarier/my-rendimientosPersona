@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { colors } from "../../../styles/base";
 import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
-import { colors } from "../../../styles/base";
 
-export const ID_PERSONA = 6666;
+export const ID_PERSONA = 1392;
 
 const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);

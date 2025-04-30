@@ -2,21 +2,20 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Animated,
   View,
-  StyleSheet,
   Text,
   Image,
   TouchableOpacity,
   FlatList,
 } from "react-native";
-
+import { colors } from "../../../styles/base";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { productosCards } from "../../../styles/paginaCanjePuntos";
 import foto1 from "../fotos/foto1.jpg";
 import foto2 from "../fotos/foto2.jpg";
 import foto3 from "../fotos/foto3.jpg";
 import noimage from "../fotos/noimage.png";
-import ConfirmPopup from "./confirmPopup";
-import { colors } from "../../../styles/base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import token from "../fotos/token.png";
+import ConfirmPopup from "./confirmPopup";
 
 //Añadir logica de cambio de base 64 a imagen
 const imageMap = {
@@ -46,15 +45,17 @@ const EtiquetaAnimada = () => {
   }, []);
 
   return (
-    <Animated.View style={[styles.etiquetaBackground, { opacity: fadeAnim }]}>
-      <View style={styles.etiquetaSaldoInsuficiente}>
+    <Animated.View
+      style={[productosCards.etiquetaBackground, { opacity: fadeAnim }]}
+    >
+      <View style={productosCards.etiquetaSaldoInsuficiente}>
         <MaterialCommunityIcons
           name="alert"
           size={20}
           color={"white"}
-          style={styles.etiquetaIcono}
+          style={productosCards.etiquetaIcono}
         />
-        <Text style={styles.etiquetaTexto}>Saldo Insuficiente</Text>
+        <Text style={productosCards.etiquetaTexto}>Saldo Insuficiente</Text>
       </View>
     </Animated.View>
   );
@@ -76,30 +77,30 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
     const esNuevo = item.destacado == 1;
 
     return (
-      <View style={styles.contenedor}>
+      <View style={productosCards.contenedor}>
         {esNuevo && (
-          <View style={styles.esNuevoContenedor}>
-            <Text style={styles.esNuevoLabel}>Nuevo</Text>
+          <View style={productosCards.esNuevoContenedor}>
+            <Text style={productosCards.esNuevoLabel}>Nuevo</Text>
           </View>
         )}
         {!puedeCanjear && <EtiquetaAnimada />}
-        <View style={styles.foto}>
+        <View style={productosCards.foto}>
           <Image
             source={imageMap[item.foto] || noimage}
-            style={styles.imagen}
+            style={productosCards.imagen}
             resizeMode="cover"
           />
         </View>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <View style={styles.contenedorTextoIcono}>
-          <Text style={styles.tokenLabel}>{item.price}</Text>
-          <Image style={styles.tokenIcono} source={token} />
+        <Text style={productosCards.title}>{item.title}</Text>
+        <Text style={productosCards.description}>{item.description}</Text>
+        <View style={productosCards.contenedorTextoIcono}>
+          <Text style={productosCards.tokenLabel}>{item.price}</Text>
+          <Image style={productosCards.tokenIcono} source={token} />
         </View>
-        <View style={styles.buttonContainer}>
+        <View style={productosCards.buttonContainer}>
           <TouchableOpacity
             style={[
-              styles.button,
+              productosCards.button,
               {
                 backgroundColor: puedeCanjear
                   ? colors.primary
@@ -114,7 +115,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
             }}
             disabled={!puedeCanjear}
           >
-            <Text style={styles.buttonText}>Canjear</Text>
+            <Text style={productosCards.buttonText}>Canjear</Text>
           </TouchableOpacity>
         </View>
         {idProductoSeleccionado === item.id && (
@@ -137,146 +138,13 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
       contentContainerStyle={{ paddingBottom: 20 }}
     />
   ) : (
-    <View style={styles.emptyContainer}>
-      <MaterialCommunityIcons name="alert" style={styles.emptyIcon} />
-      <Text style={styles.emptyText}>No hay productos disponibles.</Text>
+    <View style={productosCards.emptyContainer}>
+      <MaterialCommunityIcons name="alert" style={productosCards.emptyIcon} />
+      <Text style={productosCards.emptyText}>
+        No hay productos disponibles.
+      </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  contenedor: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    width: "90%",
-    alignSelf: "center",
-    shadowColor: "black",
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    overflow: "hidden",
-    marginVertical: 10,
-  },
-  title: {
-    fontSize: 23,
-    marginTop: 3,
-    padding: 10,
-    color: colors.lightBlack,
-    fontWeight: "bold",
-  },
-  description: {
-    paddingLeft: 10,
-    fontSize: 14,
-    color: colors.darkGray,
-  },
-  tokenLabel: {
-    paddingLeft: 10,
-    fontSize: 20,
-    color: colors.lightBlack,
-    marginRight: 5,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    padding: 10,
-  },
-  button: {
-    backgroundColor: colors.primary,
-    width: 60,
-    height: 30,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 13,
-  },
-  imagen: {
-    borderWidth: 2,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderColor: colors.primary,
-    width: "100%",
-    height: 120,
-  },
-  etiquetaBackground: {
-    backgroundColor: " rgba(0, 0, 0, 0.5)",
-    borderRadius: 10,
-    position: "absolute",
-    zIndex: 1,
-    width: "100%",
-    height: "100%",
-    shadowColor: "black",
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  etiquetaSaldoInsuficiente: {
-    backgroundColor: colors.primary,
-    borderRadius: 10,
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 2,
-    padding: 30,
-    left: "25%",
-    top: "30%",
-    shadowColor: "black",
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-
-  etiquetaTexto: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  etiquetaIcono: {
-    fontSize: 30,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "30%",
-  },
-  emptyText: {
-    fontSize: 18,
-    color: colors.darkGray,
-    textAlign: "center",
-  },
-  emptyIcon: {
-    fontSize: 40,
-    color: colors.darkGray,
-    textAlign: "center",
-  },
-  contenedorTextoIcono: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: 5,
-  },
-  tokenIcono: {
-    width: 20,
-    height: 20,
-  },
-  esNuevoContenedor: {
-    zIndex: 1,
-    position: "absolute",
-    backgroundColor: colors.primary,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "20%",
-    height: "10%",
-    borderBottomRightRadius: 10,
-    fontFamily: "Arial",
-  },
-  esNuevoLabel: {
-    color: "white",
-    fontSize: 15,
-  },
-});
 
 export default ProductosCards;
