@@ -20,6 +20,7 @@ const MainComponent = () => {
         const result = await response.json();
         setDataTokens(result);
         console.log("Datos desde API:", result);
+        console.log("DATOS A MANDAR:", data);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       } finally {
@@ -28,7 +29,7 @@ const MainComponent = () => {
     };
 
     datasourceTokens();
-  }, [dataTokens]);
+  }, []);
 
   if (loading) {
     return (
