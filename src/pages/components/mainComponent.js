@@ -4,11 +4,10 @@ import { colors } from "../../../styles/base";
 import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
 
-export const ID_PERSONA = 1392;
+export const ID_PERSONA = 6469;
 
 const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);
-  const [productos, setProductos] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchTokens = async () => {
