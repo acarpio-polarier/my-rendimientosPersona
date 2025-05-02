@@ -25,15 +25,15 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
 
   //Aqui recoge los datos y aplica los filtros, los cuales pasa a productosCards
   const filtrarDatos = () => {
-    let filtrado = data;
+    let filtrado = [...data];
 
     const categoria = parseInt(filtros.categoria);
     const [minPrecio, maxPrecio] = filtros.precioRango;
     const canjeable = filtros.canjeable;
 
-    if (filtros.orden === 1) {
-      filtrado = filtrado.filter((item) => item.destacado === true);
-    } else if (filtros.orden === 2) {
+    if (filtros.orden == 1) {
+      filtrado = filtrado.filter((item) => item.destacado == true);
+    } else if (filtros.orden == 2) {
       filtrado = [...filtrado].sort((a, b) => a.price - b.price);
     } else if (filtros.orden == 3) {
       filtrado = [...filtrado].sort((a, b) => b.price - a.price);

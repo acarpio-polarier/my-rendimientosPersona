@@ -9,6 +9,7 @@ export const ID_PERSONA = 6469;
 const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dataProductos, setDataProductos] = useState(data);
 
   const fetchTokens = async () => {
     try {
@@ -46,7 +47,7 @@ const MainComponent = () => {
     <View>
       <ComponenteFiltro
         dataTokens={dataTokens?.TokensDisponibles}
-        data={data}
+        data={dataProductos}
         ID_PERSONA={ID_PERSONA}
         recargarTokens={fetchTokens}
       />
