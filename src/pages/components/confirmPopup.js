@@ -1,7 +1,7 @@
 import React from "react";
+import Toast from "react-native-toast-message";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { confirmPopup } from "../../../styles/paginaCanjePuntos";
-import Toast from "react-native-toast-message";
 
 const ConfirmPopup = ({
   visible,
@@ -37,6 +37,11 @@ const ConfirmPopup = ({
 
       const data = await response.json();
       console.log("Canje exitoso:", data);
+      Toast.show({
+        type: "success",
+        text1: "Canje realizado",
+        text2: `${product.title} ha sido canjeado correctamente.`,
+      });
       await recargarTokens();
       cerrarPopup();
     } catch (error) {
