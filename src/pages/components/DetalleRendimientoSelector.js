@@ -204,6 +204,7 @@ export default function DetalleRendimientoSelector({
 
   const obtenerMesDelPeriodo = () => {
     if (modo === "anual") {
+      console.log("SRS obtenerMesDelPeriodo mesSeleccionado", mesSeleccionado);
       // Usar formato de mes corto y año
       return (
         FechaUtils.nombresMesesCorto[mesSeleccionado] + " " + anioSeleccionado
@@ -431,14 +432,25 @@ export default function DetalleRendimientoSelector({
       );
     } else {
       return (
+        //point
         <View style={styles.selectorContainer}>
-          <TouchableOpacity onPress={periodoAnterior} style={styles.button}>
-            <MaterialCommunityIcons
-              name="chevron-left"
-              size={30}
-              color={colors.primary}
-            />
-          </TouchableOpacity>
+          {mesSeleccionado === 0 ? (
+            <TouchableOpacity style={styles.button}>
+              <MaterialCommunityIcons
+                name="chevron-left"
+                size={30}
+                color={colors.secondary}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={periodoAnterior} style={styles.button}>
+              <MaterialCommunityIcons
+                name="chevron-left"
+                size={30}
+                color={colors.primary}
+              />
+            </TouchableOpacity>
+          )}
 
           <View style={styles.dateRange}>
             <Text style={styles.dateText}>
