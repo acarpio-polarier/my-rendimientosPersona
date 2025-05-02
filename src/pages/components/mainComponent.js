@@ -3,31 +3,25 @@ import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { colors } from "../../../styles/base";
 import ComponenteFiltro from "./componenteFiltro";
 import data from "../data/data.json";
+import { tokensDatasource } from "../../services/canjeTokens";
 
 export const ID_PERSONA = 1392;
 
 const MainComponent = () => {
   const [dataTokens, setDataTokens] = useState(null);
-  const [productos, setProductos] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchTokens = async () => {
-    try {
-      const response = await fetch(
-        `https://localhost:7136/odata/getResumenTokensPersona?idPersona=${ID_PERSONA}`
-      );
-      const result = await response.json();
+  const cargarTokens = async () => {
+    setLoading(true);
+    const result = await tokensDatasource(ID_PERSONA);
+    if (result) {
       setDataTokens(result);
-      console.log("Datos desde API:", result);
-    } catch (error) {
-      console.error("Error al obtener los datos:", error);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchTokens();
+    cargarTokens();
   }, []);
 
   if (loading) {
@@ -49,7 +43,7 @@ const MainComponent = () => {
         dataTokens={dataTokens?.TokensDisponibles}
         data={data}
         ID_PERSONA={ID_PERSONA}
-        recargarTokens={fetchTokens}
+        recargarTokens={cargarTokens}
       />
     </View>
   );
