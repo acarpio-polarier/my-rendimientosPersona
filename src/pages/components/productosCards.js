@@ -61,7 +61,7 @@ const EtiquetaAnimada = () => {
   );
 };
 
-const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
+const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
 
   const abrirPopup = (id) => {
@@ -124,6 +124,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA }) => {
             cerrarPopup={cerrarPopup}
             product={item}
             ID_PERSONA={ID_PERSONA}
+            recargarTokens={recargarTokens}
           />
         )}
       </View>

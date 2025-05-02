@@ -6,7 +6,7 @@ import ModalFiltro from "./modalFiltro";
 import ProductosCards from "./productosCards";
 import token from "../fotos/token.png";
 
-const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
+const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [visible, setVisible] = useState(false);
   const [tokens, setTokens] = useState(dataTokens);
   const [filtros, setFiltros] = useState({
@@ -14,7 +14,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
     orden: null,
     precioRango: [0, 1000],
     canjeable: false,
-    destacado: 0,
+    destacado: null,
   });
 
   //El componente recibe desde modalFiltro un objeto con las props de los filtros
@@ -32,7 +32,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
     const canjeable = filtros.canjeable;
 
     if (filtros.orden === 1) {
-      filtrado = filtrado.filter((item) => item.destacado === 1);
+      filtrado = filtrado.filter((item) => item.destacado === true);
     } else if (filtros.orden === 2) {
       filtrado = [...filtrado].sort((a, b) => a.price - b.price);
     } else if (filtros.orden == 3) {
@@ -74,7 +74,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
       orden: null,
       precioRango: [0, 1000],
       canjeable: false,
-      destacado: 0,
+      destacado: null,
     });
   };
 
@@ -109,6 +109,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA }) => {
         dataTokens={dataTokens}
         data={productosFiltrados}
         ID_PERSONA={ID_PERSONA}
+        recargarTokens={recargarTokens}
       />
     </View>
   );

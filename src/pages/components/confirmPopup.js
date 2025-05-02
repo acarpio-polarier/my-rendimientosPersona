@@ -2,7 +2,13 @@ import React from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { confirmPopup } from "../../../styles/paginaCanjePuntos";
 
-const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
+const ConfirmPopup = ({
+  visible,
+  cerrarPopup,
+  product,
+  ID_PERSONA,
+  recargarTokens,
+}) => {
   if (!visible) return null;
 
   const confirmarPopup = async () => {
@@ -30,7 +36,7 @@ const ConfirmPopup = ({ visible, cerrarPopup, product, ID_PERSONA }) => {
 
       const data = await response.json();
       console.log("Canje exitoso:", data);
-
+      await recargarTokens();
       cerrarPopup();
     } catch (error) {
       console.error("Error en el canje:", error);

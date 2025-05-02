@@ -13,7 +13,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const [precioRango, setPrecioRango] = useState([10, 500]);
   const [modalVisible, setModalVisible] = useState(visible);
   const [canjeable, setCanjeable] = useState(false);
-  const [destacado, setDestacado] = useState(0);
+  const [destacado, setDestacado] = useState(null);
 
   //Opciones de ordenes ( ampliable )
   const opcionesOrden = [
