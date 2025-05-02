@@ -91,7 +91,10 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       diaActual,
       diaActual
     );
-    console.log("tarjeta llamada datos", datos);
+    console.log("DB3 tarjeta llamada datos", datos);
+    console.log("DB3 Buscando tokens para:", diaSeleccionado);
+    console.log("DB3 Datos agrupados:", datosAgrupados);
+    console.log("Día actual encontrado:", diaActual);
     setTokensDia(datos?.TokensGanados ?? 0);
   };
 
@@ -110,13 +113,12 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       (a, b) => new Date(b.fechaFin) - new Date(a.fechaFin)
     );
 
-    const promedio = (
+    const promedio =
       registrosOrdenados.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
-      registrosOrdenados.length
-    ).toFixed(0);
+      registrosOrdenados.length;
 
     return {
-      promedio: promedio || 0,
+      promedio: parseFloat(promedio.toFixed(0)),
       cantidad: registrosOrdenados.length,
     };
   };
@@ -131,35 +133,41 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       (dia) => dia.tieneDatos && dia.estadisticas
     );
 
-    // Si no hay días con datos o solo hay uno, no hay "mejor día"
     if (diasConDatos.length <= 1) {
       return { mejorDiaId: null, todosIguales: true };
     }
 
-    // Comprobamos si todos tienen el mismo rendimiento
-    const primerRendimiento = diasConDatos[0]?.estadisticas?.promedio || 0;
+    const primerRendimiento = parseFloat(
+      diasConDatos[0]?.estadisticas?.promedio || 0
+    );
     const todosIguales = diasConDatos.every(
       (dia) =>
-        Math.abs((dia.estadisticas?.promedio || 0) - primerRendimiento) <
-        UMBRAL_DIFERENCIA_RENDIMIENTO
+        Math.abs(
+          parseFloat(dia.estadisticas?.promedio || 0) - primerRendimiento
+        ) < UMBRAL_DIFERENCIA_RENDIMIENTO
     );
 
-    // Si todos tienen el mismo rendimiento, no hay "mejor día"
     if (todosIguales) {
       return { mejorDiaId: null, todosIguales: true };
     }
 
-    // Encontrar el día con mejor rendimiento
     let mejorDiaId = null;
     let mejorRendimiento = -1;
 
     diasConDatos.forEach((dia) => {
-      if (dia.estadisticas && dia.estadisticas.promedio > mejorRendimiento) {
-        mejorRendimiento = dia.estadisticas.promedio;
+      const rendimiento = parseFloat(dia.estadisticas?.promedio || 0);
+      if (dia.estadisticas && rendimiento > mejorRendimiento) {
+        mejorRendimiento = rendimiento;
         mejorDiaId = dia.fechaFormateada;
       }
     });
 
+    console.log(
+      "Mejor día encontrado:",
+      mejorDiaId,
+      "con rendimiento:",
+      mejorRendimiento
+    );
     return { mejorDiaId, todosIguales: false };
   };
 
