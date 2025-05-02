@@ -223,11 +223,20 @@ const GraficoAnual = () => {
           />
         </TouchableOpacity>
         <Text style={styles.año}>{añoActual}</Text>
-        <TouchableOpacity onPress={() => cambiarAño(1)}>
+        <TouchableOpacity
+          onPress={
+            añoActual < new Date().getFullYear() ? () => cambiarAño(1) : null
+          }
+          disabled={añoActual === new Date().getFullYear()}
+        >
           <MaterialCommunityIcons
-            style={styles.flechasSelectorAño}
             name="chevron-right"
             size={30}
+            color={
+              añoActual === new Date().getFullYear()
+                ? colors.secondary
+                : colors.primary
+            }
           />
         </TouchableOpacity>
       </View>
