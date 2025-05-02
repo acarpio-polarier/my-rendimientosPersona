@@ -60,6 +60,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
   const confirmarFiltro = () => {
     const filtros = { orden, categoria, precioRango, canjeable, destacado };
     console.log("Filtro aplicado en popup:", filtros);
+
     onAplicarFiltros(filtros);
     handleClose();
   };

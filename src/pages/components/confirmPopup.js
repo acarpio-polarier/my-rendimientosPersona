@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { confirmPopup } from "../../../styles/paginaCanjePuntos";
+import Toast from "react-native-toast-message";
 
 const ConfirmPopup = ({
   visible,
