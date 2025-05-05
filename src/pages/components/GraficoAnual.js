@@ -245,7 +245,7 @@ const GraficoAnual = () => {
             size={30}
             color={
               añoActual === new Date().getFullYear()
-                ? colors.secondary
+                ? colors.lightGray
                 : colors.primary
             }
           />

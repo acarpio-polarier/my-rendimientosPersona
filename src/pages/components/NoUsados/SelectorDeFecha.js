@@ -50,7 +50,7 @@ const SelectorDeFecha = ({ label = "Fecha", onDateChange }) => {
         <MaterialCommunityIcons
           name="chevron-right"
           size={20}
-          color={colors.secondary}
+          color={colors.lightGray}
         />
       </TouchableOpacity>
 

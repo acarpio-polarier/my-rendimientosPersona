@@ -481,7 +481,7 @@ export default function DetalleRendimientoSelector({
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}
-              color={esMesActual() ? "#ccc" : colors.primary}
+              color={esMesActual() ? colors.lightGray : colors.primary}
             />
           </TouchableOpacity>
         </View>
@@ -678,7 +678,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   disabledButton: {
-    opacity: 0.3,
+    opacity: 1,
   },
   dateRange: {
     display: "flex",

@@ -290,7 +290,9 @@ const GraficoSemanal = () => {
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}
-              color={semanaSeleccionada === 0 ? "#ccc" : colors.primary}
+              color={
+                semanaSeleccionada === 0 ? colors.lightGray : colors.primary
+              }
             />
           </TouchableOpacity>
         </View>
@@ -409,7 +411,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   disabledButton: {
-    opacity: 0.3,
+    opacity: 1,
   },
   dateRange: {
     marginHorizontal: 16,
