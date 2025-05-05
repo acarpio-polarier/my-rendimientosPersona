@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ProgressCircle } from "react-native-svg-charts";
 import {
   Text,
@@ -41,11 +41,12 @@ const GraficoSemanal = () => {
   const [hayDatos, setHayDatos] = useState(true);
   const [datosRendimiento, setDatosRendimiento] = useState([]);
   const [tokensSemanales, setTokensSemanales] = useState(0);
-
   const [datosPorDia, setDatosPorDia] = useState([]);
+  const fetchIdRef = useRef(0); // Token de control para que no se carguen datos anteriores
 
   // Efecto
   useEffect(() => {
+    const fetchId = ++fetchIdRef.current;
     const nuevoRango = FechaUtils.obtenerRangoSemana(semanaSeleccionada);
     setRangoSemana(nuevoRango);
     setCargando(true);
@@ -58,11 +59,17 @@ const GraficoSemanal = () => {
     );
     console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
     console.log("Fecha fin ISO:", nuevoRango.finIso);
-    getRendimientoMedio(PERSONA_ID, nuevoRango.inicioIso, nuevoRango.finIso);
+    getRendimientoMedio(
+      PERSONA_ID,
+      nuevoRango.inicioIso,
+      nuevoRango.finIso,
+      fetchId
+    );
     getTokensPersonaPorFecha(
       PERSONA_ID,
       nuevoRango.inicioIso,
-      nuevoRango.finIso
+      nuevoRango.finIso,
+      fetchId
     );
 
     // Si hay un cambio de semana, actualizar el estado del botón
@@ -70,18 +77,29 @@ const GraficoSemanal = () => {
       setHayDatos(true);
     }
   }, [semanaSeleccionada]);
-  const getTokensPersonaPorFecha = async (idPersona, fechaInicio, fechaFin) => {
+  const getTokensPersonaPorFecha = async (
+    idPersona,
+    fechaInicio,
+    fechaFin,
+    fetchId
+  ) => {
     const datos = await RendimientoUtils.getTokensPersonaPorFecha(
       idPersona,
       fechaInicio,
       fechaFin
     );
     console.log("tokens fechas semanales", fechaInicio, fechaFin);
-
-    setTokensSemanales(datos?.TokensGanados ?? 0);
+    if (fetchIdRef.current == fetchId) {
+      setTokensSemanales(datos?.TokensGanados ?? 0);
+    }
   };
 
-  const getRendimientoMedio = async (idPersona, fechaInicio, fechaFin) => {
+  const getRendimientoMedio = async (
+    idPersona,
+    fechaInicio,
+    fechaFin,
+    fetchId
+  ) => {
     try {
       const datos =
         await rendimientoPersonasService.getRendimientoPersonaMaquina(
@@ -105,8 +123,15 @@ const GraficoSemanal = () => {
         // Asegurarse de que hay datos por día antes de actualizar el estado
         if (datosAgrupados && datosAgrupados.length > 0) {
           console.log("Datos por día disponibles:", datosAgrupados.length);
-          setDatosPorDia(datosAgrupados);
-          setHayDatos(true);
+          if (fetchIdRef.current == fetchId) {
+            console.log(
+              "graficoSemanal getRendimientoMedio useRef",
+              fetchIdRef.current,
+              fetchId
+            );
+            setDatosPorDia(datosAgrupados);
+            setHayDatos(true);
+          }
         } else {
           console.log("No hay datos agrupados por día");
           setDatosPorDia([]);
