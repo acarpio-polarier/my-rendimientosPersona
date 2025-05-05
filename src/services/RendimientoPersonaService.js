@@ -4,7 +4,6 @@ import {
   handleResponse,
   fetchWithTimeout,
 } from "../helpers/connection";
-import objetoPersona from "../helpers/datosMovil/objetoPersona.json";
 
 const movil = false;
 export const rendimientoPersonasService = {
