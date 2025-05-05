@@ -30,15 +30,18 @@ export default function DetalleRendimientoSelector({
   datosAnuales: datosAnualesIniciales = null,
 }) {
   console.log("DetalleRendimientoSelector - Props recibidas:", {
+    datosPorDia: datosInicialesPorDia,
     modoInicial,
     semanaInicial,
+    anioSeleccionado: anioInicial,
+    mesSeleccionado: mesInicial,
     tieneDataDias: datosInicialesPorDia ? datosInicialesPorDia.length : 0,
     tieneDataAnual: !!datosAnualesIniciales,
   });
 
   // Estados
   const [modo, setModo] = useState(modoInicial || "semanal");
-  const [seleccionActual, setSeleccionActual] = useState(semanaInicial || 0);
+  const [seleccionActual, setSeleccionActual] = useState(semanaInicial);
   const [mesSeleccionado, setMesSeleccionado] = useState(mesInicial);
   const [anioSeleccionado, setAnioSeleccionado] = useState(anioInicial);
   const [detalleRegistrosVisible, setDetalleRegistrosVisible] = useState(false);
@@ -51,10 +54,18 @@ export default function DetalleRendimientoSelector({
   useEffect(() => {
     console.log("Actualizando modo a:", modoInicial);
     setModo(modoInicial || "semanal");
+    console.log("DetalleRendimientoSelector modo", modo);
   }, [modoInicial]);
+  useEffect(() => {
+    //Borrar
+    console.log("DetalleRendimientoSelector modo", modo);
+    console.log("DetalleRendimientoSelector Lanzado");
+  }, []);
 
   // Actualizar semana cuando cambia desde fuera
   useEffect(() => {
+    console.log("DetalleRendimientoSelector modo", modo);
+
     setSeleccionActual(semanaInicial || 0);
   }, [semanaInicial]);
 

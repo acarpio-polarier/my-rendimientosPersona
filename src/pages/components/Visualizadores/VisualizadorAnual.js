@@ -39,15 +39,18 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   // Uso de dos useEffect para asegurarse que no salgan los datos hasta que se hayan
   // calculado los tokensDiarios
   useEffect(() => {
-    getTokensPersona();
+    const generarDatos = async () => {
+      await getTokensPersona();
+      await cargarDatos();
+    };
+    generarDatos();
   }, [mesSeleccionado]);
 
   useEffect(() => {
-    if (tokensDiarios.length > 0) {
-      cargarDatos();
-    }
-  }, [tokensDiarios]);
-
+    //Borrar
+    console.log("VisualizadorAnual Lanzado");
+    console.log("VisualizadorAnual Lanzado datos", data, onValueChanged);
+  }, []);
   // Agrupar por día
   const groupedData = mesActual.info.reduce((acumulador, entrada) => {
     const clave = moment(entrada.fechaIni).format("DD-dddd");
@@ -79,7 +82,7 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     const tableData = Object.entries(groupedData).map(
       ([diaCompleto, dayEntries]) => {
         const [dia, diaSemana] = diaCompleto.split("-");
-
+        console.log("Visual anual dia", dia);
         const rendimientoPromedio = (
           dayEntries.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
           dayEntries.length

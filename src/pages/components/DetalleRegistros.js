@@ -11,7 +11,6 @@ const HEIGHT_ROW = 48;
 
 const DetalleRegistros = ({ dia = [] }) => {
   const [data, setData] = useState([]);
-  const [tokensRegistro, setTokensRegistro] = useState([]);
   console.log("dia", dia);
   const formatearHora = (fecha) => {
     console.log("DetalleRegistros fecha", fecha);
