@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -29,13 +29,15 @@ const GraficoAnual = () => {
   const [hayDatos, setHayDatos] = useState(true);
   const [datosProcesados, setDatosProcesados] = useState([]);
   const [tokensAnuales, setTokensAnuales] = useState();
+  const fetchIdRef = useRef(0); // Token de control para que no se carguen datos anteriores
 
   useEffect(() => {
-    cargarDatos();
-    getTokensPersonaPorFecha(PERSONA_ID, añoActual);
+    const fetchId = ++fetchIdRef.current;
+    cargarDatos(fetchId);
+    getTokensPersonaPorFecha(PERSONA_ID, añoActual, fetchId);
   }, [añoActual]);
 
-  const cargarDatos = () => {
+  const cargarDatos = (fetchId) => {
     // Si ya tenemos datos procesados para este año, no mostramos carga
     if (
       datosProcesados &&
@@ -62,23 +64,27 @@ const GraficoAnual = () => {
       .then((response) => {
         console.log(`Datos recibidos para ${añoActual}:`, response);
         const datosProcesados = FechaUtils.procesarDatosAnuales(response);
-        // Llamada
 
         // Añadir el año a los datos procesados para referencia
         datosProcesados.anio = añoActual;
-
-        setDatosProcesados(datosProcesados);
-        setData(datosProcesados.values);
-        setLabels(datosProcesados.labels);
-        setHayDatos(datosProcesados.values.some((value) => value > 0));
-        console.log("Por mes: ", datosProcesados);
+        if (fetchIdRef.current == fetchId) {
+          console.log(
+            "graficoAnual cargarDatos -> fetchId desactualizado, datosProcesados",
+            datosProcesados
+          );
+          setDatosProcesados(datosProcesados);
+          setData(datosProcesados.values);
+          setLabels(datosProcesados.labels);
+          setHayDatos(datosProcesados.values.some((value) => value > 0));
+          console.log("Por mes: ", datosProcesados);
+        }
       })
       .catch((error) => {
         console.error("Error obteniendo datos:", error);
       })
       .finally(() => setCargando(false));
   };
-  const getTokensPersonaPorFecha = async (idPersona, añoActual) => {
+  const getTokensPersonaPorFecha = async (idPersona, añoActual, fetchId) => {
     try {
       console.log("Año actual", añoActual);
       const fechaInicio = `${añoActual}-01-01`;
@@ -89,8 +95,13 @@ const GraficoAnual = () => {
         fechaInicio,
         fechaFin
       );
-
-      setTokensAnuales(datos?.TokensGanados ?? 0);
+      if (fetchIdRef.current == fetchId) {
+        console.log(
+          "graficoAnual getTokensPersonaPorFecha -> fetchId desactualizado, datos",
+          datos?.TokensGanados ?? 0
+        );
+        setTokensAnuales(datos?.TokensGanados ?? 0);
+      }
     } catch (error) {
       console.log(error);
     }
