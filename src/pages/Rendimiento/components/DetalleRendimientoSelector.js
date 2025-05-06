@@ -10,7 +10,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../../styles/base";
 import DateUtils from "../../../helpers/FechaUtils";
-import VisualizadorSemanal from "./Visualizadores/VisualizadorSemanal";
+import VisualizadorSemanal from "./Visualizadores/VisualizadorSemanal.js";
 import VisualizadorAnual from "./Visualizadores/VisualizadorAnual";
 import { rendimientoPersonasService } from "../../../services/RendimientoPersonaService";
 import { PERSONA_ID } from "../Index";
