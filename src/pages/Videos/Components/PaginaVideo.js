@@ -23,11 +23,14 @@ const PaginaVideo = ({ route }) => {
       <View style={styles.contenedorVideos}>
         <YoutubePlayer
           height={220}
-          width={Dimensions.get("window").width * 0.95}
+          width={Dimensions.get("window").width * 0.9}
           videoId={idVideo}
           play={false}
         />
       </View>
+      <ScrollView style={styles.descripcionVideo}>
+        <Text>Desripcion de los videos</Text>
+      </ScrollView>
     </View>
   );
 };
@@ -44,12 +47,23 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
   },
-  titulo: {},
+  titulo: {
+    width: "90%",
+    alignSelf: "center",
+    textAlign: "center",
+    marginTop: "2%",
+  },
   contenedorVideos: {
     display: "flex",
     alignItems: "center",
     height: 220,
     marginTop: "2%",
+  },
+  descripcionVideo: {
+    backgroundColor: colors.lightGray,
+    width: "90%",
+    height: "55%",
+    alignSelf: "center",
   },
 });
 
