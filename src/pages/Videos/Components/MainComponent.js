@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Searchbar, Chip } from "react-native-paper";
 import { colors } from "../../../../styles/base";
+import Video from "./Video";
 
 const MainComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -62,6 +63,15 @@ const MainComponent = () => {
           </TouchableOpacity>
         ))}
       </View>
+      <View style={styles.contenedorVideos}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Video pulsado");
+          }}
+        >
+          <Video idVideo="wVv5WR64CKg" />
+        </TouchableOpacity>
+      </View>
       <ScrollView style={{ height: "92%", paddingBottom: 100 }}></ScrollView>
     </View>
   );
@@ -102,6 +112,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     alignContent: "center",
+    marginBottom: "3%",
   },
   etiqueta: {
     margin: 5,
@@ -111,6 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderWidth: 0,
   },
+  contenedorVideos: {},
 });
 
 export default MainComponent;
