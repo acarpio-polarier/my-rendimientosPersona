@@ -2,9 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import index from "./src/pages/index";
 import Rendimiento from "./src/pages/Rendimiento/Index";
-import DetalleRendimientoSelector from "./src/pages/Rendimiento/components/DetalleRendimientoSelector";
-
+import Videos from "./src/pages/Videos/Index";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -12,17 +12,14 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Rendimiento"
+          initialRouteName="index"
           screenOptions={{
             headerShown: false,
           }}
         >
+          <Stack.Screen name="index" component={index} />
           <Stack.Screen name="Rendimiento" component={Rendimiento} />
-          <Stack.Screen
-            name="DetalleRendimientoSelector"
-            component={DetalleRendimientoSelector}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="Videos" component={Videos} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
