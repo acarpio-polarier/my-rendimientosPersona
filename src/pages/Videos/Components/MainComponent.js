@@ -10,6 +10,7 @@ import {
 import { Searchbar, Chip } from "react-native-paper";
 import { colors } from "../../../../styles/base";
 import Video from "./Video";
+import { useNavigation } from "@react-navigation/native";
 
 const MainComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,6 +20,11 @@ const MainComponent = () => {
     "Pendiente",
     "Calandra",
   ]);
+  const navigation = useNavigation();
+
+  const abrirVideo = () => {
+    navigation.navigate("PaginaVideo", { idVideo: "wVv5WR64CKg" });
+  };
 
   // Borrar una etiqueta
   const handleDelete = (chipToDelete) => {
@@ -63,16 +69,13 @@ const MainComponent = () => {
           </TouchableOpacity>
         ))}
       </View>
-      <View style={styles.contenedorVideos}>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Video pulsado");
-          }}
-        >
-          <Video idVideo="wVv5WR64CKg" />
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={{ height: "92%", paddingBottom: 100 }}></ScrollView>
+      <ScrollView style={{ height: "100%", paddingBottom: 100 }}>
+        <View style={styles.contenedorVideos}>
+          <TouchableOpacity onPress={abrirVideo}>
+            <Video idVideo="wVv5WR64CKg" />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
