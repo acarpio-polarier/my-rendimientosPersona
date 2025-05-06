@@ -36,20 +36,11 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     cargarDatos();
   }, [tokensDiarios]);
 
-  useEffect(() => {
-    //Borrar
-    console.log("VisualizadorAnual Lanzado");
-    console.log("VisualizadorAnual Lanzado datos", data, onValueChanged);
-  }, []);
-
-  // Si no hay datos para el mes, muestra un mensaje
-  if (!mesActual || !mesActual.info || mesActual.info.length === 0) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.noDataText}>No hay datos para este mes</Text>
-      </View>
-    );
-  }
+  // useEffect(() => {
+  //   //Borrar
+  //   console.log("VisualizadorAnual Lanzado");
+  //   console.log("VisualizadorAnual Lanzado datos", data, onValueChanged);
+  // }, []);
 
   // Agrupar por día
   const groupedData = mesActual.info.reduce((acumulador, entrada) => {

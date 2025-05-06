@@ -53,6 +53,11 @@ export default function DetalleRendimientoSelector({
     setModo(modoInicial || "semanal");
     console.log("DetalleRendimientoSelector modo", modo);
   }, [modoInicial]);
+
+  useEffect(() => {
+    renderizarVisualizador();
+  }, [mesSeleccionado]);
+
   useEffect(() => {
     //Borrar
     console.log("DetalleRendimientoSelector modo", modo);
@@ -378,12 +383,19 @@ export default function DetalleRendimientoSelector({
       if (detalleRegistrosVisible && selectedDia) {
         return <DetalleRegistros dia={registroDia} />;
       }
+
+      console.log("DRS datosPorMes", datosPorMes);
+      // Si no hay datos para el mes, muestra un mensaje
       if (
-        !datosPorMes ||
+        !mesSeleccionado ||
         !datosPorMes.values ||
-        datosPorMes.values.length === 0
+        datosPorMes.values?.[mesSeleccionado] === 0
       ) {
-        return renderizarSinDatos("año");
+        return (
+          <View style={styles.containerNoDataText}>
+            <Text style={styles.noDataText}>No hay datos para este mes</Text>
+          </View>
+        );
       }
       return (
         <View style={styles.visualizadorContainer}>
@@ -480,14 +492,18 @@ export default function DetalleRendimientoSelector({
           </View>
 
           <TouchableOpacity
-            onPress={periodoSiguiente}
+            onPress={mesSeleccionado !== 11 ? periodoSiguiente : null}
             disabled={esMesActual()}
             style={[styles.button, esMesActual() && styles.disabledButton]}
           >
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}
-              color={esMesActual() ? colors.lightGray : colors.primary}
+              color={
+                esMesActual() || mesSeleccionado === 11
+                  ? colors.lightGray
+                  : colors.primary
+              }
             />
           </TouchableOpacity>
         </View>
@@ -817,5 +833,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#666",
     textAlign: "center",
+  },
+  noDataText: {
+    textAlign: "center",
+    marginVertical: 20,
+    fontSize: 16,
+    color: "#666",
   },
 });
