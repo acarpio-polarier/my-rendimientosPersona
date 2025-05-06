@@ -215,7 +215,7 @@ export default function DetalleRendimientoSelector({
 
   const obtenerMesDelPeriodo = () => {
     if (modo === "anual") {
-      console.log("SRS obtenerMesDelPeriodo mesSeleccionado", mesSeleccionado);
+      console.log("DRS obtenerMesDelPeriodo mesSeleccionado", mesSeleccionado);
       // Usar formato de mes corto y año
       return (
         FechaUtils.nombresMesesCorto[mesSeleccionado] + " " + anioSeleccionado
@@ -385,12 +385,22 @@ export default function DetalleRendimientoSelector({
       }
 
       console.log("DRS datosPorMes", datosPorMes);
+      console.log(
+        "DRS datosPorMes rendimiento",
+        datosPorMes.values?.[mesSeleccionado],
+        "mesSeleccionado",
+        mesSeleccionado,
+        "infoPorMes",
+        datosPorMes.infoPorMes?.[mesSeleccionado]?.info
+      );
       // Si no hay datos para el mes, muestra un mensaje
       if (
-        !mesSeleccionado ||
-        !datosPorMes.values ||
-        datosPorMes.values?.[mesSeleccionado] === 0
+        mesSeleccionado == null ||
+        mesSeleccionado === undefined ||
+        datosPorMes.length === 0 ||
+        datosPorMes?.values?.[mesSeleccionado] === 0
       ) {
+        console.log("DRS no hay datos");
         return (
           <View style={styles.containerNoDataText}>
             <Text style={styles.noDataText}>No hay datos para este mes</Text>
