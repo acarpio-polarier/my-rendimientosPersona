@@ -27,6 +27,21 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     (mes) => mes.label === mesesAbreviados[mesSeleccionado]
   );
 
+  useEffect(() => {
+    getTokensPersona();
+  }, [mesSeleccionado]);
+
+  useEffect(() => {
+    console.log("visual anual useEffect tokensDiarios", tokensDiarios);
+    cargarDatos();
+  }, [tokensDiarios]);
+
+  useEffect(() => {
+    //Borrar
+    console.log("VisualizadorAnual Lanzado");
+    console.log("VisualizadorAnual Lanzado datos", data, onValueChanged);
+  }, []);
+
   // Si no hay datos para el mes, muestra un mensaje
   if (!mesActual || !mesActual.info || mesActual.info.length === 0) {
     return (
@@ -36,21 +51,6 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     );
   }
 
-  // Uso de dos useEffect para asegurarse que no salgan los datos hasta que se hayan
-  // calculado los tokensDiarios
-  useEffect(() => {
-    const generarDatos = async () => {
-      await getTokensPersona();
-      await cargarDatos();
-    };
-    generarDatos();
-  }, [mesSeleccionado]);
-
-  useEffect(() => {
-    //Borrar
-    console.log("VisualizadorAnual Lanzado");
-    console.log("VisualizadorAnual Lanzado datos", data, onValueChanged);
-  }, []);
   // Agrupar por día
   const groupedData = mesActual.info.reduce((acumulador, entrada) => {
     const clave = moment(entrada.fechaIni).format("DD-dddd");
@@ -78,11 +78,12 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     }
   );
 
+  // Junta dayEntries con los tokens en un objeto para mostrarlo en la tabla
   const cargarDatos = () => {
     const tableData = Object.entries(groupedData).map(
       ([diaCompleto, dayEntries]) => {
         const [dia, diaSemana] = diaCompleto.split("-");
-        console.log("Visual anual dia", dia);
+
         const rendimientoPromedio = (
           dayEntries.reduce((acc, obj) => acc + obj.RendimientoGlobal, 0) /
           dayEntries.length
@@ -90,6 +91,7 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
 
         const registros = dayEntries.length;
 
+        // Compara las fechas del token y el fin del turno
         const tokensDelDia = tokensDiarios.filter((token) => {
           const tokenDate = new Date(token.fecha);
           return tokenDate.getDate() === parseInt(dia);
@@ -111,7 +113,7 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   const getTokensPersona = async () => {
     console.log("visual anual mes -1: ", mesSeleccionado);
     const anio = data?.anio;
-    const mes = mesSeleccionado + 1;
+    const mes = (mesSeleccionado + 1).toString().padStart(2, "0");
     const fechaIni = `${anio}-${mes}-01`;
     const ultimoDia = new Date(anio, mes, 0).getDate();
     const fechaFin = `${anio}-${mes}-${ultimoDia.toString().padStart(2, "0")}`;
@@ -126,9 +128,8 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
         fecha: item.fecha ?? null,
         tokens: item.tokens ?? null,
       }));
+      console.log("visual anual datos", datos);
       setTokensDiarios(tokensPersona);
-
-      console.log("visual anual datos", tokensPersona);
     }
   };
   // Crear objetos de datos de cada fila

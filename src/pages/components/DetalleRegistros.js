@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.smokedWhite,
     borderRadius: 10,
     overflow: "hidden",
-    marginVertical: 10,
   },
   headerTitle: {
     justifyContent: "center",

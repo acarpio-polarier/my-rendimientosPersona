@@ -20,7 +20,6 @@ import RendimientoUtils from "../../helpers/RendimientoUtils";
 
 const screen_height = Dimensions.get("window").height;
 
-// Recibir props directamente con destructuring
 export default function DetalleRendimientoSelector({
   datosPorDia: datosInicialesPorDia = [],
   modoInicial = "semanal",
@@ -39,7 +38,6 @@ export default function DetalleRendimientoSelector({
     tieneDataAnual: !!datosAnualesIniciales,
   });
 
-  // Estados
   const [modo, setModo] = useState(modoInicial || "semanal");
   const [seleccionActual, setSeleccionActual] = useState(semanaInicial);
   const [mesSeleccionado, setMesSeleccionado] = useState(mesInicial);
@@ -50,7 +48,6 @@ export default function DetalleRendimientoSelector({
   const [intervalo, setIntevalo] = useState("mensual");
   const [tokensMensuales, setTokensMensuales] = useState(0);
 
-  // Asegurarse de que el modo y selecciones se inicialicen correctamente
   useEffect(() => {
     console.log("Actualizando modo a:", modoInicial);
     setModo(modoInicial || "semanal");
@@ -62,14 +59,12 @@ export default function DetalleRendimientoSelector({
     console.log("DetalleRendimientoSelector Lanzado");
   }, []);
 
-  // Actualizar semana cuando cambia desde fuera
   useEffect(() => {
     console.log("DetalleRendimientoSelector modo", modo);
 
     setSeleccionActual(semanaInicial || 0);
   }, [semanaInicial]);
 
-  // Actualizar año/mes cuando cambian desde fuera
   useEffect(() => {
     setAnioSeleccionado(anioInicial);
     setMesSeleccionado(mesInicial);
