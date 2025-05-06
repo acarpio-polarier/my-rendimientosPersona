@@ -8,15 +8,15 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
-import DateUtils from "../../helpers/FechaUtils";
+import { colors } from "../../../../styles/base";
+import DateUtils from "../../../helpers/FechaUtils";
 import VisualizadorSemanal from "./Visualizadores/VisualizadorSemanal";
 import VisualizadorAnual from "./Visualizadores/VisualizadorAnual";
-import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
-import { PERSONA_ID } from "../Rendimiento/Index";
-import FechaUtils from "../../helpers/FechaUtils";
+import { rendimientoPersonasService } from "../../../services/RendimientoPersonaService";
+import { PERSONA_ID } from "../Index";
+import FechaUtils from "../../../helpers/FechaUtils";
 import DetalleRegistros from "./DetalleRegistros";
-import RendimientoUtils from "../../helpers/RendimientoUtils";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 const screen_height = Dimensions.get("window").height;
 

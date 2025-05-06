@@ -9,11 +9,11 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../../styles/base";
-import FechaUtils from "../../../helpers/FechaUtils";
-import RendimientoUtils from "../../../helpers/RendimientoUtils";
+import { colors } from "../../../../../styles/base";
+import FechaUtils from "../../../../helpers/FechaUtils";
+import RendimientoUtils from "../../../../helpers/RendimientoUtils";
 import DetalleRegistros from "../DetalleRegistros";
-import { PERSONA_ID } from "../../Rendimiento/Index";
+import { PERSONA_ID } from "../../Index";
 
 // Constantes
 

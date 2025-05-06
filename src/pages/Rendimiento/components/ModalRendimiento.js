@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
+import { colors } from "../../../../styles/base";
 // import { BlurView } from "expo-blur"; // Importación correcta de BlurView
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
-
+import { colors } from "../../../../styles/base";
 const BarraExpandible = ({
   children,
   hayDatos = false,

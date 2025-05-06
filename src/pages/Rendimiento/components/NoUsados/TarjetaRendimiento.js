@@ -7,8 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
-
+import { colors } from "../../../../styles/base";
 /**
  * TarjetaRendimiento - Componente simple que muestra un contenido principal y expandible
  *

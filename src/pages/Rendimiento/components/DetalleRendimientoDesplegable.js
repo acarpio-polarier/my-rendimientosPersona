@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { colors } from "../../../styles/base";
-import { PERSONA_ID } from "../Rendimiento/Index";
-import RendimientoUtils from "../../helpers/RendimientoUtils";
+import { colors } from "../../../../styles/base";
+import { PERSONA_ID } from "../Index";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
   const [horasTrabajadas, setHorasTrabajadas] = useState("00:00:00");

@@ -9,13 +9,13 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
+import { rendimientoPersonasService } from "../../../services/RendimientoPersonaService";
 import BarraExpandible from "./BarraExpandible";
 import DetalleRendimientoDesplegable from "./DetalleRendimientoDesplegable";
-import { colors } from "../../../styles/base";
-import { PERSONA_ID } from "../Rendimiento/Index";
-import RendimientoUtils from "../../helpers//RendimientoUtils";
-import FechaUtils from "../../helpers//FechaUtils";
+import { colors } from "../../../../styles/base";
+import { PERSONA_ID } from "../Index";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
+import FechaUtils from "../../../helpers//FechaUtils";
 import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
 import ModalRendimiento from "./ModalRendimiento";
 

@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { DataTable } from "react-native-paper";
-import FechaUtils from "../../../helpers/FechaUtils";
+import FechaUtils from "../../../../helpers/FechaUtils";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import RendimientoUtils from "../../../helpers/RendimientoUtils";
-import { PERSONA_ID } from "../../Rendimiento/Index";
-import { colors } from "../../../../styles/base";
+import RendimientoUtils from "../../../../helpers/RendimientoUtils";
+import { PERSONA_ID } from "../../Index";
+import { colors } from "../../../../../styles/base";
 
 const { width, height } = Dimensions.get("window");
 

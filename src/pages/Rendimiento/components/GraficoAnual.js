@@ -6,15 +6,15 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { PERSONA_ID } from "../Rendimiento/Index";
+import { PERSONA_ID } from "../Index";
 import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import { Line } from "react-native-svg";
-import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
+import { rendimientoPersonasService } from "../../../services/RendimientoPersonaService";
 import moment from "moment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { colors } from "../../../styles/base";
-import RendimientoUtils from "../../helpers//RendimientoUtils";
-import FechaUtils from "../../helpers//FechaUtils";
+import { colors } from "../../../../styles/base";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
+import FechaUtils from "../../../helpers//FechaUtils";
 import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
 import ModalRendimiento from "./ModalRendimiento";
 
