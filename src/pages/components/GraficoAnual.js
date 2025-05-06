@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { PERSONA_ID } from "../Index";
+import { PERSONA_ID } from "../Rendimiento/Index";
 import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import { Line } from "react-native-svg";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";

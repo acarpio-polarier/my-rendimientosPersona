@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { colors } from "../../../styles/base";
-import { PERSONA_ID } from "../Index";
+import { PERSONA_ID } from "../Rendimiento/Index";
 import RendimientoUtils from "../../helpers/RendimientoUtils";
 
 const DetalleRendimientoDesplegable = ({ datos, cargando }) => {

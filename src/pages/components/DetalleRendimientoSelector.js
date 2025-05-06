@@ -13,7 +13,7 @@ import DateUtils from "../../helpers/FechaUtils";
 import VisualizadorSemanal from "./Visualizadores/VisualizadorSemanal";
 import VisualizadorAnual from "./Visualizadores/VisualizadorAnual";
 import { rendimientoPersonasService } from "../../services/RendimientoPersonaService";
-import { PERSONA_ID } from "../Index";
+import { PERSONA_ID } from "../Rendimiento/Index";
 import FechaUtils from "../../helpers/FechaUtils";
 import DetalleRegistros from "./DetalleRegistros";
 import RendimientoUtils from "../../helpers/RendimientoUtils";

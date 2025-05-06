@@ -13,7 +13,7 @@ import { colors } from "../../../../styles/base";
 import FechaUtils from "../../../helpers/FechaUtils";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 import DetalleRegistros from "../DetalleRegistros";
-import { PERSONA_ID } from "../../Index";
+import { PERSONA_ID } from "../../Rendimiento/Index";
 
 // Constantes
 

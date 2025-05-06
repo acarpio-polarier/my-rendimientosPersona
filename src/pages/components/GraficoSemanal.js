@@ -13,7 +13,7 @@ import { rendimientoPersonasService } from "../../services/RendimientoPersonaSer
 import BarraExpandible from "./BarraExpandible";
 import DetalleRendimientoDesplegable from "./DetalleRendimientoDesplegable";
 import { colors } from "../../../styles/base";
-import { PERSONA_ID } from "../Index";
+import { PERSONA_ID } from "../Rendimiento/Index";
 import RendimientoUtils from "../../helpers//RendimientoUtils";
 import FechaUtils from "../../helpers//FechaUtils";
 import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
