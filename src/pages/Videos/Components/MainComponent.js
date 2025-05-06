@@ -19,7 +19,7 @@ const MainComponent = () => {
     "Calandra",
   ]);
 
-  // Al cerrar una etiqueta
+  // Borrar una etiqueta
   const handleDelete = (chipToDelete) => {
     setEtiquetas((prevChips) =>
       prevChips.filter((chip) => chip !== chipToDelete)
