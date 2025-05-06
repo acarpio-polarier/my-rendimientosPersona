@@ -7,11 +7,25 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, Chip } from "react-native-paper";
 import { colors } from "../../../../styles/base";
 
 const MainComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [etiquetas, setEtiquetas] = useState([
+    "Plegadora",
+    "Visto",
+    "Pendiente",
+    "Calandra",
+  ]);
+
+  // Al cerrar una etiqueta
+  const handleDelete = (chipToDelete) => {
+    setEtiquetas((prevChips) =>
+      prevChips.filter((chip) => chip !== chipToDelete)
+    );
+  };
+
   return (
     <View>
       <View style={styles.contenedorBusqueda}>
@@ -31,6 +45,22 @@ const MainComponent = () => {
             color={colors.smokedWhite}
           />
         </TouchableOpacity>
+      </View>
+      <View style={styles.contenedorEtiquetas}>
+        {etiquetas.map((chip, index) => (
+          <TouchableOpacity key={index} onPress={() => handleDelete(chip)}>
+            <Chip
+              mode="outlined"
+              onClose={() => {
+                console.log("etiquetaTocada");
+              }}
+              style={styles.etiqueta}
+              textStyle={{ color: colors.white }}
+            >
+              {chip}
+            </Chip>
+          </TouchableOpacity>
+        ))}
       </View>
       <ScrollView style={{ height: "92%", paddingBottom: 100 }}></ScrollView>
     </View>
@@ -64,6 +94,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  contenedorEtiquetas: {
+    display: "flex",
+    width: "95%",
+    alignSelf: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignContent: "center",
+  },
+  etiqueta: {
+    margin: 5,
+    width: "auto",
+    flexShrink: 1,
+    borderRadius: 10,
+    backgroundColor: colors.primary,
+    borderWidth: 0,
   },
 });
 
