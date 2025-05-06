@@ -40,11 +40,11 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   // Agrupar y procesar datos cuando cambian
   useEffect(() => {
     console.log(
-      "useEffect disparado con datos:",
+      "useEffect disparado con datos",
       data,
-      "semanaActual:",
+      "semanaActual",
       semanaActual,
-      "rangoPeriodo:",
+      "rangoPeriodo",
       rangoPeriodo
     );
 
@@ -92,9 +92,9 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       diaActual
     );
     console.log("DB3 tarjeta llamada datos", datos);
-    console.log("DB3 Buscando tokens para:", diaSeleccionado);
-    console.log("DB3 Datos agrupados:", datosAgrupados);
-    console.log("Día actual encontrado:", diaActual);
+    console.log("DB3 Buscando tokens para", diaSeleccionado);
+    console.log("DB3 Datos agrupados", datosAgrupados);
+    console.log("Día actual encontrado", diaActual);
     setTokensDia(datos?.TokensGanados ?? 0);
   };
 
@@ -163,9 +163,9 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     });
 
     console.log(
-      "Mejor día encontrado:",
+      "Mejor día encontrado",
       mejorDiaId,
-      "con rendimiento:",
+      "con rendimiento",
       mejorRendimiento
     );
     return { mejorDiaId, todosIguales: false };
@@ -196,7 +196,7 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       }
       console.log("VS procesandoDatos DiasSemana", diasConMejorMarcado);
     } catch (error) {
-      console.error("Error al procesar datos de la semana:", error);
+      console.error("Error al procesar datos de la semana", error);
       setDiasSemana([]);
     } finally {
       setCargando(false);

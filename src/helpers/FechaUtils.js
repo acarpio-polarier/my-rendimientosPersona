@@ -68,7 +68,7 @@ const FechaUtils = {
 
       return `${año}-${mes}-${dia}`;
     } catch (error) {
-      console.warn("Error al formatear fecha:", error);
+      console.warn("Error al formatear fecha", error);
       return null;
     }
   },
@@ -189,7 +189,7 @@ const FechaUtils = {
 
         dias.get(fechaBonita).data.push(registro);
       } catch (error) {
-        console.warn("Error al procesar fecha de registro:", error);
+        console.warn("Error al procesar fecha de registro", error);
       }
     });
     return Array.from(dias.values());
@@ -243,7 +243,7 @@ const FechaUtils = {
           sumas[mes] += item.RendimientoGlobal || 0;
           conteos[mes] += 1;
         } catch (error) {
-          console.warn("Error al procesar ítem de datos:", error);
+          console.warn("Error al procesar ítem de datos", error);
         }
       });
     }
@@ -337,7 +337,7 @@ const FechaUtils = {
 
       return FechaUtils.obtenerNombreMes(fechaObj.getMonth());
     } catch (error) {
-      console.warn("Error al obtener el nombre del mes:", error);
+      console.warn("Error al obtener el nombre del mes", error);
       return FechaUtils.obtenerNombreMes(new Date().getMonth());
     }
   },

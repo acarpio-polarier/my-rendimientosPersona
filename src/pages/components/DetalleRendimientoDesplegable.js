@@ -16,9 +16,9 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
   }, [horaCargada]);
 
   const mostrarHoras = () => {
-    const horas = horasTrabajadas.split(":")[0];
-    const minutos = horasTrabajadas.split(":")[1];
-    const segundos = horasTrabajadas.split(":")[2];
+    const horas = horasTrabajadas.split("")[0];
+    const minutos = horasTrabajadas.split("")[1];
+    const segundos = horasTrabajadas.split("")[2];
     const horasTexto = `${horas}h ${minutos}m`;
     console.log(
       "texto horas Treabajadas",

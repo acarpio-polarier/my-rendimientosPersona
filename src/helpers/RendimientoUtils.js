@@ -52,7 +52,7 @@ const RendimientoUtils = {
 
       return suma / datos.length;
     } catch (error) {
-      console.error("Error al calcular rendimiento promedio:", error);
+      console.error("Error al calcular rendimiento promedio", error);
       return 0;
     }
   },
@@ -156,7 +156,7 @@ const RendimientoUtils = {
         cantidad: datos.length,
       };
     } catch (error) {
-      console.error("Error al calcular estadísticas:", error);
+      console.error("Error al calcular estadísticas", error);
       return {
         promedio: 0,
         maximo: 0,

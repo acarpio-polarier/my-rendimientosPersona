@@ -80,7 +80,7 @@ const GraficoAnual = () => {
         }
       })
       .catch((error) => {
-        console.error("Error obteniendo datos:", error);
+        console.error("Error obteniendo datos", error);
       })
       .finally(() => setCargando(false));
   };

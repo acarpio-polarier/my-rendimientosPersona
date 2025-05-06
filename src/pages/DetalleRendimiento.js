@@ -60,7 +60,7 @@ export default function DetalleRendimiento({ route, navigation }) {
       // Formato: "Lunes, 25 de abril de 2023 - 14:30h"
       return fecha.format("dddd, D [de] MMMM [de] YYYY - HH:mm[h]");
     } catch (error) {
-      console.error("Error al formatear fecha:", error);
+      console.error("Error al formatear fecha", error);
       return "Error al formatear fecha";
     }
   };

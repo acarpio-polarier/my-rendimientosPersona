@@ -52,13 +52,13 @@ const GraficoSemanal = () => {
     setCargando(true);
 
     console.log(
-      "Rango de semana actualizado:",
+      "Rango de semana actualizado",
       nuevoRango,
       "rangoSemana",
       rangoSemana
     );
-    console.log("Fecha inicio ISO:", nuevoRango.inicioIso);
-    console.log("Fecha fin ISO:", nuevoRango.finIso);
+    console.log("Fecha inicio ISO", nuevoRango.inicioIso);
+    console.log("Fecha fin ISO", nuevoRango.finIso);
     getRendimientoMedio(
       PERSONA_ID,
       nuevoRango.inicioIso,
@@ -122,7 +122,7 @@ const GraficoSemanal = () => {
 
         // Asegurarse de que hay datos por día antes de actualizar el estado
         if (datosAgrupados && datosAgrupados.length > 0) {
-          console.log("Datos por día disponibles:", datosAgrupados.length);
+          console.log("Datos por día disponibles", datosAgrupados.length);
           if (fetchIdRef.current == fetchId) {
             console.log(
               "graficoSemanal getRendimientoMedio useRef",
@@ -145,7 +145,7 @@ const GraficoSemanal = () => {
         setHayDatos(false);
       }
     } catch (error) {
-      console.error("Error al obtener rendimiento:", error);
+      console.error("Error al obtener rendimiento", error);
       setProgreso(0);
       setDatosRendimiento([]);
       setHayDatos(false);
@@ -168,7 +168,7 @@ const GraficoSemanal = () => {
 
   // Callback para cuando cambia la semana desde el modal
   const handleSemanaChange = (nuevaSemana) => {
-    console.log("Semana cambiada desde el modal:", nuevaSemana);
+    console.log("Semana cambiada desde el modal", nuevaSemana);
     setSemanaSeleccionada(nuevaSemana);
   };
 

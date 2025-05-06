@@ -28,7 +28,7 @@ export default function DetalleRendimientoSelector({
   mesSeleccionado: mesInicial = new Date().getMonth(),
   datosAnuales: datosAnualesIniciales = null,
 }) {
-  console.log("DetalleRendimientoSelector - Props recibidas:", {
+  console.log("DetalleRendimientoSelector - Props recibidas", {
     datosPorDia: datosInicialesPorDia,
     modoInicial,
     semanaInicial,
@@ -49,7 +49,7 @@ export default function DetalleRendimientoSelector({
   const [tokensMensuales, setTokensMensuales] = useState(0);
 
   useEffect(() => {
-    console.log("Actualizando modo a:", modoInicial);
+    console.log("Actualizando modo a", modoInicial);
     setModo(modoInicial || "semanal");
     console.log("DetalleRendimientoSelector modo", modo);
   }, [modoInicial]);
@@ -229,7 +229,7 @@ export default function DetalleRendimientoSelector({
       }
       return FechaUtils.nombresMesesCorto[fechaObj.getMonth()];
     } catch (error) {
-      console.error("Error al obtener mes del periodo:", error);
+      console.error("Error al obtener mes del periodo", error);
       return FechaUtils.nombresMesesCorto[new Date().getMonth()];
     }
   };
@@ -250,14 +250,14 @@ export default function DetalleRendimientoSelector({
 
       if (datos && datos.length > 0) {
         const datosAgrupados = DateUtils.agruparRegistrosPorDia(datos);
-        console.log("Datos agrupados:", datosAgrupados.length, "días");
+        console.log("Datos agrupados", datosAgrupados.length, "días");
         setDatosPorDia(datosAgrupados);
       } else {
         console.log("No hay datos para esta semana");
         setDatosPorDia([]);
       }
     } catch (error) {
-      console.error("Error al cargar datos:", error);
+      console.error("Error al cargar datos", error);
       setDatosPorDia([]);
     } finally {
       setCargando(false);
