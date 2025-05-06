@@ -71,8 +71,11 @@ const MainComponent = () => {
       </View>
       <ScrollView style={{ height: "100%", paddingBottom: 100 }}>
         <View style={styles.contenedorVideos}>
-          <TouchableOpacity onPress={abrirVideo}>
+          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
             <Video idVideo="wVv5WR64CKg" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
+            <Video idVideo="b6hoBp7Hk-A" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -126,6 +129,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   contenedorVideos: {},
+  tarjetaVideo: {
+    marginVertical: "2%",
+  },
 });
 
 export default MainComponent;
