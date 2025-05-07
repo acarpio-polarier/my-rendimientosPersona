@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { colors } from "../../../../styles/base";
-import { Switch, SegmentedButtons } from "react-native-paper";
+import { Switch } from "react-native-paper";
 
 export const PERSONA_ID = 1392;
 
@@ -11,12 +11,10 @@ const PaginaVideo = ({ route }) => {
   const insets = useSafeAreaInsets();
   const { idVideo } = route.params;
   const [visto, setVisto] = useState(false);
-  const [descCom, setDescCom] = useState("desc");
 
   // Calculo para el tamaño dle video
   const widthV = Dimensions.get("window").width * 0.9;
   const heightV = (widthV * 9) / 16;
-  const colorNaranja = "'rgba(237, 182, 55, 0.9)'";
 
   const ToggleVisto = () => {
     if (visto) setVisto(false);
@@ -63,40 +61,7 @@ const PaginaVideo = ({ route }) => {
         </View>
         <View style={styles.lineaHorizontal}></View>
         <View style={styles.contenedorDescripcion}>
-          <SegmentedButtons
-            value={descCom}
-            onValueChange={setDescCom}
-            buttons={[
-              {
-                value: "desc",
-                label: "Descripcion",
-                style: {
-                  borderRadius: 4,
-                  backgroundColor:
-                    descCom === "desc" ? colorNaranja : "transparent",
-                },
-                labelStyle: {
-                  color: descCom === "desc" ? colors.white : colors.text,
-                },
-                checkedColor: colors.primary,
-              },
-              {
-                value: "com",
-                label: "Comentario",
-                style: {
-                  borderRadius: 4,
-                  backgroundColor:
-                    descCom === "com" ? colorNaranja : "transparent",
-                },
-                labelStyle: {
-                  color: descCom === "com" ? colors.white : colors.text,
-                },
-                checkedColor: colors.primary,
-              },
-            ]}
-          />
-        </View>
-        {descCom === "desc" ? (
+          <Text style={{ marginVertical: "1%" }}>Descripción:</Text>
           <View style={styles.contenidoDescripcion}>
             <Text>
               Aquí explico como se cambia el grifo del grifo del fregadero de la
@@ -110,11 +75,23 @@ const PaginaVideo = ({ route }) => {
               cuando subo nuevos vídeos
             </Text>
           </View>
-        ) : (
+        </View>
+        <View style={styles.contenedorDescripcion}>
+          <Text style={{ marginVertical: "1%" }}>Comentario:</Text>
           <View style={styles.contenidoDescripcion}>
-            <Text>Esto es un comentario</Text>
+            <Text>
+              Aquí explico como se cambia el grifo del grifo del fregadero de la
+              cocina. El del baño se hace exactamente de la misma manera. Es muy
+              sencillo y cualquiera lo puede hacer. No te quedes con las ganas
+              de hacer esta reparación o cambiarlo porque no te gusta. Solo te
+              hace falta un destornillador y una llave para tuercas apropiada.
+              Espero que el vídeo te sea de utilidad. No te olvides comentar,
+              valorar el vídeo y suscribirte al canal si no te quieres perder
+              mis nuevos vídeos. Pulsa la campanita para que Youtube te avise
+              cuando subo nuevos vídeos
+            </Text>
           </View>
-        )}
+        </View>
       </ScrollView>
     </View>
   );
@@ -183,7 +160,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.smokedWhite,
     padding: "2%",
     borderRadius: 2,
-    margin: "2%",
   },
 });
 

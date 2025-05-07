@@ -25,6 +25,9 @@ const MainComponent = () => {
   const abrirVideo = () => {
     navigation.navigate("PaginaVideo", { idVideo: "wVv5WR64CKg" });
   };
+  const abrirVideo2 = () => {
+    navigation.navigate("PaginaVideo2", { idVideo: "wVv5WR64CKg" });
+  };
 
   // Borrar una etiqueta
   const handleDelete = (chipToDelete) => {
@@ -75,7 +78,7 @@ const MainComponent = () => {
           <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
             <TarjetaVideo idVideo="wVv5WR64CKg" visto={true} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
+          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo2}>
             <TarjetaVideo idVideo="b6hoBp7Hk-A" visto={false} />
           </TouchableOpacity>
         </View>
