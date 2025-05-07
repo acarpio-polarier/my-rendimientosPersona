@@ -121,6 +121,19 @@ const RendimientoUtils = {
     }
   },
 
+  getVideosPorPersona: async (idPersona) => {
+    console.log("rendimiento utils VPP", idPersona);
+    try {
+      const datos = await rendimientoPersonasService.getVideosPorPersona(
+        idPersona
+      );
+      console.log("rendimiento utils getVideosPorPersona", datos);
+      return datos;
+    } catch (error) {
+      console.log("Error al obtener getVideosPorPersona", error);
+    }
+  },
+
   /**
    * Calcula estadísticas básicas para un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento

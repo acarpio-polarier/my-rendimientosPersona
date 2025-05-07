@@ -11,6 +11,7 @@ import { Searchbar, Chip } from "react-native-paper";
 import { colors } from "../../../../styles/base";
 import TarjetaVideo from "./TarjetaVideo";
 import { useNavigation } from "@react-navigation/native";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 const MainComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,6 +22,15 @@ const MainComponent = () => {
     "Calandra",
   ]);
   const navigation = useNavigation();
+  // Borrar
+  useEffect(() => {
+    getVideosPorPersona();
+  }, []);
+
+  const getVideosPorPersona = async () => {
+    const data = await RendimientoUtils.getVideosPorPersona(1392);
+    console.log("videos de una persona", data);
+  };
 
   const abrirVideo = () => {
     navigation.navigate("PaginaVideo", { idVideo: "wVv5WR64CKg" });
