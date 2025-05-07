@@ -1,9 +1,17 @@
-import { View, Text, ScrollView, Dimensions, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { colors } from "../../../../styles/base";
 import { Switch, SegmentedButtons } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export const PERSONA_ID = 1392;
 
@@ -12,11 +20,17 @@ const PaginaVideo = ({ route }) => {
   const { idVideo } = route.params;
   const [visto, setVisto] = useState(false);
   const [descCom, setDescCom] = useState("desc");
+  const [nuevoComentario, setNuevoComentario] = useState(true);
 
   // Calculo para el tamaño dle video
   const widthV = Dimensions.get("window").width * 0.9;
   const heightV = (widthV * 9) / 16;
   const colorNaranja = "'rgba(237, 182, 55, 0.9)'";
+
+  const ToggleDescCom = (value) => {
+    setDescCom(value);
+    if (value === "com") setNuevoComentario(false);
+  };
 
   const ToggleVisto = () => {
     if (visto) setVisto(false);
@@ -63,38 +77,48 @@ const PaginaVideo = ({ route }) => {
         </View>
         <View style={styles.lineaHorizontal}></View>
         <View style={styles.contenedorDescripcion}>
-          <SegmentedButtons
-            value={descCom}
-            onValueChange={setDescCom}
-            buttons={[
+          <TouchableOpacity
+            onPress={() => ToggleDescCom("desc")}
+            style={[
+              styles.descComBoton,
               {
-                value: "desc",
-                label: "Descripcion",
-                style: {
-                  borderRadius: 4,
-                  backgroundColor:
-                    descCom === "desc" ? colorNaranja : "transparent",
-                },
-                labelStyle: {
-                  color: descCom === "desc" ? colors.white : colors.text,
-                },
-                checkedColor: colors.primary,
-              },
-              {
-                value: "com",
-                label: "Comentario",
-                style: {
-                  borderRadius: 4,
-                  backgroundColor:
-                    descCom === "com" ? colorNaranja : "transparent",
-                },
-                labelStyle: {
-                  color: descCom === "com" ? colors.white : colors.text,
-                },
-                checkedColor: colors.primary,
+                borderBottomColor:
+                  descCom === "desc" ? colors.primary : colors.gray,
+                borderBottomWidth: 2,
               },
             ]}
-          />
+          >
+            <Text style={styles.descComText}>Descripción</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => ToggleDescCom("com")}
+            style={[
+              styles.descComBoton,
+              {
+                borderBottomColor:
+                  descCom === "com" ? colors.primary : colors.gray,
+                borderBottomWidth: 2,
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.contenedorExlamacion,
+                {
+                  backgroundColor: nuevoComentario ? colors.red : "transparent",
+                },
+              ]}
+            >
+              {nuevoComentario && (
+                <MaterialCommunityIcons
+                  name="exclamation"
+                  size={10}
+                  color={colors.smokedWhite}
+                />
+              )}
+            </View>
+            <Text style={styles.descComText}>Comentarios</Text>
+          </TouchableOpacity>
         </View>
         {descCom === "desc" ? (
           <View style={styles.contenidoDescripcion}>
@@ -185,13 +209,37 @@ const styles = StyleSheet.create({
   },
   contenedorDescripcion: {
     backgroundColor: colors.white,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: "2%",
+  },
+  descComBoton: {
+    height: "100%",
+    width: "49.5%",
     padding: "2%",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  descComText: {
+    width: "100%",
+    textAlign: "center",
   },
   contenidoDescripcion: {
     backgroundColor: colors.smokedWhite,
     padding: "5%",
     borderRadius: 5,
     margin: "2%",
+  },
+  contenedorExlamacion: {
+    height: 15,
+    width: 15,
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: 62 }, { translateY: -20 }],
+    borderRadius: "50%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
