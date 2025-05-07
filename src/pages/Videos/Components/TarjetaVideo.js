@@ -1,9 +1,11 @@
 import React from "react";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import { colors } from "../../../../styles/base";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const Video = ({ idVideo }) => {
+const TarjetaVideo = ({ idVideo, visto }) => {
   const id = idVideo;
+  const vistoCheck = visto;
   console.log("Video id", id);
 
   const miniatura = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
@@ -16,7 +18,20 @@ const Video = ({ idVideo }) => {
         imageStyle={{ borderRadius: 10 }}
         resizeMode="cover"
       >
-        <View style={styles.espacioTranparente}></View>
+        <View style={styles.espacioTranparente}>
+          {vistoCheck && (
+            <View style={styles.encabezado}>
+              <View style={styles.triangulo}>
+                <MaterialCommunityIcons
+                  name="eye-check-outline"
+                  size={30}
+                  color={colors.white}
+                  style={styles.icono}
+                />
+              </View>
+            </View>
+          )}
+        </View>
         <View style={styles.contenedorInfo}>
           <Text style={styles.textoBlanco}>
             Cómo ENCENDER y REGULAR una LUZ con el MÓVIL, con la VOZ, a
@@ -46,15 +61,39 @@ const styles = StyleSheet.create({
   },
   espacioTranparente: {
     display: "flex",
-
     height: "60%",
     width: "100%",
+    borderRadius: 10,
+  },
+  encabezado: {
+    flexDirection: "row",
+    backgroundColor: "trnasparent",
+    justifyContent: "flex-end",
+    overflow: "hidden",
+  },
+  triangulo: {
+    width: 0,
+    height: 0,
+    borderTopWidth: 65,
+    borderLeftWidth: 65,
+    borderTopColor: colors.blue,
+    opacity: 0.99,
+    borderLeftColor: "transparent",
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  icono: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -34 }, { translateY: -58 }],
   },
   contenedorInfo: {
     backgroundColor: colors.primary,
     height: "40%",
     width: "100%",
-    opacity: 0.8,
+    opacity: 0.99,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     justifyContent: "center",
@@ -62,10 +101,9 @@ const styles = StyleSheet.create({
   textoBlanco: {
     color: colors.white,
     width: "90%",
-    textAlign: "center",
     alignSelf: "center",
     fontWeight: "bold",
   },
 });
 
-export default Video;
+export default TarjetaVideo;

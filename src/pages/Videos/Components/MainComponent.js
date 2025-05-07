@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Searchbar, Chip } from "react-native-paper";
 import { colors } from "../../../../styles/base";
-import Video from "./Video";
+import TarjetaVideo from "./TarjetaVideo";
 import { useNavigation } from "@react-navigation/native";
 
 const MainComponent = () => {
@@ -47,7 +47,8 @@ const MainComponent = () => {
         />
         <TouchableOpacity style={styles.iconoFiltro}>
           <MaterialCommunityIcons
-            name="filter"
+            // name="eye-check-outline"
+            name="filter-outline"
             size={40}
             color={colors.smokedWhite}
           />
@@ -72,10 +73,10 @@ const MainComponent = () => {
       <ScrollView style={{ height: "100%", paddingBottom: 100 }}>
         <View style={styles.contenedorVideos}>
           <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
-            <Video idVideo="wVv5WR64CKg" />
+            <TarjetaVideo idVideo="wVv5WR64CKg" visto={true} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
-            <Video idVideo="b6hoBp7Hk-A" />
+            <TarjetaVideo idVideo="b6hoBp7Hk-A" visto={false} />
           </TouchableOpacity>
         </View>
       </ScrollView>
