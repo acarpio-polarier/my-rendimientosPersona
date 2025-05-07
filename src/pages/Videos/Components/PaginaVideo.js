@@ -98,7 +98,7 @@ const PaginaVideo = ({ route }) => {
         </View>
         {descCom === "desc" ? (
           <View style={styles.contenidoDescripcion}>
-            <Text>
+            <Text style={{ textAlign: "justify" }}>
               Aquí explico como se cambia el grifo del grifo del fregadero de la
               cocina. El del baño se hace exactamente de la misma manera. Es muy
               sencillo y cualquiera lo puede hacer. No te quedes con las ganas
@@ -140,6 +140,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     marginVertical: "2%",
+    // textAlign: "justify",
+    paddingHorizontal: "2%",
   },
   contenedorVideos: {
     display: "flex",
@@ -150,15 +152,21 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   descripcionVideo: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
     width: "90%",
-    height: "60%",
+    height: "auto",
+    maxHeight: "60%",
     alignSelf: "center",
     marginVertical: "5%",
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   contenedorInfoPrincipal: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
     paddingHorizontal: "3%",
     borderRadius: 10,
     paddingVertical: "2%",
@@ -176,13 +184,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   contenedorDescripcion: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
     padding: "2%",
   },
   contenidoDescripcion: {
     backgroundColor: colors.smokedWhite,
-    padding: "2%",
-    borderRadius: 2,
+    padding: "5%",
+    borderRadius: 5,
     margin: "2%",
   },
 });

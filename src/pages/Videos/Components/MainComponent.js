@@ -35,9 +35,6 @@ const MainComponent = () => {
   const abrirVideo = () => {
     navigation.navigate("PaginaVideo", { idVideo: "wVv5WR64CKg" });
   };
-  const abrirVideo2 = () => {
-    navigation.navigate("PaginaVideo2", { idVideo: "wVv5WR64CKg" });
-  };
 
   // Borrar una etiqueta
   const handleDelete = (chipToDelete) => {
@@ -60,7 +57,6 @@ const MainComponent = () => {
         />
         <TouchableOpacity style={styles.iconoFiltro}>
           <MaterialCommunityIcons
-            // name="eye-check-outline"
             name="filter-outline"
             size={40}
             color={colors.smokedWhite}
@@ -88,7 +84,7 @@ const MainComponent = () => {
           <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
             <TarjetaVideo idVideo="wVv5WR64CKg" visto={true} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo2}>
+          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
             <TarjetaVideo idVideo="b6hoBp7Hk-A" visto={false} />
           </TouchableOpacity>
         </View>
