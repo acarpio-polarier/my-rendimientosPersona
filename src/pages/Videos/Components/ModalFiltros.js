@@ -28,6 +28,11 @@ const ModalFiltros = ({
   );
   const [estadosModal, setEstadosModal] = useState(estados);
   const etiquetasModal = etiquetas;
+  console.log("etiquetasModal", etiquetasModal);
+
+  useEffect(() => {
+    setFiltros(Array.from(etiquetasSeleccionadas));
+  }, [etiquetasSeleccionadas]);
 
   const switchEstado = (estado) => {
     console.log("MF estados", estadosModal, estado);
@@ -52,12 +57,13 @@ const ModalFiltros = ({
       } else {
         nuevoSet.add(chip);
       }
+
       return nuevoSet;
     });
   };
 
   const cerraModal = () => {
-    setFiltros(Array.from(etiquetasSeleccionadas));
+    // setFiltros(Array.from(etiquetasSeleccionadas));
     onClose();
   };
 
@@ -172,6 +178,9 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
     marginBottom: "3%",
     overflow: "hidden",
+    backgroundColor: colors.lightGray,
+    padding: "2%",
+    borderRadius: 10,
   },
 
   chipContainer: {
@@ -189,7 +198,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   contenedorEstados: {
-    backgroundColor: "red",
     height: "10%",
     flexDirection: "row",
     alignItems: "center",
