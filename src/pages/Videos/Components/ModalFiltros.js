@@ -35,18 +35,8 @@ const ModalFiltros = ({
   }, [etiquetasSeleccionadas]);
 
   const switchEstado = (estado) => {
-    console.log("MF estados", estadosModal, estado);
-    if (estadosModal.includes(estado)) {
-      const nuevoEstados = estadosModal.filter((item) => item !== estado);
-      console.log("MF nuevoEstados", nuevoEstados);
-      setEstadosModal(nuevoEstados); //provisional
-      setEstadoVideo(nuevoEstados);
-    } else {
-      const nuevoEstados = [...estadosModal, estado];
-      console.log("MF nuevoEstados", nuevoEstados);
-      setEstadosModal(nuevoEstados); // provisional
-      setEstadoVideo(nuevoEstados);
-    }
+    setEstadosModal(estado);
+    setEstadoVideo(estado);
   };
 
   const handleDelete = (chip) => {
@@ -97,14 +87,28 @@ const ModalFiltros = ({
           <View style={styles.cabecera}>
             <Text style={styles.title}>Filtros</Text>
           </View>
+          <View>
+            <Text>Estado del video: </Text>
+          </View>
           <View style={styles.contenedorEstados}>
+            <TouchableOpacity
+              onPress={() => {
+                switchEstado("Todos");
+              }}
+              style={[
+                styles.bottonEstado,
+                { opacity: estados === "Todos" ? 1 : 0.5 },
+              ]}
+            >
+              <Text style={styles.chip}>Todos</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 switchEstado("Visto");
               }}
               style={[
                 styles.bottonEstado,
-                { opacity: estados.includes("Visto") ? 1 : 0.5 },
+                { opacity: estados === "Visto" ? 1 : 0.5 },
               ]}
             >
               <Text style={styles.chip}>Visto</Text>
@@ -115,7 +119,7 @@ const ModalFiltros = ({
               }}
               style={[
                 styles.bottonEstado,
-                { opacity: estados.includes("Pendiente") ? 1 : 0.5 },
+                { opacity: estados === "Pendiente" ? 1 : 0.5 },
               ]}
             >
               <Text style={styles.chip}>Pendiente</Text>
@@ -201,14 +205,17 @@ const styles = StyleSheet.create({
     height: "10%",
     flexDirection: "row",
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "space-around",
     marginVertical: "2%",
+    width: "95%",
+    backgroundColor: colors.lightGray,
+    borderRadius: 7,
   },
   bottonEstado: {
     backgroundColor: colors.primary,
-    width: "40%",
+    width: "31%",
     alignItems: "center",
-    margin: 5,
     justifyContent: "center",
     paddingHorizontal: 15,
     paddingVertical: 7,

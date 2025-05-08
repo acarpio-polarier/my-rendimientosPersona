@@ -22,7 +22,7 @@ const MainComponent = () => {
   const [videosEtiquetas, setVideosEtiquetas] = useState();
   const [etiquetas, setEtiquetas] = useState();
   const [filtros, setFiltros] = useState([]);
-  const [estadoVideo, setEstadoVideo] = useState(["Visto", "Pendiente"]);
+  const [estadoVideo, setEstadoVideo] = useState("Todos");
   const navigation = useNavigation();
 
   // Solo cargar la primera vez
@@ -69,15 +69,18 @@ const MainComponent = () => {
         if (
           etiqueta.denominacion &&
           video.idEstado === 5 &&
-          estadoVideo.includes("Visto")
+          estadoVideo === "Visto"
         ) {
           etiquetasUnicas.add(etiqueta.denominacion);
         }
         if (
           etiqueta.denominacion &&
           video.idEstado != 5 &&
-          estadoVideo.includes("Pendiente")
+          estadoVideo === "Pendiente"
         ) {
+          etiquetasUnicas.add(etiqueta.denominacion);
+        }
+        if (etiqueta.denominacion && estadoVideo === "Todos") {
           etiquetasUnicas.add(etiqueta.denominacion);
         }
       });
@@ -94,8 +97,13 @@ const MainComponent = () => {
   const getVideosPorPersona = async () => {
     const data = await RendimientoUtils.getVideosPorPersona(1392);
     console.log("MC videos de una persona", data);
-    setVideosFiltrados(data);
-    setListaVideos(data);
+
+    const videos = data.filter((video) => {
+      return video.idEstado != 2; // idEstado = 2 es que el video se le ha quitado desde RRHH
+    });
+
+    setVideosFiltrados(videos);
+    setListaVideos(videos);
   };
 
   const cargarVideosFiltrados = () => {
@@ -103,10 +111,13 @@ const MainComponent = () => {
 
     // id de los videos segun el estado
     listaVideos.forEach((video) => {
-      if (video.idEstado === 5 && estadoVideo.includes("Visto")) {
+      if (video.idEstado === 5 && estadoVideo === "Visto") {
         idsVideosEstado.push(video.idVideo);
       }
-      if (video.idEstado != 5 && estadoVideo.includes("Pendiente")) {
+      if (video.idEstado != 5 && estadoVideo === "Pendiente") {
+        idsVideosEstado.push(video.idVideo);
+      }
+      if (estadoVideo === "Todos") {
         idsVideosEstado.push(video.idVideo);
       }
     });
