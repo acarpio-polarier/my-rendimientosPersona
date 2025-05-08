@@ -22,7 +22,6 @@ const MainComponent = () => {
   const [videosEtiquetas, setVideosEtiquetas] = useState();
   const [etiquetas, setEtiquetas] = useState();
   const [filtros, setFiltros] = useState([]);
-  const [estadoVideo, setEstadoVideo] = useState(["Visto", "Pendiente"]);
   const navigation = useNavigation();
 
   // Solo cargar la primera vez
@@ -72,8 +71,9 @@ const MainComponent = () => {
     etiquetasUnicas.add("Pendiente");
     console.log("MC Etiquetas únicas:", etiquetasUnicas);
     const etiquetasFinales = Array.from(etiquetasUnicas);
-    setVideosEtiquetas(videosConEtiquetas);
     setEtiquetas(etiquetasFinales);
+    setVideosEtiquetas(videosConEtiquetas);
+    setFiltros(etiquetasFinales);
     console.log("MC Etiquetas únicas:", etiquetasFinales);
     console.log("MC videos con etiquetas", videosConEtiquetas);
   };
