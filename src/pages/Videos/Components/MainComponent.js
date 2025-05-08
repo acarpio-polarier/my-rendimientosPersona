@@ -17,24 +17,50 @@ import ModalFiltros from "./ModalFiltros";
 const MainComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [modalVisibilidad, setModalVisibilidad] = useState(false);
-  const [listaVideos, setListaVideos] = useState();
+  const [listaVideos, setListaVideos] = useState([]);
+  const [videosFiltrados, setVideosFiltrados] = useState();
+  const [videosEtiquetas, setVideosEtiquetas] = useState();
   const [etiquetas, setEtiquetas] = useState();
-  const [filtros, setFiltros] = useState();
+  const [filtros, setFiltros] = useState([]);
+  const [estadoVideo, setEstadoVideo] = useState(["Visto", "Pendiente"]);
   const navigation = useNavigation();
 
   // Solo cargar la primera vez
   useEffect(() => {
     getVideosPorPersona();
-    cargarEtiquetas();
   }, []);
+
+  useEffect(() => {
+    if (listaVideos && listaVideos.length > 0) {
+      console.log("MC useEffect cargarEtiquetas");
+      cargarEtiquetas();
+    }
+  }, [listaVideos]);
+
+  useEffect(() => {
+    if (filtros && filtros.length > 0) {
+      console.log("MC useEffect cargarVideosFiltrados", filtros);
+      cargarVideosFiltrados();
+    } else {
+      setVideosFiltrados([]);
+    }
+  }, [filtros]);
 
   const cargarEtiquetas = async () => {
     const etiquetasUnicas = new Set();
+    const videosConEtiquetas = [];
 
+    // Sacar etiquetas de cada video y guardarlas en el Set
     for (const video of listaVideos) {
       const etiquetas = await RendimientoUtils.getEtiquetasVideos(
         video.idVideo
       );
+
+      // Array con los videos y sus etiquetas
+      videosConEtiquetas.push({
+        idVideo: video.idVideo,
+        etiquetas: etiquetas,
+      });
 
       etiquetas.forEach((etiqueta) => {
         if (etiqueta.denominacion) {
@@ -42,17 +68,58 @@ const MainComponent = () => {
         }
       });
     }
-
+    etiquetasUnicas.add("Visto");
+    etiquetasUnicas.add("Pendiente");
+    console.log("MC Etiquetas únicas:", etiquetasUnicas);
     const etiquetasFinales = Array.from(etiquetasUnicas);
+    setVideosEtiquetas(videosConEtiquetas);
     setEtiquetas(etiquetasFinales);
-    setFiltros(etiquetasFinales);
-    console.log("Etiquetas únicas:", etiquetasFinales);
+    console.log("MC Etiquetas únicas:", etiquetasFinales);
+    console.log("MC videos con etiquetas", videosConEtiquetas);
   };
 
   const getVideosPorPersona = async () => {
     const data = await RendimientoUtils.getVideosPorPersona(1392);
-    console.log("videos de una persona", data);
+    console.log("MC videos de una persona", data);
+    setVideosFiltrados(data);
     setListaVideos(data);
+  };
+
+  const cargarVideosFiltrados = () => {
+    const idsFiltrados = new Set();
+    console.log("MC filtrando listaVideos", listaVideos);
+    console.log("MC filtrando filtros", filtros);
+    console.log("MC filtrando videosEtiquetas", videosEtiquetas);
+    // Comprobar etiquetas
+    videosEtiquetas.forEach((video) => {
+      const etiquetasDelVideo = video.etiquetas.map((e) => e.denominacion);
+
+      const coincide = etiquetasDelVideo.some((etiqueta) =>
+        filtros.includes(etiqueta)
+      );
+
+      if (coincide) {
+        idsFiltrados.add(video.idVideo);
+      }
+    });
+
+    // Comprobar estado
+    listaVideos.forEach((video) => {
+      if (video.idEstado === 5 && filtros.includes("Visto")) {
+        idsFiltrados.add(video.idVideo);
+      }
+      if (video.idEstado != 5 && filtros.includes("Pendiente")) {
+        idsFiltrados.add(video.idVideo);
+      }
+    });
+
+    const idsFiltradosArray = Array.from(idsFiltrados);
+    const nuevosFiltrados = listaVideos.filter((video) =>
+      idsFiltradosArray.includes(video.idVideo)
+    );
+    setVideosFiltrados(nuevosFiltrados);
+
+    console.log("MC filtrando nuevosFilstrados", nuevosFiltrados);
   };
 
   return (
@@ -80,34 +147,39 @@ const MainComponent = () => {
           />
         </TouchableOpacity>
       </View>
-
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        {videosFiltrados && videosFiltrados.length > 0 ? (
+          <View style={styles.contenedorVideos}>
+            {videosFiltrados?.map((video, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.tarjetaVideo}
+                onPress={() =>
+                  navigation.navigate("PaginaVideo", { video: video })
+                }
+              >
+                <TarjetaVideo video={video} />
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <View style={styles.contenedorVideos}>
+            <Text style={styles.textNoVids}>No hay videos disponibles</Text>
+          </View>
+        )}
+      </ScrollView>
       {modalVisibilidad && (
         <ModalFiltros
           isVisible={modalVisibilidad}
           onClose={() => setModalVisibilidad(!modalVisibilidad)}
           filtros={filtros}
+          setFiltros={setFiltros}
           etiquetas={etiquetas}
         />
       )}
-
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.contenedorVideos}>
-          {listaVideos?.map((video, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.tarjetaVideo}
-              onPress={() =>
-                navigation.navigate("PaginaVideo", { video: video })
-              }
-            >
-              <TarjetaVideo video={video} />
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
     </View>
   );
 };
@@ -147,6 +219,13 @@ const styles = StyleSheet.create({
   contenedorVideos: {},
   tarjetaVideo: {
     marginVertical: "2%",
+  },
+  textNoVids: {
+    alignSelf: "center",
+    marginVertical: "10%",
+    fontSize: 35,
+    color: colors.gray,
+    textAlign: "center",
   },
 });
 
