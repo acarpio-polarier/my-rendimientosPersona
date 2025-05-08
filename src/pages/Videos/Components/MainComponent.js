@@ -12,35 +12,47 @@ import { colors } from "../../../../styles/base";
 import TarjetaVideo from "./TarjetaVideo";
 import { useNavigation } from "@react-navigation/native";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
+import ModalFiltros from "./ModalFiltros";
 
 const MainComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [etiquetas, setEtiquetas] = useState([
-    "Plegadora",
-    "Visto",
-    "Pendiente",
-    "Calandra",
-  ]);
+  const [modalVisibilidad, setModalVisibilidad] = useState(false);
+  const [listaVideos, setListaVideos] = useState();
+  const [etiquetas, setEtiquetas] = useState();
+  const [filtros, setFiltros] = useState();
   const navigation = useNavigation();
-  // Borrar
+
+  // Solo cargar la primera vez
   useEffect(() => {
     getVideosPorPersona();
+    cargarEtiquetas();
   }, []);
+
+  const cargarEtiquetas = async () => {
+    const etiquetasUnicas = new Set();
+
+    for (const video of listaVideos) {
+      const etiquetas = await RendimientoUtils.getEtiquetasVideos(
+        video.idVideo
+      );
+
+      etiquetas.forEach((etiqueta) => {
+        if (etiqueta.denominacion) {
+          etiquetasUnicas.add(etiqueta.denominacion);
+        }
+      });
+    }
+
+    const etiquetasFinales = Array.from(etiquetasUnicas);
+    setEtiquetas(etiquetasFinales);
+    setFiltros(etiquetasFinales);
+    console.log("Etiquetas únicas:", etiquetasFinales);
+  };
 
   const getVideosPorPersona = async () => {
     const data = await RendimientoUtils.getVideosPorPersona(1392);
     console.log("videos de una persona", data);
-  };
-
-  const abrirVideo = () => {
-    navigation.navigate("PaginaVideo", { idVideo: "wVv5WR64CKg" });
-  };
-
-  // Borrar una etiqueta
-  const handleDelete = (chipToDelete) => {
-    setEtiquetas((prevChips) =>
-      prevChips.filter((chip) => chip !== chipToDelete)
-    );
+    setListaVideos(data);
   };
 
   return (
@@ -55,7 +67,12 @@ const MainComponent = () => {
           inputStyle={{ textAlignVertical: "center" }}
           style={styles.barraBusqueda}
         />
-        <TouchableOpacity style={styles.iconoFiltro}>
+        <TouchableOpacity
+          style={styles.iconoFiltro}
+          onPress={() => {
+            setModalVisibilidad(!modalVisibilidad);
+          }}
+        >
           <MaterialCommunityIcons
             name="filter-outline"
             size={40}
@@ -63,30 +80,32 @@ const MainComponent = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={styles.contenedorEtiquetas}>
-        {etiquetas.map((chip, index) => (
-          <TouchableOpacity key={index} onPress={() => handleDelete(chip)}>
-            <Chip
-              mode="outlined"
-              onClose={() => {
-                console.log("etiquetaTocada");
-              }}
-              style={styles.etiqueta}
-              textStyle={{ color: colors.white }}
-            >
-              {chip}
-            </Chip>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <ScrollView style={{ height: "100%", paddingBottom: 100 }}>
+
+      {modalVisibilidad && (
+        <ModalFiltros
+          isVisible={modalVisibilidad}
+          onClose={() => setModalVisibilidad(!modalVisibilidad)}
+          filtros={filtros}
+          etiquetas={etiquetas}
+        />
+      )}
+
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.contenedorVideos}>
-          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
-            <TarjetaVideo idVideo="wVv5WR64CKg" visto={true} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.tarjetaVideo} onPress={abrirVideo}>
-            <TarjetaVideo idVideo="b6hoBp7Hk-A" visto={false} />
-          </TouchableOpacity>
+          {listaVideos?.map((video, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.tarjetaVideo}
+              onPress={() =>
+                navigation.navigate("PaginaVideo", { video: video })
+              }
+            >
+              <TarjetaVideo video={video} />
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -121,22 +140,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  contenedorEtiquetas: {
-    display: "flex",
-    width: "95%",
-    alignSelf: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignContent: "center",
-    marginBottom: "3%",
-  },
-  etiqueta: {
-    margin: 5,
-    width: "auto",
-    flexShrink: 1,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    borderWidth: 0,
+
+  scrollView: {
+    height: "83%",
   },
   contenedorVideos: {},
   tarjetaVideo: {

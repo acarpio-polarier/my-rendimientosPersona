@@ -13,6 +13,7 @@ export const rendimientoPersonasService = {
   getResumenTokensPersona,
   getDetallesPersona,
   getVideosPorPersona,
+  getEtiquetasVideos,
 
   //Llamada
 };
@@ -203,6 +204,28 @@ function getVideosPorPersona(idPersona) {
         "getVideosPorPersona" +
         "?idPersona=" +
         idPersona,
+      requestOptions("GET")
+    )
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+function getEtiquetasVideos(idVideo) {
+  console.log(
+    connectionConstants.ODATA_URL + "getEtiquetasVideo" + "?idVideo=" + idVideo,
+    requestOptions("GET")
+  );
+  return new Promise((resolve, reject) => {
+    fetch(
+      connectionConstants.ODATA_URL +
+        "getEtiquetasVideo" +
+        "?idVideo=" +
+        idVideo,
       requestOptions("GET")
     )
       .then(handleResponse)

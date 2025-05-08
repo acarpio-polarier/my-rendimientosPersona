@@ -17,7 +17,9 @@ export const PERSONA_ID = 1392;
 
 const PaginaVideo = ({ route }) => {
   const insets = useSafeAreaInsets();
-  const { idVideo } = route.params;
+  const video = route.params.video;
+  const idVideo = video.youtubeId;
+  const descripcionVideo = video.descripcion;
   const [visto, setVisto] = useState(false);
   const [descCom, setDescCom] = useState("desc");
   const [nuevoComentario, setNuevoComentario] = useState(true);
@@ -26,6 +28,10 @@ const PaginaVideo = ({ route }) => {
   const widthV = Dimensions.get("window").width * 0.9;
   const heightV = (widthV * 9) / 16;
   const colorNaranja = "'rgba(237, 182, 55, 0.9)'";
+
+  useEffect(() => {
+    if (video.idEstado == 5) setVisto(true);
+  }, []);
 
   const ToggleDescCom = (value) => {
     setDescCom(value);
@@ -39,6 +45,7 @@ const PaginaVideo = ({ route }) => {
 
   //Borrar
   useEffect(() => {
+    console.log("videoPagina", video);
     console.log("visibilidad", visto);
   }, [visto]);
 
@@ -58,13 +65,10 @@ const PaginaVideo = ({ route }) => {
       <ScrollView style={styles.descripcionVideo}>
         <View style={styles.contenedorInfoPrincipal}>
           <View>
-            <Text style={styles.titulo}>
-              Cómo ENCENDER y REGULAR una LUZ con el MÓVIL, con la VOZ, a
-              DISTANCIA (DIMMER INTELIGENTE)
-            </Text>
+            <Text style={styles.titulo}>{video.titulo}</Text>
           </View>
           <View style={styles.fechaYVisto}>
-            <Text>07/05/2025</Text>
+            <Text>fechaSubida</Text>
             <View style={styles.contenedorSwitch}>
               <Text>Visto:</Text>
               <Switch
@@ -122,17 +126,7 @@ const PaginaVideo = ({ route }) => {
         </View>
         {descCom === "desc" ? (
           <View style={styles.contenidoDescripcion}>
-            <Text style={{ textAlign: "justify" }}>
-              Aquí explico como se cambia el grifo del grifo del fregadero de la
-              cocina. El del baño se hace exactamente de la misma manera. Es muy
-              sencillo y cualquiera lo puede hacer. No te quedes con las ganas
-              de hacer esta reparación o cambiarlo porque no te gusta. Solo te
-              hace falta un destornillador y una llave para tuercas apropiada.
-              Espero que el vídeo te sea de utilidad. No te olvides comentar,
-              valorar el vídeo y suscribirte al canal si no te quieres perder
-              mis nuevos vídeos. Pulsa la campanita para que Youtube te avise
-              cuando subo nuevos vídeos
-            </Text>
+            <Text style={{ textAlign: "justify" }}>{descripcionVideo}</Text>
           </View>
         ) : (
           <View style={styles.contenidoDescripcion}>

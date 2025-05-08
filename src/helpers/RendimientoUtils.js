@@ -134,6 +134,19 @@ const RendimientoUtils = {
     }
   },
 
+  getEtiquetasVideos: async (idVideo) => {
+    console.log("rendimiento utils EV");
+    try {
+      const datos = await rendimientoPersonasService.getEtiquetasVideos(
+        idVideo
+      );
+      console.log("rendimiento utils EV");
+      return datos;
+    } catch (error) {
+      console.log("Error al obtener getEtiquetasVideos", error);
+    }
+  },
+
   /**
    * Calcula estadísticas básicas para un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento

@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import { colors } from "../../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const TarjetaVideo = ({ idVideo, visto }) => {
-  const id = idVideo;
-  const vistoCheck = visto;
+const TarjetaVideo = ({ video }) => {
+  const id = video.youtubeId;
+  const vistoCheck = video.idEstado == 5 ? true : false;
+  const titulo = video.titulo;
   console.log("Video id", id);
 
   const miniatura = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
+  //Borrar
+  useEffect(() => {
+    console.log("video", video);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -33,10 +39,7 @@ const TarjetaVideo = ({ idVideo, visto }) => {
           )}
         </View>
         <View style={styles.contenedorInfo}>
-          <Text style={styles.textoBlanco}>
-            Cómo ENCENDER y REGULAR una LUZ con el MÓVIL, con la VOZ, a
-            DISTANCIA (DIMMER INTELIGENTE)
-          </Text>
+          <Text style={styles.textoBlanco}>{video.titulo}</Text>
         </View>
       </ImageBackground>
     </View>
