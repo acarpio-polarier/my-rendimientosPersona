@@ -22,6 +22,7 @@ const MainComponent = () => {
   const [videosEtiquetas, setVideosEtiquetas] = useState();
   const [etiquetas, setEtiquetas] = useState();
   const [filtros, setFiltros] = useState([]);
+  const [estadoVideo, setEstadoVideo] = useState(["Visto", "Pendiente"]);
   const navigation = useNavigation();
 
   // Solo cargar la primera vez
@@ -34,7 +35,7 @@ const MainComponent = () => {
       console.log("MC useEffect cargarEtiquetas");
       cargarEtiquetas();
     }
-  }, [listaVideos]);
+  }, [listaVideos, estadoVideo]);
 
   useEffect(() => {
     if (filtros && filtros.length > 0) {
@@ -62,13 +63,25 @@ const MainComponent = () => {
       });
 
       etiquetas.forEach((etiqueta) => {
-        if (etiqueta.denominacion) {
+        console.log("MC forEach estados", estadoVideo);
+
+        // Mostrar solo las etiquetas las cuales estan en videos segun el estado
+        if (
+          etiqueta.denominacion &&
+          video.idEstado === 5 &&
+          estadoVideo.includes("Visto")
+        ) {
+          etiquetasUnicas.add(etiqueta.denominacion);
+        }
+        if (
+          etiqueta.denominacion &&
+          video.idEstado != 5 &&
+          estadoVideo.includes("Pendiente")
+        ) {
           etiquetasUnicas.add(etiqueta.denominacion);
         }
       });
     }
-    etiquetasUnicas.add("Visto");
-    etiquetasUnicas.add("Pendiente");
     console.log("MC Etiquetas únicas:", etiquetasUnicas);
     const etiquetasFinales = Array.from(etiquetasUnicas);
     setEtiquetas(etiquetasFinales);
@@ -86,11 +99,24 @@ const MainComponent = () => {
   };
 
   const cargarVideosFiltrados = () => {
+    const idsVideosEstado = [];
+
+    // id de los videos segun el estado
+    listaVideos.forEach((video) => {
+      if (video.idEstado === 5 && estadoVideo.includes("Visto")) {
+        idsVideosEstado.push(video.idVideo);
+      }
+      if (video.idEstado != 5 && estadoVideo.includes("Pendiente")) {
+        idsVideosEstado.push(video.idVideo);
+      }
+    });
+
     const idsFiltrados = new Set();
     console.log("MC filtrando listaVideos", listaVideos);
     console.log("MC filtrando filtros", filtros);
     console.log("MC filtrando videosEtiquetas", videosEtiquetas);
-    // Comprobar etiquetas
+
+    // id de los videos segun las etiquetas
     videosEtiquetas.forEach((video) => {
       const etiquetasDelVideo = video.etiquetas.map((e) => e.denominacion);
 
@@ -103,19 +129,13 @@ const MainComponent = () => {
       }
     });
 
-    // Comprobar estado
-    listaVideos.forEach((video) => {
-      if (video.idEstado === 5 && filtros.includes("Visto")) {
-        idsFiltrados.add(video.idVideo);
-      }
-      if (video.idEstado != 5 && filtros.includes("Pendiente")) {
-        idsFiltrados.add(video.idVideo);
-      }
-    });
-
     const idsFiltradosArray = Array.from(idsFiltrados);
-    const nuevosFiltrados = listaVideos.filter((video) =>
-      idsFiltradosArray.includes(video.idVideo)
+
+    // Comprobar que los ids esten enlos aceptados por el estado y las etiquetas
+    const nuevosFiltrados = listaVideos.filter(
+      (video) =>
+        idsFiltradosArray.includes(video.idVideo) &&
+        idsVideosEstado.includes(video.idVideo)
     );
     setVideosFiltrados(nuevosFiltrados);
 
@@ -178,6 +198,8 @@ const MainComponent = () => {
           filtros={filtros}
           setFiltros={setFiltros}
           etiquetas={etiquetas}
+          estados={estadoVideo}
+          setEstadoVideo={setEstadoVideo}
         />
       )}
     </View>

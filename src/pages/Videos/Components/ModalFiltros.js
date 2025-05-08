@@ -17,6 +17,8 @@ const ModalFiltros = ({
   filtros,
   setFiltros,
   etiquetas,
+  estados,
+  setEstadoVideo,
 }) => {
   const deviceHeight = Dimensions.get("window").height;
   const pan = useRef(new Animated.ValueXY()).current;
@@ -24,7 +26,23 @@ const ModalFiltros = ({
   const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState(
     new Set(filtros)
   );
+  const [estadosModal, setEstadosModal] = useState(estados);
   const etiquetasModal = etiquetas;
+
+  const switchEstado = (estado) => {
+    console.log("MF estados", estadosModal, estado);
+    if (estadosModal.includes(estado)) {
+      const nuevoEstados = estadosModal.filter((item) => item !== estado);
+      console.log("MF nuevoEstados", nuevoEstados);
+      setEstadosModal(nuevoEstados); //provisional
+      setEstadoVideo(nuevoEstados);
+    } else {
+      const nuevoEstados = [...estadosModal, estado];
+      console.log("MF nuevoEstados", nuevoEstados);
+      setEstadosModal(nuevoEstados); // provisional
+      setEstadoVideo(nuevoEstados);
+    }
+  };
 
   const handleDelete = (chip) => {
     setEtiquetasSeleccionadas((prevSet) => {
@@ -73,7 +91,30 @@ const ModalFiltros = ({
           <View style={styles.cabecera}>
             <Text style={styles.title}>Filtros</Text>
           </View>
-
+          <View style={styles.contenedorEstados}>
+            <TouchableOpacity
+              onPress={() => {
+                switchEstado("Visto");
+              }}
+              style={[
+                styles.bottonEstado,
+                { opacity: estados.includes("Visto") ? 1 : 0.5 },
+              ]}
+            >
+              <Text style={styles.chip}>Visto</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                switchEstado("Pendiente");
+              }}
+              style={[
+                styles.bottonEstado,
+                { opacity: estados.includes("Pendiente") ? 1 : 0.5 },
+              ]}
+            >
+              <Text style={styles.chip}>Pendiente</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.contenedorEtiquetas}>
             {etiquetasModal.map((chip, index) => (
               <TouchableOpacity key={index} onPress={() => handleDelete(chip)}>
@@ -146,6 +187,24 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 15,
     fontWeight: "bold",
+  },
+  contenedorEstados: {
+    backgroundColor: "red",
+    height: "10%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginVertical: "2%",
+  },
+  bottonEstado: {
+    backgroundColor: colors.primary,
+    width: "40%",
+    alignItems: "center",
+    margin: 5,
+    justifyContent: "center",
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    borderRadius: 7,
   },
 });
 
