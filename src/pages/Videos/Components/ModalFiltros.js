@@ -21,6 +21,8 @@ const ModalFiltros = ({
   setEstadoVideo,
 }) => {
   const deviceHeight = Dimensions.get("window").height;
+  const MODAL_HEIGHT = deviceHeight * 0.7;
+  const SCROLL_HEIGHT = deviceHeight * 0.4;
   const pan = useRef(new Animated.ValueXY()).current;
   const opacity = useRef(new Animated.Value(1)).current;
   const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState(
@@ -83,56 +85,39 @@ const ModalFiltros = ({
           },
         ]}
       >
-        <View style={[styles.modalContent, { height: deviceHeight / 1.7 }]}>
+        <View style={[styles.modalContent, { maxHeight: MODAL_HEIGHT }]}>
           <View style={styles.cabecera}>
             <Text style={styles.title}>Filtros</Text>
           </View>
+
           <View style={styles.tituloEstado}>
             <Text style={styles.textoEstado}>Estado del video: </Text>
           </View>
+
           <View style={styles.contenedorEstados}>
-            <TouchableOpacity
-              onPress={() => {
-                switchEstado("Todos");
-              }}
-              style={[
-                styles.bottonEstado,
-                { opacity: estados === "Todos" ? 1 : 0.5 },
-              ]}
-            >
-              <Text style={styles.chip}>Todos</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                switchEstado("Visto");
-              }}
-              style={[
-                styles.bottonEstado,
-                { opacity: estados === "Visto" ? 1 : 0.5 },
-              ]}
-            >
-              <Text style={styles.chip}>Visto</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                switchEstado("Pendiente");
-              }}
-              style={[
-                styles.bottonEstado,
-                { opacity: estados === "Pendiente" ? 1 : 0.5 },
-              ]}
-            >
-              <Text style={styles.chip}>Pendiente</Text>
-            </TouchableOpacity>
+            {["Todos", "Visto", "Pendiente"].map((estado) => (
+              <TouchableOpacity
+                key={estado}
+                onPress={() => switchEstado(estado)}
+                style={[
+                  styles.bottonEstado,
+                  { opacity: estados === estado ? 1 : 0.5 },
+                ]}
+              >
+                <Text style={styles.chip}>{estado}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
+
           <View style={styles.tituloEstado}>
             <Text style={styles.textoEstado}>Etiquetas: </Text>
           </View>
-          <View style={styles.contenedorEtiquetas}>
-            <ScrollView
-              style={styles.contenedorEtiquetas}
-              showsVerticalScrollIndicator={false}
-            >
+
+          <ScrollView
+            style={[styles.ScrollView, { height: SCROLL_HEIGHT }]}
+            contentContainerStyle={styles.scrollContainer}
+          >
+            <View style={styles.contenedorEtiquetas}>
               {etiquetasModal.map((chip, index) => (
                 <TouchableOpacity
                   key={index}
@@ -148,8 +133,8 @@ const ModalFiltros = ({
                   </View>
                 </TouchableOpacity>
               ))}
-            </ScrollView>
-          </View>
+            </View>
+          </ScrollView>
         </View>
       </Animated.View>
     </Modal>
@@ -164,73 +149,25 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   modalContent: {
+    maxHeight: "70%",
     backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    paddingBottom: 10,
   },
   cabecera: {
-    height: "12%",
+    height: 60,
     backgroundColor: colors.primary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
     color: colors.white,
-    width: "100%",
-    textAlign: "center",
-  },
-  contenedorEtiquetas: {
-    display: "flex",
-    width: "95%",
-    MaxHeight: "57%",
-    alignSelf: "center",
-    flexDirection: "row",
-    alignContent: "flex-start",
-    marginBottom: "3%",
-    overflow: "hidden",
-    backgroundColor: colors.lightGray,
-    padding: "2%",
-    borderRadius: 10,
-  },
-
-  chipContainer: {
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    margin: 5,
-    justifyContent: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 7,
-    borderRadius: 7,
-    width: "45%",
-  },
-  chip: {
-    color: colors.white,
-    fontSize: 15,
-    fontWeight: "bold",
-  },
-  contenedorEstados: {
-    height: "10%",
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "center",
-    justifyContent: "space-around",
-    marginVertical: "1%",
-    width: "95%",
-    backgroundColor: colors.lightGray,
-    borderRadius: 7,
-  },
-  bottonEstado: {
-    backgroundColor: colors.primary,
-    width: "31%",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 7,
-    borderRadius: 7,
   },
   tituloEstado: {
     marginHorizontal: "2%",
@@ -241,9 +178,52 @@ const styles = StyleSheet.create({
   textoEstado: {
     fontSize: 15,
   },
+  contenedorEstados: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginVertical: "2%",
+    width: "95%",
+    alignSelf: "center",
+    backgroundColor: colors.lightGray,
+    borderRadius: 7,
+    padding: 5,
+  },
+  bottonEstado: {
+    backgroundColor: colors.primary,
+    width: "31%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    borderRadius: 7,
+  },
   ScrollView: {
-    height: "100%",
-    backgroundColor: "red",
+    flexGrow: 0,
+    width: "95%",
+    alignSelf: "center",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  contenedorEtiquetas: {
+    backgroundColor: colors.lightGray,
+    padding: "2%",
+    borderRadius: 10,
+  },
+  chipContainer: {
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    borderRadius: 7,
+  },
+  chip: {
+    color: colors.white,
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
 
