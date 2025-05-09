@@ -46,6 +46,7 @@ const PaginaVideo = ({ route }) => {
     const handleAppStateChange = (nextAppState) => {
       if (appState.current.match(/active/) && nextAppState === "background") {
         console.log("La app pasó a segundo plano");
+        cerrarPagina();
       }
       appState.current = nextAppState;
     };
@@ -64,6 +65,7 @@ const PaginaVideo = ({ route }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", () => {
       console.log("Antes de salir de la pantalla");
+      cerrarPagina();
     });
 
     return unsubscribe;
@@ -133,6 +135,8 @@ const PaginaVideo = ({ route }) => {
       console.log(tiempoReproducido);
     }
   };
+
+  const cerrarPagina = () => {};
 
   return (
     <View style={{ paddingTop: insets.top + 1 }}>
