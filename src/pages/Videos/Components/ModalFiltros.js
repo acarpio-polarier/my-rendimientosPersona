@@ -6,11 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
   Animated,
+  ScrollView,
 } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 const ModalFiltros = ({
   isVisible,
   onClose,
@@ -87,8 +87,8 @@ const ModalFiltros = ({
           <View style={styles.cabecera}>
             <Text style={styles.title}>Filtros</Text>
           </View>
-          <View>
-            <Text>Estado del video: </Text>
+          <View style={styles.tituloEstado}>
+            <Text style={styles.textoEstado}>Estado del video: </Text>
           </View>
           <View style={styles.contenedorEstados}>
             <TouchableOpacity
@@ -125,19 +125,30 @@ const ModalFiltros = ({
               <Text style={styles.chip}>Pendiente</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.tituloEstado}>
+            <Text style={styles.textoEstado}>Etiquetas: </Text>
+          </View>
           <View style={styles.contenedorEtiquetas}>
-            {etiquetasModal.map((chip, index) => (
-              <TouchableOpacity key={index} onPress={() => handleDelete(chip)}>
-                <View
-                  style={[
-                    styles.chipContainer,
-                    { opacity: etiquetasSeleccionadas.has(chip) ? 1 : 0.5 },
-                  ]}
+            <ScrollView
+              style={styles.contenedorEtiquetas}
+              showsVerticalScrollIndicator={false}
+            >
+              {etiquetasModal.map((chip, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => handleDelete(chip)}
                 >
-                  <Text style={styles.chip}>{chip}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+                  <View
+                    style={[
+                      styles.chipContainer,
+                      { opacity: etiquetasSeleccionadas.has(chip) ? 1 : 0.5 },
+                    ]}
+                  >
+                    <Text style={styles.chip}>{chip}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
           </View>
         </View>
       </Animated.View>
@@ -175,10 +186,9 @@ const styles = StyleSheet.create({
   contenedorEtiquetas: {
     display: "flex",
     width: "95%",
-    maxHeight: "80%",
+    MaxHeight: "57%",
     alignSelf: "center",
     flexDirection: "row",
-    flexWrap: "wrap",
     alignContent: "flex-start",
     marginBottom: "3%",
     overflow: "hidden",
@@ -195,6 +205,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 7,
     borderRadius: 7,
+    width: "45%",
   },
   chip: {
     color: colors.white,
@@ -207,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     justifyContent: "space-around",
-    marginVertical: "2%",
+    marginVertical: "1%",
     width: "95%",
     backgroundColor: colors.lightGray,
     borderRadius: 7,
@@ -220,6 +231,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 7,
     borderRadius: 7,
+  },
+  tituloEstado: {
+    marginHorizontal: "2%",
+    paddingTop: "2%",
+    paddingLeft: "2%",
+    paddingBottom: "2%",
+  },
+  textoEstado: {
+    fontSize: 15,
+  },
+  ScrollView: {
+    height: "100%",
+    backgroundColor: "red",
   },
 });
 
