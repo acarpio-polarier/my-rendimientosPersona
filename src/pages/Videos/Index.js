@@ -9,7 +9,7 @@ const Index = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View>
+    <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>MyVideos</Text>
       </View>

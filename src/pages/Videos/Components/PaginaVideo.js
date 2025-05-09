@@ -24,6 +24,7 @@ const PaginaVideo = ({ route }) => {
   const [visto, setVisto] = useState(false);
   const [descCom, setDescCom] = useState("desc");
   const [nuevoComentario, setNuevoComentario] = useState(true);
+  const fechaEnvio = new Date(video.fechaEnvio).toISOString().split("T")[0];
 
   // Calculo para el tamaño dle video
   const widthV = Dimensions.get("window").width * 0.9;
@@ -43,21 +44,21 @@ const PaginaVideo = ({ route }) => {
     setVisto(!visto);
   };
 
-  //Borrar
+  // Actualizar idEstado
   useEffect(() => {
     console.log("PV video", video);
     const setEstado = async (idEstado) => {
       await RendimientoUtils.setIdEstado(video.idPersonaVideo, idEstado);
     };
     if (visto) {
-      setEstado(5);
+      setEstado(5); // 5 = visto
     } else {
-      setEstado(3);
+      setEstado(3); // 3 = abierto
     }
   }, [visto]);
 
   return (
-    <View>
+    <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>MyVideos</Text>
       </View>
@@ -75,7 +76,7 @@ const PaginaVideo = ({ route }) => {
             <Text style={styles.titulo}>{video.titulo}</Text>
           </View>
           <View style={styles.fechaYVisto}>
-            <Text>fechaSubida</Text>
+            <Text>{fechaEnvio}</Text>
             <View style={styles.contenedorSwitch}>
               <Text>Visto:</Text>
               <Switch
@@ -116,11 +117,14 @@ const PaginaVideo = ({ route }) => {
               style={[
                 styles.contenedorExlamacion,
                 {
-                  backgroundColor: nuevoComentario ? colors.red : "transparent",
+                  backgroundColor:
+                    nuevoComentario && video.comentario
+                      ? colors.red
+                      : "transparent",
                 },
               ]}
             >
-              {nuevoComentario && (
+              {nuevoComentario && video.comentario && (
                 <MaterialCommunityIcons
                   name="exclamation"
                   size={10}
@@ -137,7 +141,7 @@ const PaginaVideo = ({ route }) => {
           </View>
         ) : (
           <View style={styles.contenidoDescripcion}>
-            <Text>Esto es un comentario</Text>
+            <Text>{video.comentario}</Text>
           </View>
         )}
       </ScrollView>
