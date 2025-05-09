@@ -122,6 +122,7 @@ const ModalFiltros = ({
                 <TouchableOpacity
                   key={index}
                   onPress={() => handleDelete(chip)}
+                  style={{ width: "95%" }}
                 >
                   <View
                     style={[
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     width: "95%",
     alignSelf: "center",
+    borderRadius: 10,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -210,6 +212,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGray,
     padding: "2%",
     borderRadius: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "99%",
   },
   chipContainer: {
     backgroundColor: colors.primary,
@@ -219,6 +224,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 7,
     borderRadius: 7,
+    width: "100%",
   },
   chip: {
     color: colors.white,

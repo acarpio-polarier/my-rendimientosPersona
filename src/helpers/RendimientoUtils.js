@@ -147,6 +147,19 @@ const RendimientoUtils = {
     }
   },
 
+  setIdEstado: async (idVideo, idEstado) => {
+    console.log("rendimiento utils IE");
+    try {
+      const datos = await rendimientoPersonasService.setIdEstado(
+        idVideo,
+        idEstado
+      );
+      return datos;
+    } catch (error) {
+      console.log("Error al añadir a setIdEstado", error);
+    }
+  },
+
   /**
    * Calcula estadísticas básicas para un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento

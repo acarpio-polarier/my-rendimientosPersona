@@ -23,12 +23,27 @@ const MainComponent = () => {
   const [etiquetas, setEtiquetas] = useState();
   const [filtros, setFiltros] = useState([]);
   const [estadoVideo, setEstadoVideo] = useState("Todos");
+  const [videosBuscados, setVideosBuscados] = useState([]);
+
   const navigation = useNavigation();
 
   // Solo cargar la primera vez
   useEffect(() => {
     getVideosPorPersona();
   }, []);
+
+  // Filtrado por busqueda
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setVideosBuscados(videosFiltrados);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtrados = videosFiltrados.filter((video) =>
+        video.titulo?.toLowerCase().includes(query)
+      );
+      setVideosBuscados(filtrados);
+    }
+  }, [searchQuery, videosFiltrados]);
 
   useEffect(() => {
     if (listaVideos && listaVideos.length > 0) {
@@ -153,6 +168,11 @@ const MainComponent = () => {
     console.log("MC filtrando nuevosFilstrados", nuevosFiltrados);
   };
 
+  const refrescarPagina = () => {
+    console.log("MC pagina refrescada");
+    setEstadoVideo("Todos");
+    getVideosPorPersona();
+  };
   return (
     <View>
       <View style={styles.contenedorBusqueda}>
@@ -165,6 +185,13 @@ const MainComponent = () => {
           inputStyle={{ textAlignVertical: "center" }}
           style={styles.barraBusqueda}
         />
+        <TouchableOpacity style={styles.iconoFiltro} onPress={refrescarPagina}>
+          <MaterialCommunityIcons
+            name="refresh"
+            size={40}
+            color={colors.smokedWhite}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.iconoFiltro}
           onPress={() => {
@@ -182,9 +209,9 @@ const MainComponent = () => {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        {videosFiltrados && videosFiltrados.length > 0 ? (
+        {videosBuscados && videosBuscados.length > 0 ? (
           <View style={styles.contenedorVideos}>
-            {videosFiltrados?.map((video, index) => (
+            {videosBuscados.map((video, index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.tarjetaVideo}
@@ -228,7 +255,7 @@ const styles = StyleSheet.create({
     marginVertical: "2%",
   },
   barraBusqueda: {
-    width: "83%",
+    width: "65%",
     height: "100%",
     borderRadius: 10,
     backgroundColor: colors.smokedWhite,

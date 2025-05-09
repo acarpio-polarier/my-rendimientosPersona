@@ -12,6 +12,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import { colors } from "../../../../styles/base";
 import { Switch, SegmentedButtons } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 export const PERSONA_ID = 1392;
 
@@ -39,14 +40,20 @@ const PaginaVideo = ({ route }) => {
   };
 
   const ToggleVisto = () => {
-    if (visto) setVisto(false);
-    else setVisto(true);
+    setVisto(!visto);
   };
 
   //Borrar
   useEffect(() => {
-    console.log("videoPagina", video);
-    console.log("visibilidad", visto);
+    console.log("PV video", video);
+    const setEstado = async (idEstado) => {
+      await RendimientoUtils.setIdEstado(video.idPersonaVideo, idEstado);
+    };
+    if (visto) {
+      setEstado(5);
+    } else {
+      setEstado(3);
+    }
   }, [visto]);
 
   return (

@@ -14,6 +14,7 @@ export const rendimientoPersonasService = {
   getDetallesPersona,
   getVideosPorPersona,
   getEtiquetasVideos,
+  setIdEstado,
 
   //Llamada
 };
@@ -227,6 +228,36 @@ function getEtiquetasVideos(idVideo) {
         "?idVideo=" +
         idVideo,
       requestOptions("GET")
+    )
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function setIdEstado(idPersonaVideo, idEstadoNuevo) {
+  console.log(
+    connectionConstants.ODATA_URL +
+      "updateAsignacion" +
+      "?idPersonaVideo=" +
+      idPersonaVideo +
+      "&idEstadoNuevo=" +
+      idEstadoNuevo,
+    requestOptions("PUT")
+  );
+  return new Promise((resolve, reject) => {
+    fetch(
+      connectionConstants.ODATA_URL +
+        "updateAsignacion" +
+        "?idPersonaVideo=" +
+        idPersonaVideo +
+        "&idEstadoNuevo=" +
+        idEstadoNuevo,
+      requestOptions("PUT")
     )
       .then(handleResponse)
       .then((data) => {
