@@ -73,7 +73,7 @@ const PaginaVideo = ({ route }) => {
 
   //Borrar
   useEffect(() => {
-    console.log(tiempoReproducido);
+    console.log("PV tiemporReproducido", tiempoReproducido);
   }, [tiempoReproducido]);
 
   // Actualizar idEstado
@@ -124,6 +124,7 @@ const PaginaVideo = ({ route }) => {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+      console.log("PV tiempoReproducido pausa", tiempoReproducido);
     }
 
     if (
@@ -135,8 +136,28 @@ const PaginaVideo = ({ route }) => {
       console.log(tiempoReproducido);
     }
   };
+  const registrarSesionVisualizacion = async () => {
+    console.log("PV registrarSV", tiempoReproducido);
 
-  const cerrarPagina = () => {};
+    const datosSesion = {
+      idPersonaVideo: video.idPersonaVideo,
+      segundosVisualizados: tiempoReproducido,
+      finalizadoYoutube: youtubeVisto,
+      finalizadoManual: visto,
+    };
+    console.log("PV datosSesion", datosSesion);
+
+    await RendimientoUtils.registrarSesionVisualizacion(datosSesion);
+  };
+
+  const cerrarPagina = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    console.log(tiempoReproducido);
+    registrarSesionVisualizacion();
+  };
 
   return (
     <View style={{ paddingTop: insets.top + 1 }}>

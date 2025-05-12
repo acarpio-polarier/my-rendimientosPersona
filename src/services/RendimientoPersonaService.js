@@ -15,6 +15,7 @@ export const rendimientoPersonasService = {
   getVideosPorPersona,
   getEtiquetasVideos,
   setIdEstado,
+  registrarSesionVisualizacion,
 
   //Llamada
 };
@@ -259,6 +260,28 @@ function setIdEstado(idPersonaVideo, idEstadoNuevo) {
         idEstadoNuevo,
       requestOptions("PUT")
     )
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function registrarSesionVisualizacion(datosSesion) {
+  const url = connectionConstants.ODATA_URL + "registrarSesionVisualizacion";
+  console.log("RPS datosSesion", datosSesion, url);
+
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datosSesion),
+    })
       .then(handleResponse)
       .then((data) => {
         resolve(data);

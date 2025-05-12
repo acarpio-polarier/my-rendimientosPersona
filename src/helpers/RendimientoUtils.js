@@ -150,13 +150,29 @@ const RendimientoUtils = {
   setIdEstado: async (idVideo, idEstado) => {
     console.log("rendimiento utils IE");
     try {
-      const datos = await rendimientoPersonasService.setIdEstado(
-        idVideo,
-        idEstado
-      );
-      return datos;
+      await rendimientoPersonasService.setIdEstado(idVideo, idEstado);
     } catch (error) {
       console.log("Error al añadir a setIdEstado", error);
+    }
+  },
+  registrarSesionVisualizacion: async (datos) => {
+    console.log("rendimiento utils RSV");
+    const datosSesion = {
+      idPersonaVideo: datos.idPersonaVideo,
+      segundosVisualizados: datos.segundosVisualizados ?? 0,
+      finalizadoYoutube: datos.finalizadoYoutube ?? false,
+      finalizadoManual: datos.finalizadoManual ?? false,
+    };
+    try {
+      await rendimientoPersonasService.registrarSesionVisualizacion(
+        datosSesion
+      );
+    } catch (error) {
+      console.log(
+        "Error al añadir a registrarSesionVisualizacion",
+        error,
+        datosSesion
+      );
     }
   },
 
