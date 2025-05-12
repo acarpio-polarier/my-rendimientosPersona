@@ -158,6 +158,16 @@ const RendimientoUtils = {
     }
   },
 
+  getNoImage: async () => {
+    console.log("rendimiento utils NI");
+    try {
+      const datos = await rendimientoPersonasService.getNoImage();
+      return datos;
+    } catch (error) {
+      console.log("Error al cargar la imagen noImage", error);
+    }
+  },
+
   setIdEstado: async (idVideo, idEstado) => {
     console.log("rendimiento utils IE");
     try {
@@ -184,6 +194,16 @@ const RendimientoUtils = {
         error,
         datosSesion
       );
+    }
+  },
+
+  getProductos: async () => {
+    console.log("rendimiento utils getProductos");
+    try {
+      const datos = await rendimientoPersonasService.getProductos();
+      return datos;
+    } catch (error) {
+      console.log("Error al rebir los productos", error);
     }
   },
 

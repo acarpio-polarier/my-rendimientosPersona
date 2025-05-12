@@ -16,6 +16,8 @@ export const rendimientoPersonasService = {
   getEtiquetasVideos,
   setIdEstado,
   registrarSesionVisualizacion,
+  getProductos,
+  getNoImage,
 
   //Llamada
 };
@@ -285,6 +287,48 @@ function registrarSesionVisualizacion(datosSesion) {
       .then(handleResponse)
       .then((data) => {
         resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function getProductos() {
+  const url = connectionConstants.ODATA_URL + "getProductos";
+  console.log("RPS getProductos", url);
+
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function getNoImage() {
+  const url = connectionConstants.ODATA_URL + "getNoImage";
+  console.log("RPS getNoImage", url);
+
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data.foto);
       })
       .catch((ex) => {
         reject(ex);

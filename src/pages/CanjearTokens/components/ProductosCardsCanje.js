@@ -11,20 +11,11 @@ import {
 import { colors } from "../../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { productosCards } from "../../../../styles/paginaCanjePuntos";
-import foto1 from "../fotos/foto1.jpg";
-import foto2 from "../fotos/foto2.jpg";
-import foto3 from "../fotos/foto3.jpg";
-import noimage from "../fotos/noimage.png";
 import token from "../fotos/token.png";
 import ConfirmPopup from "./ConfirmPopup";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 //Añadir logica de cambio de base 64 a imagen
-const imageMap = {
-  "foto1.jpg": foto1,
-  "foto2.jpg": foto2,
-  "foto3.jpg": foto3,
-  "noimage.png": noimage,
-};
 const screen_height = Dimensions.get("window").height;
 
 const EtiquetaAnimada = () => {
@@ -65,6 +56,11 @@ const EtiquetaAnimada = () => {
 
 const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
+  const [noImage, setNoImage] = useState();
+
+  useEffect(() => {
+    cargarNoImagen();
+  }, []);
 
   const abrirPopup = (id) => {
     setIdProductoSeleccionado(id);
@@ -74,9 +70,15 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     setIdProductoSeleccionado(null);
   };
 
+  const cargarNoImagen = async () => {
+    const img = await RendimientoUtils.getNoImage();
+    setNoImage(img);
+  };
+
   const renderItem = ({ item }) => {
     const puedeCanjear = dataTokens >= item.price;
     const esNuevo = item.destacado == 1;
+    const foto = item.foto;
 
     return (
       <View style={productosCards.contenedor}>
@@ -88,7 +90,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
         {!puedeCanjear && <EtiquetaAnimada />}
         <View style={productosCards.foto}>
           <Image
-            source={imageMap[item.foto] || noimage}
+            source={{ uri: foto || noImage }}
             style={productosCards.imagen}
             resizeMode="cover"
           />

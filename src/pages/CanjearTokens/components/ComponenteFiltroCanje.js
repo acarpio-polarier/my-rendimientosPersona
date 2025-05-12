@@ -54,7 +54,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
       filtrado = filtrado.filter((item) => item.price <= tokensDisponibles);
     }
 
-    console.log("Datos filtrados:", filtrado);
+    // console.log("Datos filtrados:", filtrado);
     return filtrado;
   };
 
