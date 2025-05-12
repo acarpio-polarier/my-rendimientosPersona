@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from "react-native";
 import styles from "../../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MainComponent from "./components/mainComponent";
+import MainComponent from "./components/MainComponentCanje";
 
 const Index = () => {
   const insets = useSafeAreaInsets();

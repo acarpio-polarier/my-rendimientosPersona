@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { componenteFiltro } from "../../../../styles/paginaCanjePuntos";
-import ModalFiltro from "./modalFiltro";
-import ProductosCards from "./productosCards";
+import ModalFiltro from "./ModalFiltroCanje";
+import ProductosCards from "./ProductosCardsCanje";
 import token from "../fotos/token.png";
 
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {

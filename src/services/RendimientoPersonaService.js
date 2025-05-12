@@ -102,7 +102,7 @@ function getResumenTokensPersona(idPersona) {
   return new Promise((resolve, reject) => {
     fetch(
       connectionConstants.ODATA_URL +
-        "getTokensPersona" +
+        "getResumenTokensPersona" +
         "?idPersona=" +
         idPersona,
       requestOptions("GET")

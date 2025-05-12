@@ -16,7 +16,7 @@ import foto2 from "../fotos/foto2.jpg";
 import foto3 from "../fotos/foto3.jpg";
 import noimage from "../fotos/noimage.png";
 import token from "../fotos/token.png";
-import ConfirmPopup from "./confirmPopup";
+import ConfirmPopup from "./ConfirmPopup";
 
 //Añadir logica de cambio de base 64 a imagen
 const imageMap = {

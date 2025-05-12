@@ -95,6 +95,17 @@ const RendimientoUtils = {
       console.log("Error obteniendo tokens", error);
     }
   },
+  getResumenTokensPersona: async (idPersona) => {
+    try {
+      const datos = await rendimientoPersonasService.getResumenTokensPersona(
+        idPersona
+      );
+      console.log("RendimientoUtils RTP", datos);
+      return datos;
+    } catch (error) {
+      console.log("Error obtenido getResumenTokensPersona", error);
+    }
+  },
 
   /**
    * Calcula los detalles de una persona por fecha
