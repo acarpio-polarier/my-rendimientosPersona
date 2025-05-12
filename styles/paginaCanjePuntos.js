@@ -278,6 +278,7 @@ export const productosCards = {
   },
   description: {
     paddingLeft: 10,
+    paddingRight: "2%",
     fontSize: 14,
     color: colors.darkGray,
   },
