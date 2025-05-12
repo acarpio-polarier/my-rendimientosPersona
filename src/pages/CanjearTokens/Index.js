@@ -7,7 +7,13 @@ const Index = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ paddingTop: insets.top + 1, backgroundColor: "white" }}>
+    <View
+      style={{
+        paddingTop: insets.top + 1,
+        backgroundColor: "white",
+        height: "100%",
+      }}
+    >
       <View style={[styles.navigationBar]}>
         <Text style={styles.headerText}>Canje de puntos</Text>
       </View>

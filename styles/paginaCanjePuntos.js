@@ -1,4 +1,4 @@
-import { colors } from "./base";
+import { colors, fontSize } from "./base";
 
 //#region componenteFiltro
 export const componenteFiltro = {
@@ -7,52 +7,55 @@ export const componenteFiltro = {
     alignSelf: "center",
     marginTop: -5,
   },
+  cabecera: {
+    flexDirection: "row",
+    paddingHorizontal: "5%",
+    paddingVertical: "4%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomColor: colors.smokedWhite,
+    borderBottomWidth: 2,
+  },
 
   contenedorBotones: {
     flexDirection: "row",
-  },
-
-  linea: {
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(210,210,210)",
+    width: "40%",
+    justifyContent: "space-between",
   },
 
   boton: {
     backgroundColor: colors.primary,
-    width: "20%",
-    height: 30,
+    width: "55%",
+    height: 40,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
-    marginLeft: 20,
   },
 
   botonFilter: {
     backgroundColor: colors.primary,
-    width: "10%",
-    height: 30,
+    width: "35%",
+    height: 40,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
-    marginLeft: 5,
   },
 
   labelBoton: {
     color: "white",
+    fontSize: 17,
   },
 
   contenedorToken: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "end",
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 5,
+    marginBottom: 5,
   },
   tokenIcono: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     marginRight: 15,
   },
   tokenLabel: {
@@ -61,7 +64,7 @@ export const componenteFiltro = {
     alignItems: "center",
     right: 10,
     color: colors.lightBlack,
-    fontSize: 15,
+    fontSize: 20,
   },
 };
 

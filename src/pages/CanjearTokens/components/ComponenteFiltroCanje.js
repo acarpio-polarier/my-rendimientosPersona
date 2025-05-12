@@ -84,22 +84,27 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
 
   return (
     <View style={componenteFiltro.contenedor}>
-      <View style={componenteFiltro.contenedorToken}>
-        <Image style={componenteFiltro.tokenIcono} source={token} />
-        <Text style={componenteFiltro.tokenLabel}>Tokens: {tokens}</Text>
+      <View style={componenteFiltro.cabecera}>
+        <View style={componenteFiltro.contenedorToken}>
+          <Image style={componenteFiltro.tokenIcono} source={token} />
+          <Text style={componenteFiltro.tokenLabel}>Tokens: {tokens}</Text>
+        </View>
+        <View style={componenteFiltro.contenedorBotones}>
+          <TouchableOpacity style={componenteFiltro.boton} onPress={abrirPopup}>
+            <Text style={componenteFiltro.labelBoton}>Filtros</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={componenteFiltro.botonFilter}
+            onPress={reiniciarFiltros}
+          >
+            <MaterialCommunityIcons
+              name="filter-off"
+              size={30}
+              color={"white"}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={componenteFiltro.contenedorBotones}>
-        <TouchableOpacity style={componenteFiltro.boton} onPress={abrirPopup}>
-          <Text style={componenteFiltro.labelBoton}>Filtros</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={componenteFiltro.botonFilter}
-          onPress={reiniciarFiltros}
-        >
-          <MaterialCommunityIcons name="filter-off" size={20} color={"white"} />
-        </TouchableOpacity>
-      </View>
-      <View style={componenteFiltro.linea}></View>
       <ModalFiltro
         visible={visible}
         cerrarPopup={cerrarPopup}
