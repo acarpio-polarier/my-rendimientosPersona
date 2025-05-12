@@ -27,48 +27,47 @@ const index = () => {
   };
 
   return (
-    <View>
+    <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
         <Text style={styles.headerText}>MyApp</Text>
       </View>
-      <ScrollView style={estilos.contenido}>
-        <View>
-          <TouchableOpacity onPress={openRendimiento} style={estilos.carta}>
-            <Text>myRendimiento</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity onPress={openVideos} style={estilos.carta}>
-            <Text>myVideos</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity onPress={openCanjes} style={estilos.carta}>
-            <Text>myPuntos</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <View style={estilos.contenido}>
+        <TouchableOpacity onPress={openRendimiento} style={estilos.carta}>
+          <Text>myRendimiento</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openVideos} style={estilos.carta}>
+          <Text>myVideos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openCanjes} style={estilos.carta}>
+          <Text>myPuntos</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const estilos = StyleSheet.create({
   contenido: {
-    display: "flex",
     padding: "2%",
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.smokedWhite,
     height: "100%",
     width: "100%",
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingHorizontal: "5%",
   },
   carta: {
-    display: "flex",
     height: 150,
-    width: 150,
-    backgroundColor: colors.primary,
+    width: "45%",
+    backgroundColor: colors.white,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
+    borderRadius: 10,
+    borderWidth: 10,
+    borderColor: colors.primary,
   },
 });
+
 export default index;
