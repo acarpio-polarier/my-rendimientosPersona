@@ -32,7 +32,9 @@ const PaginaVideo = ({ route }) => {
   const [duracionVideo, setDuracionVideo] = useState(0);
   const [youtubeVisto, setYoutubeVisto] = useState(false);
   const playerRef = useRef(null);
-  const intervalRef = useRef(null);
+  const vistoRef = useRef(visto);
+  const ytVistoRef = useRef(youtubeVisto);
+  const tiempoRep = useRef(tiempoReproducido);
   const appState = useRef(AppState.currentState);
   const navigation = useNavigation();
 
@@ -40,6 +42,10 @@ const PaginaVideo = ({ route }) => {
 
   const widthV = Dimensions.get("window").width * 0.9;
   const heightV = (widthV * 9) / 16;
+
+  useEffect(() => {
+    ytVistoRef.current = youtubeVisto;
+  }, [youtubeVisto]);
 
   // Logica para detectar si sales de la app
   useEffect(() => {
@@ -73,6 +79,7 @@ const PaginaVideo = ({ route }) => {
 
   //Borrar
   useEffect(() => {
+    tiempoRep.current = tiempoReproducido;
     console.log("PV tiemporReproducido", tiempoReproducido);
   }, [tiempoReproducido]);
 
@@ -86,16 +93,12 @@ const PaginaVideo = ({ route }) => {
     } else {
       setEstado(3); // 3 = abierto
     }
-    console.log(visto);
+    vistoRef.current = visto;
+    console.log("visibilidad", visto);
   }, [visto]);
 
   useEffect(() => {
     if (video.idEstado === 5) setVisto(true);
-
-    // Limpiar el intervalo
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
   }, []);
 
   const ToggleDescCom = (value) => {
@@ -107,44 +110,43 @@ const PaginaVideo = ({ route }) => {
     setVisto(!visto);
   };
 
+  const comprobarVisibilidad = () => {
+    if (tiempoRep.current / duracionVideo >= 0.95 && duracionVideo > 0) {
+      setYoutubeVisto(true);
+    }
+  };
+
   const handleEvent = async (event) => {
     console.log("Evento:", event);
 
-    // Sumador de segundos
-    if (event === "playing") {
-      if (!intervalRef.current) {
-        intervalRef.current = setInterval(() => {
-          setTiempoReproducido((prev) => prev + 1);
-        }, 1000);
-      }
-    }
-
     // Parar el sumados
     if (event === "paused" || event === "buffering" || event === "ended") {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-      console.log("PV tiempoReproducido pausa", tiempoReproducido);
+      const tiempoActual = await playerRef.current?.getCurrentTime();
+      setTiempoReproducido(Math.trunc(tiempoActual));
     }
 
-    if (
-      event === "ended" ||
-      (tiempoReproducido / duracionVideo >= 0.95 && duracionVideo > 0)
-    ) {
+    if (event === "ended") {
       setYoutubeVisto(true);
       setVisto(true);
-      console.log(tiempoReproducido);
+      console.log(youtubeVisto);
     }
   };
+
   const registrarSesionVisualizacion = async () => {
-    console.log("PV registrarSV", tiempoReproducido);
+    console.log(
+      "PV registrarSV tiemporReproducido",
+      tiempoRep.current,
+      "youtubeVisto",
+      ytVistoRef.current,
+      "visto",
+      vistoRef.current
+    );
 
     const datosSesion = {
       idPersonaVideo: video.idPersonaVideo,
-      segundosVisualizados: tiempoReproducido,
-      finalizadoYoutube: youtubeVisto,
-      finalizadoManual: visto,
+      segundosVisualizados: tiempoRep.current,
+      finalizadoYoutube: ytVistoRef.current,
+      finalizadoManual: vistoRef.current,
     };
     console.log("PV datosSesion", datosSesion);
 
@@ -152,11 +154,13 @@ const PaginaVideo = ({ route }) => {
   };
 
   const cerrarPagina = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    console.log("visto", visto);
+    console.log(
+      "visibilidad:",
+      vistoRef.current,
+      "tiempoReproducido:",
+      tiempoRep.current
+    );
+    comprobarVisibilidad();
     registrarSesionVisualizacion();
   };
 
