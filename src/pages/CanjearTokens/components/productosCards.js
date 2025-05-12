@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { colors } from "../../../../styles/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -24,6 +25,7 @@ const imageMap = {
   "foto3.jpg": foto3,
   "noimage.png": noimage,
 };
+const screen_height = Dimensions.get("window").height;
 
 const EtiquetaAnimada = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -136,7 +138,8 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
-      contentContainerStyle={{ paddingBottom: 20 }}
+      style={{ height: screen_height * 0.8 }}
+      contentContainerStyle={{ paddingBottom: 10 }}
     />
   ) : (
     <View style={productosCards.emptyContainer}>
