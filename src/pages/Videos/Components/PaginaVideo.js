@@ -106,6 +106,7 @@ const PaginaVideo = ({ route }) => {
     if (value === "com") setNuevoComentario(false);
   };
 
+  // Cambiar la visibilidad con el Switch
   const ToggleVisto = () => {
     setVisto(!visto);
   };
@@ -167,6 +168,16 @@ const PaginaVideo = ({ route }) => {
   return (
     <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
+        <TouchableOpacity
+          style={styles.felchaCabecera}
+          onPress={() => navigation.navigate("Videos")}
+        >
+          <MaterialCommunityIcons
+            name="arrow-left"
+            size={30}
+            color={colors.smokedWhite}
+          />
+        </TouchableOpacity>
         <Text style={styles.headerText}>MyVideos</Text>
       </View>
       <View style={styles.contenedorVideos}>
@@ -265,11 +276,16 @@ const PaginaVideo = ({ route }) => {
 
 const styles = StyleSheet.create({
   navigationBar: {
+    flexDirection: "row",
     width: "100%",
     height: 60,
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
+  },
+  felchaCabecera: {
+    position: "absolute",
+    left: 30,
   },
   lineaHorizontal: {
     backgroundColor: colors.smokedWhite,
