@@ -22,6 +22,9 @@ const index = () => {
   const openVideos = () => {
     navigation.navigate("Videos");
   };
+  const openCanjes = () => {
+    navigation.navigate("Canjes");
+  };
 
   return (
     <View>
@@ -37,6 +40,11 @@ const index = () => {
         <View>
           <TouchableOpacity onPress={openVideos} style={estilos.carta}>
             <Text>myVideos</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity onPress={openCanjes} style={estilos.carta}>
+            <Text>myPuntos</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

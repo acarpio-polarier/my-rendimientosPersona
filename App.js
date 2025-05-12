@@ -6,6 +6,7 @@ import index from "./src/pages/index";
 import Rendimiento from "./src/pages/Rendimiento/Index";
 import Videos from "./src/pages/Videos/Index";
 import PaginaVideo from "./src/pages/Videos/Components/PaginaVideo";
+import Canjes from "./src/pages/CanjearTokens/Index";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
           <Stack.Screen name="Rendimiento" component={Rendimiento} />
           <Stack.Screen name="Videos" component={Videos} />
           <Stack.Screen name="PaginaVideo" component={PaginaVideo} />
+          <Stack.Screen name="Canjes" component={Canjes} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />

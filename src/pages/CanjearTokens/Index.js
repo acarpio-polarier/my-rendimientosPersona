@@ -7,16 +7,14 @@ const Index = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView
-      style={{ paddingTop: insets.top + 1, backgroundColor: "white" }}
-    >
-      <View style={styles.navigationBar}>
+    <View style={{ paddingTop: insets.top + 1, backgroundColor: "white" }}>
+      <View style={[styles.navigationBar]}>
         <Text style={styles.headerText}>Canje de puntos</Text>
       </View>
       <View>
         <MainComponent />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

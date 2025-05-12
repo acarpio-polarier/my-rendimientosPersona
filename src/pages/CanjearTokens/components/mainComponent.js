@@ -31,7 +31,7 @@ const MainComponent = () => {
 
   if (loading) {
     return (
-      <View>
+      <View style={{ paddingBottom: 900, backgroundColor: colors.smokedWhite }}>
         <Text style={styles.loadingLabel}>Cargando datos...</Text>
         <ActivityIndicator
           style={styles.loadingCircle}
