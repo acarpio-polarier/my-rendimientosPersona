@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     marginVertical: "2%",
     width: "95%",
     alignSelf: "center",
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.smokedWhite,
     borderRadius: 7,
     padding: 5,
   },
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   contenedorEtiquetas: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.smokedWhite,
     padding: "2%",
     borderRadius: 10,
     alignItems: "center",
