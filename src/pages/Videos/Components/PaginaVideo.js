@@ -86,6 +86,7 @@ const PaginaVideo = ({ route }) => {
     } else {
       setEstado(3); // 3 = abierto
     }
+    console.log(visto);
   }, [visto]);
 
   useEffect(() => {
@@ -155,7 +156,7 @@ const PaginaVideo = ({ route }) => {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    console.log(tiempoReproducido);
+    console.log("visto", visto);
     registrarSesionVisualizacion();
   };
 

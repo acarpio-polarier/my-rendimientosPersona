@@ -159,9 +159,9 @@ const RendimientoUtils = {
     console.log("rendimiento utils RSV");
     const datosSesion = {
       idPersonaVideo: datos.idPersonaVideo,
-      segundosVisualizados: datos.segundosVisualizados ?? 0,
-      finalizadoYoutube: datos.finalizadoYoutube ?? false,
-      finalizadoManual: datos.finalizadoManual ?? false,
+      segundosVisualizados: datos.segundosVisualizados,
+      finalizadoYoutube: datos.finalizadoYoutube,
+      finalizadoManual: datos.finalizadoManual,
     };
     try {
       await rendimientoPersonasService.registrarSesionVisualizacion(
