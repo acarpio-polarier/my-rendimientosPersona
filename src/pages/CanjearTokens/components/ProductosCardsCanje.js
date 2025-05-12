@@ -87,7 +87,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
             <Text style={productosCards.esNuevoLabel}>Nuevo</Text>
           </View>
         )}
-        {!puedeCanjear && <EtiquetaAnimada />}
+        {!puedeCanjear} {/*&& <EtiquetaAnimada />*/}
         <View style={productosCards.foto}>
           <Image
             source={{ uri: foto || noImage }}
@@ -96,31 +96,34 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
           />
         </View>
         <Text style={productosCards.title}>{item.title}</Text>
-        <Text style={productosCards.description}>{item.description}</Text>
-        <View style={productosCards.contenedorTextoIcono}>
-          <Text style={productosCards.tokenLabel}>{item.price}</Text>
-          <Image style={productosCards.tokenIcono} source={token} />
-        </View>
-        <View style={productosCards.buttonContainer}>
-          <TouchableOpacity
-            style={[
-              productosCards.button,
-              {
-                backgroundColor: puedeCanjear
-                  ? colors.primary
-                  : colors.darkGray,
-              },
-            ]}
-            onPress={() => {
-              if (puedeCanjear) {
-                console.log(`Boton pulsado: ${item.id}`);
-                abrirPopup(item.id);
-              }
-            }}
-            disabled={!puedeCanjear}
-          >
-            <Text style={productosCards.buttonText}>Canjear</Text>
-          </TouchableOpacity>
+        <Text style={productosCards.description}>{item.descripcion}</Text>
+        <View style={productosCards.pieTarjeta}>
+          <View style={productosCards.contenedorTextoIcono}>
+            <Text style={productosCards.tokenLabel}>{item.price}</Text>
+            <Image style={productosCards.tokenIcono} source={token} />
+          </View>
+
+          <View style={productosCards.buttonContainer}>
+            <TouchableOpacity
+              style={[
+                productosCards.button,
+                {
+                  backgroundColor: puedeCanjear
+                    ? colors.primary
+                    : colors.darkGray,
+                },
+              ]}
+              onPress={() => {
+                if (puedeCanjear) {
+                  console.log(`Boton pulsado: ${item.id}`);
+                  abrirPopup(item.id);
+                }
+              }}
+              disabled={!puedeCanjear}
+            >
+              <Text style={productosCards.buttonText}>Canjear</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         {idProductoSeleccionado === item.id && (
           <ConfirmPopup

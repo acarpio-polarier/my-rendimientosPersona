@@ -255,7 +255,9 @@ export const modalFiltro = {
 
 export const productosCards = {
   contenedor: {
-    backgroundColor: "white",
+    borderWidth: 2,
+    borderColor: colors.primary,
+    backgroundColor: colors.smokedWhite,
     borderRadius: 10,
     width: "90%",
     alignSelf: "center",
@@ -265,6 +267,7 @@ export const productosCards = {
     shadowRadius: 4,
     overflow: "hidden",
     marginVertical: 10,
+    elevation: 2,
   },
   title: {
     fontSize: 23,
@@ -288,6 +291,7 @@ export const productosCards = {
     flexDirection: "row",
     justifyContent: "flex-end",
     padding: 10,
+    height: "100%",
   },
   button: {
     backgroundColor: colors.primary,
@@ -302,10 +306,6 @@ export const productosCards = {
     fontSize: 13,
   },
   imagen: {
-    borderWidth: 2,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderColor: colors.primary,
     width: "100%",
     height: 120,
   },
@@ -365,11 +365,11 @@ export const productosCards = {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    marginTop: 5,
+    height: "100%",
   },
   tokenIcono: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
   },
   esNuevoContenedor: {
     zIndex: 1,
@@ -385,5 +385,12 @@ export const productosCards = {
   esNuevoLabel: {
     color: "white",
     fontSize: 15,
+  },
+  pieTarjeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: "5%",
+    paddingVertical: "1%",
   },
 };
