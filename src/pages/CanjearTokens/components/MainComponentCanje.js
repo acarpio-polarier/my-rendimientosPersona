@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { colors } from "../../../../styles/base";
 import ComponenteFiltro from "./ComponenteFiltroCanje";
-import data from "../datos/data.json";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 export const ID_PERSONA = 1392;

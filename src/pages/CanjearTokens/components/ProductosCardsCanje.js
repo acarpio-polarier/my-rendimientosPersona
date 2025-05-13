@@ -87,7 +87,7 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
             <Text style={productosCards.esNuevoLabel}>Nuevo</Text>
           </View>
         )}
-        {!puedeCanjear} {/*&& <EtiquetaAnimada />*/}
+        {/* {!puedeCanjear} && <EtiquetaAnimada /> */}
         <View style={productosCards.foto}>
           <Image
             source={{ uri: foto || noImage }}

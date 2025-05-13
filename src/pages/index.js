@@ -1,13 +1,6 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import styles from "../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Rendimiento from "./Rendimiento/Index";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../styles/base";
 
