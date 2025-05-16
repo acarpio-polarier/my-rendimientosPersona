@@ -23,6 +23,10 @@ const index = () => {
     navigation.navigate("Videos");
   };
 
+  const openLocker = () => {
+    navigation.navigate("Locker");
+  };
+
   return (
     <View>
       <View style={styles.navigationBar}>
@@ -37,6 +41,11 @@ const index = () => {
         <View>
           <TouchableOpacity onPress={openVideos} style={estilos.carta}>
             <Text>myVideos</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity onPress={openLocker} style={estilos.carta}>
+            <Text>myLocker</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

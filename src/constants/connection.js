@@ -1,4 +1,4 @@
-const baseURL = "http://jbarceloapicore.polarier.com/";
+const baseURL = "https://localhost:7136/";
 const webApiCoreURL = baseURL;
 
 export const connectionConstants = {
