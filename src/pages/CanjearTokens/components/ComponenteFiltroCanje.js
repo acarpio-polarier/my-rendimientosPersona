@@ -18,7 +18,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     categoria: [1, 2, 3, 4],
     orden: 1,
     precioRango: [0, 1000],
-    canjeable: false,
+    canjeable: true,
   });
 
   useEffect(() => {
@@ -36,14 +36,33 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     const oreden = filtros.orden;
     const precioRango = filtros.precioRango;
     const canjeable = filtros.canjeable;
-    console.log("categorias", categorias);
-    if (categorias.length > 0) {
-      var datosConCategoria = datosSinFiltrar.filter((producto) =>
-        categorias.includes(producto.categoria)
-      );
+    console.log("datosSinFiltrar", datosSinFiltrar);
 
-      setDatosFiltrados(datosConCategoria);
-    } else setDatosFiltrados(datosSinFiltrar);
+    // filtrar por categoria
+    const datosConCategoria = datosSinFiltrar.filter((producto) =>
+      categorias.includes(producto.categoria)
+    );
+    console.log(datosConCategoria);
+    var datosConFiltros = datosConCategoria;
+    console.log("datosConFiltros", datosConFiltros);
+
+    // filtrar por canjeable
+    if (canjeable === true) {
+      var datosConCanjeable = datosConFiltros.filter(
+        (producto) => producto.price <= dataTokens
+      );
+    } else {
+      var datosConCanjeable = datosConFiltros;
+    }
+    var datosConFiltros = datosConCanjeable;
+
+    // filtrar por precio
+    const datosConPrecio = datosConFiltros.filter(
+      (producto) =>
+        producto.price >= precioRango[0] && producto.price <= precioRango[1]
+    );
+    var datosConFiltros = datosConPrecio;
+    setDatosFiltrados(datosConFiltros);
   };
 
   const abrirPopup = () => {
@@ -59,7 +78,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
       categoria: [1, 2, 3, 4],
       orden: 1,
       precioRango: [0, 1000],
-      canjeable: false,
+      canjeable: true,
     });
   };
 
