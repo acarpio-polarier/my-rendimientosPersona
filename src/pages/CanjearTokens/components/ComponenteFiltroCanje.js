@@ -18,7 +18,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     categoria: [1, 2, 3, 4],
     orden: 1,
     precioRango: [0, 1000],
-    canjeable: true,
+    canjeable: false,
   });
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
       categoria: [1, 2, 3, 4],
       orden: 1,
       precioRango: [0, 1000],
-      canjeable: true,
+      canjeable: false,
     });
   };
 

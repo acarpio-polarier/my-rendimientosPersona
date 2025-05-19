@@ -29,6 +29,13 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
     { id: 4, label: "Otros" },
   ];
 
+  useEffect(() => {
+    setOrden(filtrosActuales.orden);
+    setCategorias(filtrosActuales.categoria || []);
+    setPrecioRango(filtrosActuales.precioRango);
+    setCanjeable(filtrosActuales.canjeable);
+  }, [filtrosActuales]);
+
   const handleSeleccionOrden = (id) => {
     setOrden((prev) => (prev === id ? 0 : id));
   };
