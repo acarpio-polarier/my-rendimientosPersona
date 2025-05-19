@@ -53,7 +53,11 @@ const ConfirmPopup = ({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={solicitarCanje}
-              style={[confirmPopup.botonBase, confirmPopup.confirmar]}
+              style={[
+                confirmPopup.botonBase,
+                confirmPopup.confirmar,
+                pulsado && { opacity: 0.5 },
+              ]}
               disabled={pulsado}
             >
               <Text style={confirmPopup.textoBotones}>Confirmar</Text>
