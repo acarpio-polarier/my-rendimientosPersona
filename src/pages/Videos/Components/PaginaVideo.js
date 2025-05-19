@@ -113,7 +113,9 @@ const PaginaVideo = ({ route }) => {
     setVisto(!visto);
   };
 
-  const comprobarVisibilidad = () => {
+  const comprobarVisibilidad = async () => {
+    const tiempoActual = await playerRef.current?.getCurrentTime();
+    setTiempoReproducido(Math.trunc(tiempoActual));
     const duracion = duracionVideoRef.current;
     console.log("duracionVideo", tiempoRep.current, "/", duracion);
 
@@ -148,7 +150,6 @@ const PaginaVideo = ({ route }) => {
       "visto",
       vistoRef.current
     );
-    comprobarVisibilidad();
 
     const datosSesion = {
       idPersonaVideo: video.idPersonaVideo,
@@ -162,13 +163,14 @@ const PaginaVideo = ({ route }) => {
   };
 
   const cerrarPagina = () => {
+    comprobarVisibilidad();
     console.log(
       "visibilidad:",
       vistoRef.current,
       "tiempoReproducido:",
       tiempoRep.current
     );
-    comprobarVisibilidad();
+
     registrarSesionVisualizacion();
   };
 
