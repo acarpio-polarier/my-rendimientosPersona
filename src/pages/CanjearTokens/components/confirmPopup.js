@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { confirmPopup } from "../../../../styles/paginaCanjePuntos";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
@@ -10,14 +10,30 @@ const ConfirmPopup = ({
   ID_PERSONA,
   recargarTokens,
 }) => {
+  const [pulsado, setPulsado] = useState(false);
+
   if (!visible) return null;
   console.log("popup", product.id, ID_PERSONA);
 
   const solicitarCanje = async () => {
-    await RendimientoUtils.solicitarCanje(ID_PERSONA, product.id);
-    await recargarTokens();
-    cerrarPopup();
+    if (pulsado) return;
+    setPulsado(true);
+
+    try {
+      await RendimientoUtils.solicitarCanje(ID_PERSONA, product.id);
+      await recargarTokens();
+      cerrarPopup();
+    } catch (error) {
+      console.error("Error en canje:", error);
+      setPulsado(false);
+    }
   };
+
+  useEffect(() => {
+    if (!visible) {
+      setPulsado(false);
+    }
+  }, [visible]);
 
   return (
     <Modal transparent visible={visible} animationType="fade">
@@ -31,12 +47,14 @@ const ConfirmPopup = ({
             <TouchableOpacity
               onPress={cerrarPopup}
               style={[confirmPopup.botonBase, confirmPopup.cancelar]}
+              disabled={pulsado}
             >
               <Text style={confirmPopup.textoBotones}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={solicitarCanje}
               style={[confirmPopup.botonBase, confirmPopup.confirmar]}
+              disabled={pulsado}
             >
               <Text style={confirmPopup.textoBotones}>Confirmar</Text>
             </TouchableOpacity>
