@@ -383,14 +383,14 @@ export const productosCards = {
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
-    width: "20%",
-    height: "10%",
+    width: "30%",
+    height: "13%",
     borderBottomRightRadius: 10,
     fontFamily: "Arial",
   },
   esNuevoLabel: {
     color: "white",
-    fontSize: 15,
+    fontSize: 18,
   },
   pieTarjeta: {
     flexDirection: "row",
