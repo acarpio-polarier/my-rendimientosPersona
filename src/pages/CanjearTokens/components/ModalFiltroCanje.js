@@ -11,11 +11,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
   const filtrosActuales = filtros;
   console.log("filtrosActuales", filtrosActuales);
   const [orden, setOrden] = useState(filtrosActuales.orden);
-  const [categoria, setCategoria] = useState(filtrosActuales.categoria);
+  const [categorias, setCategorias] = useState(filtrosActuales.categoria || []);
   const [precioRango, setPrecioRango] = useState(filtrosActuales.precioRango);
   const [modalVisible, setModalVisible] = useState(visible);
   const [canjeable, setCanjeable] = useState(filtrosActuales.canjeable);
-  const [destacado, setDestacado] = useState(filtrosActuales.destacado);
 
   const opcionesOrden = [
     { id: 1, label: "Novedades" },
@@ -35,7 +34,13 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
   };
 
   const handleSeleccionCategoria = (id) => {
-    setCategoria((prev) => (prev === id ? 0 : id));
+    setCategorias((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((catId) => catId !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
   };
 
   const onSwitchPulsado = () => {
@@ -57,11 +62,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
 
   const confirmarFiltro = () => {
     const filtrosAplicados = {
-      categoria,
+      categoria: categorias,
       orden,
       precioRango,
       canjeable,
-      destacado,
     };
     console.log("Filtro aplicado en popup:", filtrosAplicados);
     onAplicarFiltros(filtrosAplicados);
@@ -107,7 +111,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
               key={opcion.id}
               style={[
                 modalFiltro.botonFiltro,
-                categoria === opcion.id && modalFiltro.botonActivo,
+                categorias.includes(opcion.id) && modalFiltro.botonActivo,
               ]}
               onPress={() => handleSeleccionCategoria(opcion.id)}
             >

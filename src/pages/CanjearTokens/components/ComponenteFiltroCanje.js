@@ -9,18 +9,21 @@ import token from "../fotos/token.png";
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [visible, setVisible] = useState(false);
   const [tokens, setTokens] = useState(dataTokens);
+  const [datosFiltrados, setDatosFiltrados] = useState();
   console.log("dataTokens", dataTokens);
 
-
-  // categoria: 1 = experiencias, 2 = servicios, 3 = otros
+  // categoria: 0 = no filtro, 1 = experiencias, 2 = servicios, 3 = otros
   // orden: 1 = novedades, 2 = precio Asc, 3 = precio Desc
   const [filtros, setFiltros] = useState({
-    categoria: null,
+    categoria: [1, 2, 3, 4],
     orden: 1,
     precioRango: [0, 1000],
     canjeable: false,
-    destacado: null,
   });
+
+  useEffect(() => {
+    filtrarDatos();
+  }, [filtros]);
 
   const aplicarFiltros = (valores) => {
     console.log("Filtros recibidos a ComponenteFiltro:", valores);
@@ -28,39 +31,20 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   };
 
   const filtrarDatos = () => {
-    let filtrado = data;
-
-    const categoria = parseInt(filtros.categoria);
-    const [minPrecio, maxPrecio] = filtros.precioRango;
+    const datosSinFiltrar = data;
+    const categorias = filtros.categoria;
+    const oreden = filtros.orden;
+    const precioRango = filtros.precioRango;
     const canjeable = filtros.canjeable;
-
-    if (filtros.orden === 1) {
-      filtrado = filtrado.filter((item) => item.destacado === true);
-    } else if (filtros.orden === 2) {
-      filtrado = [...filtrado].sort((a, b) => a.price - b.price);
-    } else if (filtros.orden == 3) {
-      filtrado = [...filtrado].sort((a, b) => b.price - a.price);
-    }
-
-    if (!isNaN(categoria) && categoria !== 0) {
-      filtrado = filtrado.filter((item) => item.categoria === categoria);
-    }
-
-    if (!isNaN(minPrecio) && !isNaN(maxPrecio)) {
-      filtrado = filtrado.filter(
-        (item) => item.price >= minPrecio && item.price <= maxPrecio
+    console.log("categorias", categorias);
+    if (categorias.length > 0) {
+      var datosConCategoria = datosSinFiltrar.filter((producto) =>
+        categorias.includes(producto.categoria)
       );
-    }
 
-    if (canjeable) {
-      const tokensDisponibles = dataTokens;
-      filtrado = filtrado.filter((item) => item.price <= tokensDisponibles);
-    }
-
-    return filtrado;
+      setDatosFiltrados(datosConCategoria);
+    } else setDatosFiltrados(datosSinFiltrar);
   };
-
-  const productosFiltrados = filtrarDatos();
 
   const abrirPopup = () => {
     setVisible(true);
@@ -72,11 +56,10 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
 
   const reiniciarFiltros = () => {
     setFiltros({
-      categoria: 0,
-      orden: null,
+      categoria: [1, 2, 3, 4],
+      orden: 1,
       precioRango: [0, 1000],
       canjeable: false,
-      destacado: null,
     });
   };
 
@@ -117,7 +100,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
 
       <ProductosCards
         dataTokens={dataTokens}
-        data={productosFiltrados}
+        data={datosFiltrados}
         ID_PERSONA={ID_PERSONA}
         recargarTokens={recargarTokens}
       />
