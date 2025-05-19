@@ -34,6 +34,7 @@ const PaginaVideo = ({ route }) => {
   const playerRef = useRef(null);
   const vistoRef = useRef(visto);
   const ytVistoRef = useRef(youtubeVisto);
+  const duracionVideoRef = useRef(0);
   const tiempoRep = useRef(tiempoReproducido);
   const appState = useRef(AppState.currentState);
   const navigation = useNavigation();
@@ -44,6 +45,7 @@ const PaginaVideo = ({ route }) => {
   const heightV = (widthV * 9) / 16;
 
   useEffect(() => {
+    console.log("UseEffect YTVisto", youtubeVisto);
     ytVistoRef.current = youtubeVisto;
   }, [youtubeVisto]);
 
@@ -112,7 +114,10 @@ const PaginaVideo = ({ route }) => {
   };
 
   const comprobarVisibilidad = () => {
-    if (tiempoRep.current / duracionVideo >= 0.95 && duracionVideo > 0) {
+    const duracion = duracionVideoRef.current;
+    console.log("duracionVideo", tiempoRep.current, "/", duracion);
+
+    if (tiempoRep.current / duracion >= 0.95) {
       setYoutubeVisto(true);
     }
   };
@@ -124,6 +129,7 @@ const PaginaVideo = ({ route }) => {
     if (event === "paused" || event === "buffering" || event === "ended") {
       const tiempoActual = await playerRef.current?.getCurrentTime();
       setTiempoReproducido(Math.trunc(tiempoActual));
+      comprobarVisibilidad();
     }
 
     if (event === "ended") {
@@ -142,6 +148,7 @@ const PaginaVideo = ({ route }) => {
       "visto",
       vistoRef.current
     );
+    comprobarVisibilidad();
 
     const datosSesion = {
       idPersonaVideo: video.idPersonaVideo,
@@ -190,6 +197,7 @@ const PaginaVideo = ({ route }) => {
           onChangeState={handleEvent}
           onReady={async () => {
             const duracion = await playerRef.current.getDuration();
+            duracionVideoRef.current = duracion;
             setDuracionVideo(duracion);
             console.log("duración del video", duracion, "segundos");
           }}
