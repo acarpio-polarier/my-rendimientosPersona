@@ -3,6 +3,8 @@ import styles from "../../../styles/rendimiento";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MainComponent from "./components/MainComponentCanje";
 
+export const PERSONA_ID = 1392;
+
 const Index = () => {
   const insets = useSafeAreaInsets();
 

@@ -19,6 +19,7 @@ export const rendimientoPersonasService = {
   getProductos,
   getNoImage,
   getMinMaxPrecio,
+  solicitarCanje,
   //Llamada
 };
 
@@ -343,6 +344,33 @@ function getMinMaxPrecio() {
   return new Promise((resolve, reject) => {
     fetch(url, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function solicitarCanje(idPersona, idProducto) {
+  const url =
+    connectionConstants.ODATA_URL +
+    "solicitarCanje" +
+    "?idPersona=" +
+    idPersona +
+    "&idProducto=" +
+    idProducto;
+  console.log("RPS solicitarCanje");
+
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },

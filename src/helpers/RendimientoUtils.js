@@ -167,6 +167,14 @@ const RendimientoUtils = {
       console.log("Error al cargar la imagen noImage", error);
     }
   },
+  solicitarCanje: async (idPersona, idProducto) => {
+    console.log("rendimiento utils SC");
+    try {
+      await rendimientoPersonasService.solicitarCanje(idPersona, idProducto);
+    } catch (error) {
+      console.log("Error al solicitar canje", error);
+    }
+  },
 
   setIdEstado: async (idVideo, idEstado) => {
     console.log("rendimiento utils IE");

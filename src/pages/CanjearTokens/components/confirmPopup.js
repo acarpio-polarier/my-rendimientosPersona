@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { confirmPopup } from "../../../../styles/paginaCanjePuntos";
+import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
 const ConfirmPopup = ({
   visible,
@@ -10,37 +11,12 @@ const ConfirmPopup = ({
   recargarTokens,
 }) => {
   if (!visible) return null;
+  console.log("popup", product.id, ID_PERSONA);
 
-  const confirmarPopup = async () => {
-    //Llamada a la API para el canjeo de Tokens
-    try {
-      const response = await fetch(
-        `https://localhost:7136/odata/solicitarCanje?idPersona=${ID_PERSONA}&tokensASolicitar=${product.price}`,
-
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ID_PERSONA,
-            productId: product.id,
-            token: product.price,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al canjear el producto");
-      }
-
-      const data = await response.json();
-      console.log("Canje exitoso:", data);
-      await recargarTokens();
-      cerrarPopup();
-    } catch (error) {
-      console.error("Error en el canje:", error);
-    }
+  const solicitarCanje = async () => {
+    await RendimientoUtils.solicitarCanje(ID_PERSONA, product.id);
+    await recargarTokens();
+    cerrarPopup();
   };
 
   return (
@@ -59,7 +35,7 @@ const ConfirmPopup = ({
               <Text style={confirmPopup.textoBotones}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={confirmarPopup}
+              onPress={solicitarCanje}
               style={[confirmPopup.botonBase, confirmPopup.confirmar]}
             >
               <Text style={confirmPopup.textoBotones}>Confirmar</Text>
