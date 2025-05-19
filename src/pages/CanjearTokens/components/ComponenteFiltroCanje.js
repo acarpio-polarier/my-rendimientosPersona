@@ -9,21 +9,22 @@ import token from "../fotos/token.png";
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [visible, setVisible] = useState(false);
   const [tokens, setTokens] = useState(dataTokens);
+
+  // categoria: 1 = experiencias, 2 = servicios, 3 = otros
+  // orden: 1 = novedades, 2 = precio Asc, 3 = precio Desc
   const [filtros, setFiltros] = useState({
     categoria: null,
-    orden: null,
+    orden: 1,
     precioRango: [0, 1000],
     canjeable: false,
     destacado: null,
   });
 
-  //El componente recibe desde modalFiltro un objeto con las props de los filtros
   const aplicarFiltros = (valores) => {
     console.log("Filtros recibidos a ComponenteFiltro:", valores);
     setFiltros(valores);
   };
 
-  //Aqui recoge los datos y aplica los filtros, los cuales pasa a productosCards
   const filtrarDatos = () => {
     let filtrado = data;
 
@@ -44,9 +45,9 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     }
 
     if (!isNaN(minPrecio) && !isNaN(maxPrecio)) {
-      filtrado = filtrado.filter((item) => {
-        return item.price >= minPrecio && item.price <= maxPrecio;
-      });
+      filtrado = filtrado.filter(
+        (item) => item.price >= minPrecio && item.price <= maxPrecio
+      );
     }
 
     if (canjeable) {
@@ -54,7 +55,6 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
       filtrado = filtrado.filter((item) => item.price <= tokensDisponibles);
     }
 
-    // console.log("Datos filtrados:", filtrado);
     return filtrado;
   };
 
@@ -105,11 +105,14 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
           </TouchableOpacity>
         </View>
       </View>
+
       <ModalFiltro
         visible={visible}
         cerrarPopup={cerrarPopup}
         onAplicarFiltros={aplicarFiltros}
+        filtros={filtros}
       />
+
       <ProductosCards
         dataTokens={dataTokens}
         data={productosFiltrados}

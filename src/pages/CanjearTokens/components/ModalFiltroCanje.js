@@ -5,31 +5,30 @@ import { modalFiltro } from "../../../../styles/paginaCanjePuntos";
 import { colors } from "../../../../styles/base";
 import token from "../fotos/token.png";
 import ModalRendimiento from "../../Rendimiento/components/ModalRendimiento";
-import Slider from "@react-native-community/slider";
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
-const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
-  const [orden, setOrden] = useState(0);
-  const [categoria, setCategoria] = useState(0);
-  const [precioRango, setPrecioRango] = useState([10, 500]);
+const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
+  const filtrosActuales = filtros;
+  console.log("filtrosActuales", filtrosActuales);
+  const [orden, setOrden] = useState(filtrosActuales.orden);
+  const [categoria, setCategoria] = useState(filtrosActuales.categoria);
+  const [precioRango, setPrecioRango] = useState(filtrosActuales.precioRango);
   const [modalVisible, setModalVisible] = useState(visible);
-  const [canjeable, setCanjeable] = useState(false);
-  const [destacado, setDestacado] = useState(null);
+  const [canjeable, setCanjeable] = useState(filtrosActuales.canjeable);
+  const [destacado, setDestacado] = useState(filtrosActuales.destacado);
 
-  //Opciones de ordenes ( ampliable )
   const opcionesOrden = [
     { id: 1, label: "Novedades" },
     { id: 2, label: "Precio As." },
     { id: 3, label: "Precio Des." },
   ];
 
-  //Opciones de categorias ( se podria hacer mas optimo, recogiendo solo los datos de cat que llegan de la db )
   const opcionesCategoria = [
     { id: 1, label: "Experiencias" },
     { id: 2, label: "Servicios" },
     { id: 3, label: "Otros" },
   ];
 
-  //Handlers para desmarcar con doble pulsacion
   const handleSeleccionOrden = (id) => {
     setOrden((prev) => (prev === id ? 0 : id));
   };
@@ -42,7 +41,6 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
     setCanjeable(!canjeable);
   };
 
-  //Visibilidad del modal ( el popup de filtros )
   useEffect(() => {
     if (visible) {
       setModalVisible(true);
@@ -56,11 +54,16 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
     }, 300);
   };
 
-  //Funcion para el boton de confirmar ( aplica filtros )
   const confirmarFiltro = () => {
-    const filtros = { orden, categoria, precioRango, canjeable, destacado };
-    console.log("Filtro aplicado en popup:", filtros);
-    onAplicarFiltros(filtros);
+    const filtrosAplicados = {
+      categoria,
+      orden,
+      precioRango,
+      canjeable,
+      destacado,
+    };
+    console.log("Filtro aplicado en popup:", filtrosAplicados);
+    onAplicarFiltros(filtrosAplicados);
     handleClose();
   };
 
@@ -71,12 +74,11 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
       title={"Filtros"}
       blurIntensity="light"
     >
-      {/* FILTRO ORDEN */}
+      {/* ORDEN */}
       <View style={modalFiltro.contenedorFiltro}>
         <View style={modalFiltro.label}>
           <Text style={{ fontWeight: "bold" }}>Ordenar por:</Text>
         </View>
-
         <View style={modalFiltro.contenedorBotones}>
           {opcionesOrden.map((opcion) => (
             <TouchableOpacity
@@ -93,12 +95,11 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
         </View>
       </View>
 
-      {/* FILTRO CATEGORIA */}
+      {/* CATEGORÍA */}
       <View style={modalFiltro.contenedorFiltro}>
         <View style={modalFiltro.label}>
           <Text style={{ fontWeight: "bold" }}>Filtrar por:</Text>
         </View>
-
         <View style={modalFiltro.contenedorBotones}>
           {opcionesCategoria.map((opcion) => (
             <TouchableOpacity
@@ -115,7 +116,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
         </View>
       </View>
 
-      {/* FILTRO PRECIO */}
+      {/* PRECIO */}
       <View style={modalFiltro.contenedorFiltroPrecio}>
         <View style={modalFiltro.label}>
           <Text style={modalFiltro.labelText}>Precio:</Text>
@@ -140,14 +141,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
         </View>
 
         <View style={modalFiltro.sliderContainer}>
-          <Slider
-            minimumValue={0}
-            maximumValue={100}
-            step={1}
-            value={10}
-            onValueChange={setPrecioRango}
-          />
-          {/* <MultiSlider
+          <MultiSlider
             values={precioRango}
             onValuesChange={setPrecioRango}
             min={0}
@@ -157,11 +151,11 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
             snapped
             selectedStyle={{ backgroundColor: colors.primary }}
             markerStyle={{ backgroundColor: colors.primary }}
-          /> */}
+          />
         </View>
       </View>
 
-      {/* FILTRO SWITCH */}
+      {/* SWITCH CANJEABLE */}
       <View style={modalFiltro.contenedorCanjeableFiltro}>
         <View style={modalFiltro.contenedorItems}>
           <Text style={modalFiltro.label}>Canjeable: </Text>
@@ -174,11 +168,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros }) => {
         </View>
       </View>
 
-      {/* CONTENEDOR PRINCIPAL */}
+      {/* BOTÓN APLICAR */}
       <View style={modalFiltro.fondo}>
         <View style={modalFiltro.contenedor}>
           <View style={modalFiltro.linea} />
-
           <View style={modalFiltro.barraInferior}>
             <TouchableOpacity
               style={modalFiltro.botonAplicar}
