@@ -173,17 +173,19 @@ export const modalFiltro = {
   },
   contenedorBotones: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     padding: 10,
+    flexWrap: "wrap",
   },
   botonFiltro: {
     backgroundColor: colors.primary_light,
-    width: "33%",
+    width: "30%",
     height: 30,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     opacity: 0.6,
+    margin: 2,
   },
   botonActivo: {
     backgroundColor: colors.primary,

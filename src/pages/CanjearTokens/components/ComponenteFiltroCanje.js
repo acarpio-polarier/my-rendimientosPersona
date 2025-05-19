@@ -9,6 +9,8 @@ import token from "../fotos/token.png";
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [visible, setVisible] = useState(false);
   const [tokens, setTokens] = useState(dataTokens);
+  console.log("dataTokens", dataTokens);
+
 
   // categoria: 1 = experiencias, 2 = servicios, 3 = otros
   // orden: 1 = novedades, 2 = precio Asc, 3 = precio Desc

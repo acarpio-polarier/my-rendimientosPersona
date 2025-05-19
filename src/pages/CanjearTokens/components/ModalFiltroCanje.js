@@ -24,9 +24,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
   ];
 
   const opcionesCategoria = [
-    { id: 1, label: "Experiencias" },
-    { id: 2, label: "Servicios" },
-    { id: 3, label: "Otros" },
+    { id: 1, label: "Servicios" },
+    { id: 2, label: "Productos" },
+    { id: 3, label: "Experiencias" },
+    { id: 4, label: "Otros" },
   ];
 
   const handleSeleccionOrden = (id) => {
