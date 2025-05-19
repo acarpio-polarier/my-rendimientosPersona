@@ -18,7 +18,7 @@ export const rendimientoPersonasService = {
   registrarSesionVisualizacion,
   getProductos,
   getNoImage,
-
+  getMinMaxPrecio,
   //Llamada
 };
 
@@ -329,6 +329,27 @@ function getNoImage() {
       .then(handleResponse)
       .then((data) => {
         resolve(data.foto);
+      })
+      .catch((ex) => {
+        reject(ex);
+      });
+  });
+}
+
+function getMinMaxPrecio() {
+  const url = connectionConstants.ODATA_URL + "getMinMaxPrecio";
+  console.log("RPS getMinMaxPrice", url);
+
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(handleResponse)
+      .then((data) => {
+        resolve(data);
       })
       .catch((ex) => {
         reject(ex);

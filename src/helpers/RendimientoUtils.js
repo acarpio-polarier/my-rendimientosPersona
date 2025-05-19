@@ -207,6 +207,16 @@ const RendimientoUtils = {
     }
   },
 
+  getMinMaxPrecio: async () => {
+    console.log("rendimiento utils getMinMaxPrecio");
+    try {
+      const data = await rendimientoPersonasService.getMinMaxPrecio();
+      return data;
+    } catch (error) {
+      console.log("Error al obtener un precio max o min", error);
+    }
+  },
+
   /**
    * Calcula estadísticas básicas para un conjunto de datos
    * @param {Array} datos - Array de datos de rendimiento

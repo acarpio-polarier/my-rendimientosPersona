@@ -156,8 +156,8 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
           <MultiSlider
             values={precioRango}
             onValuesChange={setPrecioRango}
-            min={0}
-            max={1000}
+            min={filtrosActuales.precioRango[0]}
+            max={filtrosActuales.precioRango[1]}
             step={10}
             allowOverlap={false}
             snapped
