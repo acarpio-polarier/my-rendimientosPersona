@@ -29,7 +29,6 @@ const PaginaVideo = ({ route }) => {
   const [descCom, setDescCom] = useState("desc");
   const [nuevoComentario, setNuevoComentario] = useState(true);
   const [tiempoReproducido, setTiempoReproducido] = useState(0);
-  const [duracionVideo, setDuracionVideo] = useState(0);
   const [youtubeVisto, setYoutubeVisto] = useState(false);
   const playerRef = useRef(null);
   const vistoRef = useRef(visto);
@@ -200,7 +199,6 @@ const PaginaVideo = ({ route }) => {
           onReady={async () => {
             const duracion = await playerRef.current.getDuration();
             duracionVideoRef.current = duracion;
-            setDuracionVideo(duracion);
             console.log("duración del video", duracion, "segundos");
           }}
         />
