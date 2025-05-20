@@ -8,6 +8,10 @@ import Videos from "./src/pages/Videos/Index";
 import PaginaVideo from "./src/pages/Videos/Components/PaginaVideo";
 import Canjes from "./src/pages/CanjearTokens/Index";
 const Stack = createNativeStackNavigator();
+import { LogBox } from "react-native";
+
+// Ignora un  warning especifico
+LogBox.ignoreLogs(["Support for defaultProps will be removed"]);
 
 export default function App() {
   return (

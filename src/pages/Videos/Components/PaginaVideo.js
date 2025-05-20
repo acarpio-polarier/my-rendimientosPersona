@@ -161,6 +161,11 @@ const PaginaVideo = ({ route }) => {
     await RendimientoUtils.registrarSesionVisualizacion(datosSesion);
   };
 
+  const accionFlexhaAtras = () => {
+    cerrarPagina();
+    navigation.navigate("Videos");
+  };
+
   const cerrarPagina = () => {
     comprobarVisibilidad();
     console.log(
@@ -178,7 +183,7 @@ const PaginaVideo = ({ route }) => {
       <View style={styles.navigationBar}>
         <TouchableOpacity
           style={styles.felchaCabecera}
-          onPress={() => navigation.navigate("Videos")}
+          onPress={accionFlexhaAtras}
         >
           <MaterialCommunityIcons
             name="arrow-left"
