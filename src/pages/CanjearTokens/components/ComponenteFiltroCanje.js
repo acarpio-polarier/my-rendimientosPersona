@@ -11,12 +11,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [visible, setVisible] = useState(false);
   const [tokens, setTokens] = useState(dataTokens);
   const [datosFiltrados, setDatosFiltrados] = useState();
-  const [filtrosDefecto, setFiltrosDefecto] = useState({
-    categoria: [1, 2, 3, 4],
-    orden: 1,
-    precioRango: [],
-    canjeable: false,
-  });
+
   console.log("dataTokens", dataTokens);
 
   // categoria: 0 = no filtro, 1 = experiencias, 2 = servicios, 3 = otros
@@ -27,6 +22,10 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     precioRango: [],
     canjeable: false,
   });
+
+  useEffect(() => {
+    setTokens(dataTokens);
+  }, [dataTokens]);
 
   useEffect(() => {
     obtenerMinMaxPrecio();
@@ -46,10 +45,6 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const obtenerMinMaxPrecio = async () => {
     const data = await RendimientoUtils.getMinMaxPrecio();
     setFiltros({ ...filtros, precioRango: [data.minPrice, data.maxPrice] });
-    setFiltrosDefecto({
-      ...filtros,
-      precioRango: [data.minPrice, data.maxPrice],
-    });
   };
 
   const filtrarDatos = () => {
@@ -126,10 +121,6 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
       canjeable: false,
     });
   };
-
-  useEffect(() => {
-    setTokens(dataTokens);
-  }, [dataTokens]);
 
   return (
     <View style={componenteFiltro.contenedor}>
