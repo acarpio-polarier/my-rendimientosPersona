@@ -9,7 +9,7 @@ const TarjetaVideo = ({ video }) => {
   const titulo = video.titulo;
   console.log("Video id", id);
 
-  const miniatura = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+  const miniaturaDefault = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 
   //Borrar
   useEffect(() => {
@@ -19,7 +19,7 @@ const TarjetaVideo = ({ video }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{ uri: miniatura }}
+        source={{ uri: miniaturaDefault }}
         style={styles.backgroundImage}
         imageStyle={{ borderRadius: 10 }}
         resizeMode="cover"
@@ -39,7 +39,7 @@ const TarjetaVideo = ({ video }) => {
           )}
         </View>
         <View style={styles.contenedorInfo}>
-          <Text style={styles.textoBlanco}>{video.titulo}</Text>
+          <Text style={styles.textoBlanco}>{titulo}</Text>
         </View>
       </ImageBackground>
     </View>
