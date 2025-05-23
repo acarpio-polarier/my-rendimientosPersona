@@ -6,12 +6,13 @@ import MainComponent from "./Components/MainComponent";
 export const PERSONA_ID = 1392;
 
 const Index = () => {
+  const titupoPagina = "MyVideos";
   const insets = useSafeAreaInsets();
 
   return (
     <View style={{ paddingTop: insets.top + 1 }}>
       <View style={styles.navigationBar}>
-        <Text style={styles.headerText}>MyVideos</Text>
+        <Text style={styles.headerText}>{titupoPagina}</Text>
       </View>
       <MainComponent />
     </View>
