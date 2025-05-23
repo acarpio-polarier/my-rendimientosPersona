@@ -80,12 +80,14 @@ const GraficoSemanal = () => {
   const getTokensPersonaPorFecha = async (
     idPersona,
     fechaInicio,
-    fechaFin,
+    fechaFinal,
     fetchId
   ) => {
+    const fechaIni = new Date(fechaInicio).toISOString().split("T")[0];
+    const fechaFin = new Date(fechaFinal).toISOString().split("T")[0];
     const datos = await RendimientoUtils.getTokensPersonaPorFecha(
       idPersona,
-      fechaInicio,
+      fechaIni,
       fechaFin
     );
     console.log("tokens fechas semanales", fechaInicio, fechaFin);
