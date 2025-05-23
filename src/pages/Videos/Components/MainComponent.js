@@ -24,10 +24,11 @@ const MainComponent = () => {
   const [filtros, setFiltros] = useState([]);
   const [estadoVideo, setEstadoVideo] = useState("Todos");
   const [videosBuscados, setVideosBuscados] = useState([]);
+  const dbIdEstadoVisto = 5;
+  const dbIdEstadoEliminado = 2;
 
   const navigation = useNavigation();
 
-  // Solo cargar la primera vez
   useEffect(() => {
     getVideosPorPersona();
   }, []);
@@ -83,14 +84,14 @@ const MainComponent = () => {
         // Mostrar solo las etiquetas las cuales estan en videos segun el estado
         if (
           etiqueta.denominacion &&
-          video.idEstado === 5 &&
+          video.idEstado === dbIdEstadoVisto &&
           estadoVideo === "Visto"
         ) {
           etiquetasUnicas.add(etiqueta.denominacion);
         }
         if (
           etiqueta.denominacion &&
-          video.idEstado != 5 &&
+          video.idEstado != dbIdEstadoVisto &&
           estadoVideo === "Pendiente"
         ) {
           etiquetasUnicas.add(etiqueta.denominacion);
@@ -114,7 +115,7 @@ const MainComponent = () => {
     console.log("MC videos de una persona", data);
 
     const videos = data.filter((video) => {
-      return video.idEstado != 2; // idEstado = 2 es que el video se le ha quitado desde RRHH
+      return video.idEstado != dbIdEstadoEliminado;
     });
 
     setVideosFiltrados(videos);
@@ -126,10 +127,10 @@ const MainComponent = () => {
 
     // id de los videos segun el estado
     listaVideos.forEach((video) => {
-      if (video.idEstado === 5 && estadoVideo === "Visto") {
+      if (video.idEstado === dbIdEstadoVisto && estadoVideo === "Visto") {
         idsVideosEstado.push(video.idVideo);
       }
-      if (video.idEstado != 5 && estadoVideo === "Pendiente") {
+      if (video.idEstado != dbIdEstadoVisto && estadoVideo === "Pendiente") {
         idsVideosEstado.push(video.idVideo);
       }
       if (estadoVideo === "Todos") {
