@@ -15,6 +15,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
   const [precioRango, setPrecioRango] = useState(filtrosActuales.precioRango);
   const [modalVisible, setModalVisible] = useState(visible);
   const [canjeable, setCanjeable] = useState(filtrosActuales.canjeable);
+  const rangoPrecioProvisional = [0, 100];
 
   const opcionesOrden = [
     { id: 1, label: "Novedades" },
@@ -156,8 +157,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
           <MultiSlider
             values={precioRango}
             onValuesChange={setPrecioRango}
-            min={filtrosActuales.precioRango[0]}
-            max={filtrosActuales.precioRango[1]}
+            // min={filtrosActuales.precioRango[0]}
+            // max={filtrosActuales.precioRango[1]}
+            min={rangoPrecioProvisional[0]}
+            max={rangoPrecioProvisional[1]}
             step={10}
             allowOverlap={false}
             snapped
