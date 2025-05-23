@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AppState } from "react-native";
-
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useEffect, useRef } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { colors } from "../../../../styles/base";
@@ -50,6 +48,7 @@ const PaginaVideo = ({ route }) => {
 
   // Logica para detectar si sales de la app
   useEffect(() => {
+    if (video.idEstado === 5) setVisto(true);
     const handleAppStateChange = (nextAppState) => {
       if (appState.current.match(/active/) && nextAppState === "background") {
         console.log("La app pasó a segundo plano");
@@ -78,7 +77,6 @@ const PaginaVideo = ({ route }) => {
     return unsubscribe;
   }, [navigation]);
 
-  //Borrar
   useEffect(() => {
     tiempoRep.current = tiempoReproducido;
     console.log("PV tiemporReproducido", tiempoReproducido);
@@ -98,10 +96,7 @@ const PaginaVideo = ({ route }) => {
     console.log("visibilidad", visto);
   }, [visto]);
 
-  useEffect(() => {
-    if (video.idEstado === 5) setVisto(true);
-  }, []);
-
+  // Cambiar entre Descripcion y comentario
   const ToggleDescCom = (value) => {
     setDescCom(value);
     if (value === "com") setNuevoComentario(false);
@@ -123,6 +118,7 @@ const PaginaVideo = ({ route }) => {
     }
   };
 
+  // Controlar evento de YT
   const handleEvent = async (event) => {
     console.log("Evento:", event);
 
@@ -161,7 +157,7 @@ const PaginaVideo = ({ route }) => {
     await RendimientoUtils.registrarSesionVisualizacion(datosSesion);
   };
 
-  const accionFlexhaAtras = () => {
+  const accionFlechaAtras = () => {
     cerrarPagina();
     navigation.navigate("Videos");
   };
@@ -183,7 +179,7 @@ const PaginaVideo = ({ route }) => {
       <View style={styles.navigationBar}>
         <TouchableOpacity
           style={styles.felchaCabecera}
-          onPress={accionFlexhaAtras}
+          onPress={accionFlechaAtras}
         >
           <MaterialCommunityIcons
             name="arrow-left"

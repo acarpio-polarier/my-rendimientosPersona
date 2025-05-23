@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Searchbar, Chip } from "react-native-paper";
+import { Searchbar } from "react-native-paper";
 import { colors } from "../../../../styles/base";
 import TarjetaVideo from "./TarjetaVideo";
 import { useNavigation } from "@react-navigation/native";
