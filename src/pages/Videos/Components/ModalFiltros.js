@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../../../../styles/base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 const ModalFiltros = ({
   isVisible,
   onClose,
@@ -28,16 +27,14 @@ const ModalFiltros = ({
   const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState(
     new Set(filtros)
   );
-  const [estadosModal, setEstadosModal] = useState(estados);
+  const filtrosVisibilidad = ["Todos", "Visto", "Pendiente"];
   const etiquetasModal = etiquetas;
-  console.log("etiquetasModal", etiquetasModal);
 
   useEffect(() => {
     setFiltros(Array.from(etiquetasSeleccionadas));
   }, [etiquetasSeleccionadas]);
 
   const switchEstado = (estado) => {
-    setEstadosModal(estado);
     setEstadoVideo(estado);
   };
 
@@ -55,14 +52,8 @@ const ModalFiltros = ({
   };
 
   const cerraModal = () => {
-    // setFiltros(Array.from(etiquetasSeleccionadas));
     onClose();
   };
-
-  // borrar
-  useEffect(() => {
-    console.log("MF etiquetas Seleccionadas", etiquetasSeleccionadas);
-  }, [etiquetasSeleccionadas]);
 
   return (
     <Modal
@@ -95,7 +86,7 @@ const ModalFiltros = ({
           </View>
 
           <View style={styles.contenedorEstados}>
-            {["Todos", "Visto", "Pendiente"].map((estado) => (
+            {filtrosVisibilidad.map((estado) => (
               <TouchableOpacity
                 key={estado}
                 onPress={() => switchEstado(estado)}
