@@ -7,6 +7,7 @@ export const PERSONA_ID = 1392;
 
 const Index = () => {
   const insets = useSafeAreaInsets();
+  const tituloPagina = "Canje de puntos";
 
   return (
     <View
@@ -17,7 +18,7 @@ const Index = () => {
       }}
     >
       <View style={[styles.navigationBar]}>
-        <Text style={styles.headerText}>Canje de puntos</Text>
+        <Text style={styles.headerText}>{tituloPagina}</Text>
       </View>
       <View>
         <MainComponent />
