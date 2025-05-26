@@ -11,18 +11,6 @@ const MainComponent = () => {
   const [loading, setLoading] = useState(true);
   const [productos, setProductos] = useState(null);
 
-  const getResumenTokensPersona = async () => {
-    const resumenTokens = await RendimientoUtils.getResumenTokensPersona(
-      ID_PERSONA
-    );
-    setDataTokens(resumenTokens);
-  };
-
-  const getProductos = async () => {
-    const response = await RendimientoUtils.getProductos();
-    setProductos(response);
-  };
-
   useEffect(() => {
     getResumenTokensPersona();
   }, []);
@@ -35,6 +23,18 @@ const MainComponent = () => {
   useEffect(() => {
     if (productos) setLoading(false);
   }, [productos]);
+
+  const getResumenTokensPersona = async () => {
+    const resumenTokens = await RendimientoUtils.getResumenTokensPersona(
+      ID_PERSONA
+    );
+    setDataTokens(resumenTokens);
+  };
+
+  const getProductos = async () => {
+    const response = await RendimientoUtils.getProductos();
+    setProductos(response);
+  };
 
   if (loading) {
     return (
