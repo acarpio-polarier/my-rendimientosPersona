@@ -10,12 +10,9 @@ import {
 import { DataTable } from "react-native-paper";
 import FechaUtils from "../../../../helpers/FechaUtils";
 import moment from "moment";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import RendimientoUtils from "../../../../helpers/RendimientoUtils";
 import { PERSONA_ID } from "../../Index";
 import { colors } from "../../../../../styles/base";
-
-const { width, height } = Dimensions.get("window");
 
 const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
   const mesesAbreviados = FechaUtils.nombresMesesCorto;
@@ -35,12 +32,6 @@ const VisualizadorAnual = ({ data, mesSeleccionado, onValueChanged }) => {
     console.log("visual anual useEffect tokensDiarios", tokensDiarios);
     cargarDatos();
   }, [tokensDiarios]);
-
-  // useEffect(() => {
-  //   //Borrar
-  //   console.log("VisualizadorAnual Lanzado");
-  //   console.log("VisualizadorAnual Lanzado datos", data, onValueChanged);
-  // }, []);
 
   // Agrupar por día
   const groupedData = mesActual.info.reduce((acumulador, entrada) => {
@@ -244,9 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  cabeceraTexto: {
-    color: colors.white,
-  },
+
   headerTitle: {
     justifyContent: "center",
     alignItems: "center",
@@ -265,10 +254,6 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 17,
   },
-  wrapper: {
-    flexDirection: "row",
-  },
-  scrollViewContent: {},
   head: {
     height: 44,
   },
@@ -313,30 +298,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E5E5E5",
   },
-  head: {
-    height: 44,
-    backgroundColor: colors.primary,
-  },
   headText: {
     margin: 6,
     fontWeight: "bold",
     textAlign: "center",
     color: colors.white,
-  },
-  text: {
-    fontSize: 16,
-    height: "100%",
-    width: "100%",
-    textAlign: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noDataText: {
-    textAlign: "center",
-    marginVertical: 20,
-    fontSize: 16,
-    color: "#666",
   },
 });
 
