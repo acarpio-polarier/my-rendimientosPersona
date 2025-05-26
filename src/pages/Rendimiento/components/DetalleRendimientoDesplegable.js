@@ -4,7 +4,7 @@ import { colors } from "../../../../styles/base";
 import { PERSONA_ID } from "../Index";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
-const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
+const DetalleRendimientoDesplegable = ({ datos }) => {
   const [horasTrabajadas, setHorasTrabajadas] = useState("00:00:00");
   const [totalPrendas, setTotalPrendas] = useState(0);
   const [mediaPrendasHora, setMediaPrendasHora] = useState(0);
@@ -16,6 +16,7 @@ const DetalleRendimientoDesplegable = ({ datos, cargando }) => {
   }, [horaCargada]);
 
   const mostrarHoras = () => {
+    console.log("horasTrabajadas", horasTrabajadas);
     const horas = horasTrabajadas.split("")[0];
     const minutos = horasTrabajadas.split("")[1];
     const segundos = horasTrabajadas.split("")[2];
@@ -83,9 +84,6 @@ const styles = StyleSheet.create({
     width: "95%",
     display: "flex",
     alignSelf: "center",
-  },
-  cargando: {
-    opacity: 0.5,
   },
   seccionMetrica: {
     flexDirection: "row",
