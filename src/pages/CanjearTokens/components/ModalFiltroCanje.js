@@ -15,7 +15,6 @@ const ModalFiltro = ({
   minMaxPrice,
 }) => {
   const filtrosActuales = filtros;
-  console.log("filtrosActuales", filtrosActuales);
   const [orden, setOrden] = useState(filtrosActuales.orden);
   const [categorias, setCategorias] = useState(filtrosActuales.categoria || []);
   const [precioRango, setPrecioRango] = useState(filtrosActuales.precioRango);
@@ -46,7 +45,6 @@ const ModalFiltro = ({
     setCategorias(filtrosActuales.categoria || []);
     setPrecioRango(filtrosActuales.precioRango);
     setCanjeable(filtrosActuales.canjeable);
-    console.log("minmaxPrice", minMaxPrice);
   }, [filtrosActuales]);
 
   const handleSeleccionOrden = (id) => {
@@ -81,7 +79,6 @@ const ModalFiltro = ({
       precioRango,
       canjeable,
     };
-    console.log("Filtro aplicado en popup:", filtrosAplicados);
     onAplicarFiltros(filtrosAplicados);
     handleClose();
   };
