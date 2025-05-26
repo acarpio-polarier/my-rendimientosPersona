@@ -64,11 +64,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
-  contenidoExpandible: {
-    backgroundColor: "white",
-    maxHeight: 250,
-    padding: 0,
-  },
   mensajeSinDatos: {
     textAlign: "center",
     color: "#666",
