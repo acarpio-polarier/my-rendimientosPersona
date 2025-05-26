@@ -49,7 +49,6 @@ export default function DetalleRendimiento({ route, navigation }) {
     },
   };
 
-  // Función para formatear fecha y hora
   const formatearFecha = (fechaString) => {
     if (!fechaString) return "Fecha desconocida";
 
