@@ -47,33 +47,16 @@ export default function DetalleRendimientoSelector({
   const [selectedDia, setSelectedDia] = useState(0);
   const [intervalo, setIntevalo] = useState("mensual");
   const [tokensMensuales, setTokensMensuales] = useState(0);
-
-  useEffect(() => {
-    console.log("Actualizando modo a", modoInicial);
-    setModo(modoInicial || "semanal");
-    console.log("DetalleRendimientoSelector modo", modo);
-  }, [modoInicial]);
-
-  useEffect(() => {
-    renderizarVisualizador();
-  }, [mesSeleccionado]);
-
-  useEffect(() => {
-    //Borrar
-    console.log("DetalleRendimientoSelector modo", modo);
-    console.log("DetalleRendimientoSelector Lanzado");
-  }, []);
-
-  useEffect(() => {
-    console.log("DetalleRendimientoSelector modo", modo);
-
-    setSeleccionActual(semanaInicial || 0);
-  }, [semanaInicial]);
-
-  useEffect(() => {
-    setAnioSeleccionado(anioInicial);
-    setMesSeleccionado(mesInicial);
-  }, [anioInicial, mesInicial]);
+  const [datosAnuales, setDatosAnuales] = useState(datosAnualesIniciales || []);
+  const [cargandoDatosAnuales, setCargandoDatosAnuales] = useState(false);
+  const [rangoPeriodo, setRangoPeriodo] = useState(
+    modo === "semanal"
+      ? DateUtils.obtenerRangoSemana(0)
+      : DateUtils.obtenerRangoMes(anioSeleccionado, mesSeleccionado)
+  );
+  const [datosPorDia, setDatosPorDia] = useState(datosInicialesPorDia || []);
+  const [datosPorMes, setDatosPorMes] = useState([]);
+  const [cargando, setCargando] = useState(false);
 
   // Caché para almacenar datos por año y evitar llamadas repetidas
   const [datosCache, setDatosCache] = useState(() => {
@@ -86,20 +69,31 @@ export default function DetalleRendimientoSelector({
     return cache;
   });
 
-  const [datosMensualesCompletos, setDatosMensualesCompletos] = useState([]);
-  const [datosAnuales, setDatosAnuales] = useState(datosAnualesIniciales || []);
-  const [cargandoDatosAnuales, setCargandoDatosAnuales] = useState(false);
-
-  const [rangoPeriodo, setRangoPeriodo] = useState(
-    modo === "semanal"
-      ? DateUtils.obtenerRangoSemana(0)
-      : DateUtils.obtenerRangoMes(anioSeleccionado, mesSeleccionado)
-  );
-  const [datosPorDia, setDatosPorDia] = useState(datosInicialesPorDia || []);
-  const [datosPorMes, setDatosPorMes] = useState([]);
-  const [cargando, setCargando] = useState(false);
+  useEffect(() => {
+    console.log("Actualizando modo a", modoInicial);
+    setModo(modoInicial || "semanal");
+    console.log("DetalleRendimientoSelector modo", modo);
+  }, [modoInicial]);
 
   useEffect(() => {
+    renderizarVisualizador();
+  }, [mesSeleccionado]);
+
+  useEffect(() => {
+    console.log("DetalleRendimientoSelector modo", modo);
+    setSeleccionActual(semanaInicial || 0);
+  }, [semanaInicial]);
+
+  useEffect(() => {
+    setAnioSeleccionado(anioInicial);
+    setMesSeleccionado(mesInicial);
+  }, [anioInicial, mesInicial]);
+
+  useEffect(() => {
+    cargarNuevoRango();
+  }, [seleccionActual, modo, mesSeleccionado, anioSeleccionado]);
+
+  const cargarNuevoRango = () => {
     let nuevoRango;
 
     if (modo === "semanal") {
@@ -130,7 +124,7 @@ export default function DetalleRendimientoSelector({
     getTokensPersonaPorFecha(PERSONA_ID, mesSeleccionado, anioSeleccionado);
 
     setRangoPeriodo(nuevoRango);
-  }, [seleccionActual, modo, mesSeleccionado, anioSeleccionado]);
+  };
 
   const getTokensPersonaPorFecha = async (
     idPersona,
@@ -154,7 +148,6 @@ export default function DetalleRendimientoSelector({
     );
 
     console.log("un mes entero", fechaInicioStr, fechaFinStr);
-
     setTokensMensuales(datos?.TokensGanados ?? 0);
   };
 
@@ -576,9 +569,6 @@ export default function DetalleRendimientoSelector({
 
     return 0;
   };
-  const colorProgreso = RendimientoUtils.determinarColorProgreso(
-    rendimientoAcumulado()
-  );
   const textoEstado = RendimientoUtils.determinarTextoEstado(
     rendimientoAcumulado()
   );
@@ -653,9 +643,6 @@ export default function DetalleRendimientoSelector({
 }
 
 const styles = StyleSheet.create({
-  backgroundColorRed: {
-    backgroundColor: "red",
-  },
   contenedor: {
     width: "100%",
     alignSelf: "center",
@@ -678,11 +665,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  modeToggle: {
-    position: "absolute",
-    right: 8,
-    padding: 4,
   },
   contenido: {
     padding: 10,
@@ -711,12 +693,6 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     opacity: 1,
-  },
-  dateRange: {
-    display: "flex",
-    marginHorizontal: 16,
-    justifyContent: "center",
-    textAlign: "center",
   },
   dateText: {
     fontWeight: "500",
@@ -768,24 +744,7 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
   },
-  // Estilos para el visualizador mensual
-  tituloMes: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-    color: colors.primary,
-  },
-  proximamenteContainer: {
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  proximamenteTexto: {
-    color: "#666",
-    fontSize: 14,
-    fontStyle: "italic",
-  },
+
   // Estilos para tarjetas
   tarjetasContainer: {
     flexDirection: "row",
@@ -839,11 +798,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
   },
-  estadoTexto: {
-    fontSize: 10,
-    color: "#666",
-    textAlign: "center",
-  },
+
   noDataText: {
     textAlign: "center",
     marginVertical: 20,
