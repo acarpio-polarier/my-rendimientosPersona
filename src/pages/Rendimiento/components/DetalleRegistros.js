@@ -10,6 +10,8 @@ const HEIGHT_ROW = 48;
 
 const DetalleRegistros = ({ dia = [] }) => {
   const [data, setData] = useState([]);
+  const [tablaHeight, setTablaHeight] = useState();
+
   console.log("dia", dia);
   const formatearHora = (fecha) => {
     console.log("DetalleRegistros fecha", fecha);
@@ -21,55 +23,55 @@ const DetalleRegistros = ({ dia = [] }) => {
 
   useEffect(() => {
     console.log();
-
-    const cargarDatos = async () => {
-      const soloFecha = new Date(dia[0]?.fechaIni).toISOString().split("T")[0];
-      console.log("DetalleRegistros soloFecha", soloFecha);
-
-      const datos = await RendimientoUtils.getTokensPersona(
-        PERSONA_ID,
-        soloFecha,
-        soloFecha
-      );
-
-      if (Array.isArray(datos)) {
-        const tokensPersona = datos.map((item) => ({
-          fecha: item.fecha ?? null,
-          tokens: item.tokens ?? null,
-        }));
-
-        console.log("array tokens getTokensPersona", tokensPersona);
-
-        const tokensGanados = tokensPersona?.[0]?.tokens ?? 0;
-        console.log("array tokens datos", datos);
-        console.log("array tokens tokensganados", tokensGanados);
-        console.log("array tokens dia", dia);
-
-        const datosTokens = dia.map((item) => {
-          const tokenCoincidente = tokensPersona.find(
-            (token) => token.fecha === item.fechaFin
-          );
-          if (tokenCoincidente) {
-            return { ...item, tokens: tokenCoincidente.tokens };
-          }
-          return { ...item, tokens: 0 };
-        });
-
-        console.log("array tokens datosTokens", datosTokens);
-
-        const dataFormateada = datosTokens.map((item) => [
-          formatearHora(item.fechaIni),
-          formatearHora(item.fechaFin),
-          item.RendimientoGlobal + "%",
-          item.tokens,
-        ]);
-
-        setData(dataFormateada);
-      }
-    };
-
     cargarDatos();
   }, [dia]);
+
+  const cargarDatos = async () => {
+    const soloFecha = new Date(dia[0]?.fechaIni).toISOString().split("T")[0];
+    console.log("DetalleRegistros soloFecha", soloFecha);
+
+    const datos = await RendimientoUtils.getTokensPersona(
+      PERSONA_ID,
+      soloFecha,
+      soloFecha
+    );
+
+    if (Array.isArray(datos)) {
+      const tokensPersona = datos.map((item) => ({
+        fecha: item.fecha ?? null,
+        tokens: item.tokens ?? null,
+      }));
+
+      console.log("array tokens getTokensPersona", tokensPersona);
+
+      const tokensGanados = tokensPersona?.[0]?.tokens ?? 0;
+      console.log("array tokens datos", datos);
+      console.log("array tokens tokensganados", tokensGanados);
+      console.log("array tokens dia", dia);
+
+      const datosTokens = dia.map((item) => {
+        const tokenCoincidente = tokensPersona.find(
+          (token) => token.fecha === item.fechaFin
+        );
+        if (tokenCoincidente) {
+          return { ...item, tokens: tokenCoincidente.tokens };
+        }
+        return { ...item, tokens: 0 };
+      });
+
+      console.log("array tokens datosTokens", datosTokens);
+
+      const dataFormateada = datosTokens.map((item) => [
+        formatearHora(item.fechaIni),
+        formatearHora(item.fechaFin),
+        item.RendimientoGlobal + "%",
+        item.tokens,
+      ]);
+
+      setData(dataFormateada);
+      setTablaHeight(HEIGHT_HEADER + dataFormateada.length * HEIGHT_ROW);
+    }
+  };
 
   const getColor = (valor) => {
     const rend = parseFloat(valor.split("%")[0]);
@@ -81,8 +83,6 @@ const DetalleRegistros = ({ dia = [] }) => {
   const getBackgroundColor = (index) => {
     return index % 2 !== 0 ? colors.smokedWhite : colors.white;
   };
-
-  const tablaHeight = HEIGHT_HEADER + data.length * HEIGHT_ROW;
 
   return (
     <View style={[styles.contenedorPrincipal, { height: tablaHeight }]}>
