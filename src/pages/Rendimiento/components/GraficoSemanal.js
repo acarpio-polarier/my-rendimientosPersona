@@ -44,7 +44,6 @@ const GraficoSemanal = () => {
   const [datosPorDia, setDatosPorDia] = useState([]);
   const fetchIdRef = useRef(0); // Token de control para que no se carguen datos anteriores
 
-  // Efecto
   useEffect(() => {
     const fetchId = ++fetchIdRef.current;
     const nuevoRango = FechaUtils.obtenerRangoSemana(semanaSeleccionada);
