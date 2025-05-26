@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Animated,
   View,
   Text,
   Image,
@@ -15,44 +14,7 @@ import token from "../fotos/token.png";
 import ConfirmPopup from "./ConfirmPopup";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
-//Añadir logica de cambio de base 64 a imagen
 const screen_height = Dimensions.get("window").height;
-
-const EtiquetaAnimada = () => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 150,
-      useNativeDriver: true,
-    }).start();
-
-    return () => {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 150,
-        useNativeDriver: true,
-      }).start();
-    };
-  }, []);
-
-  return (
-    <Animated.View
-      style={[productosCards.etiquetaBackground, { opacity: fadeAnim }]}
-    >
-      <View style={productosCards.etiquetaSaldoInsuficiente}>
-        <MaterialCommunityIcons
-          name="alert"
-          size={20}
-          color={"white"}
-          style={productosCards.etiquetaIcono}
-        />
-        <Text style={productosCards.etiquetaTexto}>Saldo Insuficiente</Text>
-      </View>
-    </Animated.View>
-  );
-};
 
 const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
@@ -87,7 +49,6 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
             <Text style={productosCards.esNuevoLabel}>Nuevo</Text>
           </View>
         )}
-        {/* {!puedeCanjear} && <EtiquetaAnimada /> */}
         <View style={productosCards.foto}>
           <Image
             source={{ uri: foto || noImage }}
@@ -115,7 +76,6 @@ const ProductosCards = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
               ]}
               onPress={() => {
                 if (puedeCanjear) {
-                  console.log(`Boton pulsado: ${item.id}`);
                   abrirPopup(item.id);
                 }
               }}
