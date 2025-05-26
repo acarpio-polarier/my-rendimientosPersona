@@ -7,11 +7,14 @@ import ProductosCards from "./ProductosCardsCanje";
 import token from "../fotos/token.png";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 
+// No hacer console.log de data (contiene una imagen)
 const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const [visible, setVisible] = useState(false);
   const [tokens, setTokens] = useState(dataTokens);
   const [datosFiltrados, setDatosFiltrados] = useState();
+  const [minMaxPrecio, setMinMaxPrecio] = useState([0, 100]);
 
+  console.log("data", data?.[0].price);
   console.log("dataTokens", dataTokens);
 
   // categoria: 0 = no filtro, 1 = experiencias, 2 = servicios, 3 = otros
@@ -45,6 +48,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   const obtenerMinMaxPrecio = async () => {
     const data = await RendimientoUtils.getMinMaxPrecio();
     setFiltros({ ...filtros, precioRango: [data.minPrice, data.maxPrice] });
+    setMinMaxPrecio(data.minPrice, data.maxPrice);
   };
 
   const filtrarDatos = () => {
@@ -117,7 +121,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
     setFiltros({
       categoria: [1, 2, 3, 4],
       orden: 1,
-      precioRango: [0, 1000],
+      precioRango: [0, 10],
       canjeable: false,
     });
   };
