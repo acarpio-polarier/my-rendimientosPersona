@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,26 +15,13 @@ import RendimientoUtils from "../../../../helpers/RendimientoUtils";
 import DetalleRegistros from "../DetalleRegistros";
 import { PERSONA_ID } from "../../Index";
 
-// Constantes
-
 const UMBRAL_DIFERENCIA_RENDIMIENTO = 0.01;
 
-/**
- * Componente que visualiza el rendimiento en una vista semanal
- *
- * @param {Object} props - Propiedades del componente
- * @param {Array} props.data - Datos de rendimiento a visualizar
- * @param {number} props.semanaActual - Índice de la semana actual (0 para la semana actual)
- * @param {Object} props.rangoPeriodo - Objeto con fechas de inicio y fin del período
- * @param {string} props.rangoPeriodo.fechaInicio - Fecha de inicio del período (o inicioIso)
- * @param {string} props.rangoPeriodo.fechaFin - Fecha de fin del período (o finIso)
- */
 const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
   // Estados
   const [diasSemana, setDiasSemana] = useState([]);
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const [cargando, setCargando] = useState(true);
-  const [datosPorDia, setDatosPorDia] = useState([]);
   const [tokensDia, setTokensDia] = useState(0);
 
   // Agrupar y procesar datos cuando cambian
@@ -62,7 +49,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
       ? data
       : FechaUtils.agruparRegistrosPorDia(data);
 
-    setDatosPorDia(datosAgrupados);
     procesarDatosSemana(datosAgrupados);
     console.log(
       "datosAgrupados",
@@ -98,11 +84,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     setTokensDia(datos?.TokensGanados ?? 0);
   };
 
-  /**
-   * Obtiene los datos estadísticos para un día específico
-   * @param {Object} datosDia - Datos para un día específico
-   * @returns {Object|null} - Objeto con estadísticas o null si no hay datos
-   */
   const obtenerEstadisticasDia = (datosDia) => {
     if (!datosDia || !datosDia.data || datosDia.data.length === 0) {
       console.log("VS datosDia", datosDia);
@@ -123,11 +104,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     };
   };
 
-  /**
-   * Encuentra el día con mejor rendimiento entre los días con datos
-   * @param {Array} dias - Array de objetos día
-   * @returns {Object} - Objeto con id del mejor día y flag si todos son iguales
-   */
   const encontrarMejorDia = (dias) => {
     const diasConDatos = dias.filter(
       (dia) => dia.tieneDatos && dia.estadisticas
@@ -171,10 +147,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     return { mejorDiaId, todosIguales: false };
   };
 
-  /**
-   * Prepara los datos de la semana para visualizar
-   * @param {Array} datosAgrupados - Datos agrupados por día
-   */
   const procesarDatosSemana = (datosAgrupados) => {
     setCargando(true);
     console.log("VS procesandoDatos datosAgrupados", datosAgrupados);
@@ -203,11 +175,6 @@ const VisualizadorSemanal = ({ data, semanaActual, rangoPeriodo }) => {
     }
   };
 
-  /**
-   * Genera un array con los datos de cada día de la semana
-   * @param {Array} datosAgrupados - Datos agrupados por día
-   * @returns {Array} - Array de objetos con los datos de cada día
-   */
   const generarDiasSemana = (datosAgrupados) => {
     // Obtener fechas de inicio y fin del período
     const fechaInicio = new Date(
@@ -487,7 +454,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "99%",
     paddingVertical: 5,
-    // paddingHorizontal: 5,
   },
   diaItem: {
     height: 85,
@@ -607,11 +573,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
   },
-  estadoTexto: {
-    fontSize: 10,
-    color: "#666",
-    textAlign: "center",
-  },
+
   // Estilos para mensajes y carga
   sinDatosContainer: {
     padding: 20,
@@ -632,9 +594,6 @@ const styles = StyleSheet.create({
     color: "#666",
     fontSize: 14,
     marginTop: 10,
-  },
-  tablaContainer: {
-    width: "99%",
   },
 });
 
