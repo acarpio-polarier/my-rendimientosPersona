@@ -7,7 +7,13 @@ import token from "../fotos/token.png";
 import ModalRendimiento from "../../Rendimiento/components/ModalRendimiento";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
-const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
+const ModalFiltro = ({
+  visible,
+  cerrarPopup,
+  onAplicarFiltros,
+  filtros,
+  minMaxPrice,
+}) => {
   const filtrosActuales = filtros;
   console.log("filtrosActuales", filtrosActuales);
   const [orden, setOrden] = useState(filtrosActuales.orden);
@@ -15,6 +21,7 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
   const [precioRango, setPrecioRango] = useState(filtrosActuales.precioRango);
   const [modalVisible, setModalVisible] = useState(visible);
   const [canjeable, setCanjeable] = useState(filtrosActuales.canjeable);
+  const [minPrice, maxPrice] = minMaxPrice;
 
   const opcionesOrden = [
     { id: 1, label: "Novedades" },
@@ -28,12 +35,18 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
     { id: 3, label: "Experiencias" },
     { id: 4, label: "Otros" },
   ];
+  useEffect(() => {
+    if (visible) {
+      setModalVisible(true);
+    }
+  }, [visible]);
 
   useEffect(() => {
     setOrden(filtrosActuales.orden);
     setCategorias(filtrosActuales.categoria || []);
     setPrecioRango(filtrosActuales.precioRango);
     setCanjeable(filtrosActuales.canjeable);
+    console.log("minmaxPrice", minMaxPrice);
   }, [filtrosActuales]);
 
   const handleSeleccionOrden = (id) => {
@@ -53,12 +66,6 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
   const onSwitchPulsado = () => {
     setCanjeable(!canjeable);
   };
-
-  useEffect(() => {
-    if (visible) {
-      setModalVisible(true);
-    }
-  }, [visible]);
 
   const handleClose = () => {
     setModalVisible(false);
@@ -154,10 +161,10 @@ const ModalFiltro = ({ visible, cerrarPopup, onAplicarFiltros, filtros }) => {
 
         <View style={modalFiltro.sliderContainer}>
           <MultiSlider
-            values={[0, 100]}
+            values={precioRango}
             onValuesChange={setPrecioRango}
-            min={0}
-            max={100}
+            min={minPrice}
+            max={maxPrice}
             step={5}
             allowOverlap={false}
             snapped

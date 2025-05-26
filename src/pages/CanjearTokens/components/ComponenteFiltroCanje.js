@@ -47,8 +47,8 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
   };
   const obtenerMinMaxPrecio = async () => {
     const data = await RendimientoUtils.getMinMaxPrecio();
-    setFiltros({ ...filtros, precioRango: [data.minPrice, data.maxPrice] });
-    setMinMaxPrecio(data.minPrice, data.maxPrice);
+    setFiltros({ ...filtros, precioRango: [0, data.maxPrice] });
+    setMinMaxPrecio([0, data.maxPrice]);
   };
 
   const filtrarDatos = () => {
@@ -155,6 +155,7 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
         cerrarPopup={cerrarPopup}
         onAplicarFiltros={aplicarFiltros}
         filtros={filtros}
+        minMaxPrice={minMaxPrecio}
       />
 
       <ProductosCards
