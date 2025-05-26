@@ -12,6 +12,12 @@ const ConfirmPopup = ({
 }) => {
   const [pulsado, setPulsado] = useState(false);
 
+  useEffect(() => {
+    if (!visible) {
+      setPulsado(false);
+    }
+  }, [visible]);
+
   if (!visible) return null;
   console.log("popup", product.id, ID_PERSONA);
 
@@ -19,21 +25,11 @@ const ConfirmPopup = ({
     if (pulsado) return;
     setPulsado(true);
 
-    try {
-      await RendimientoUtils.solicitarCanje(ID_PERSONA, product.id);
-      await recargarTokens();
-      cerrarPopup();
-    } catch (error) {
-      console.error("Error en canje:", error);
-      setPulsado(false);
-    }
+    await RendimientoUtils.solicitarCanje(ID_PERSONA, product.id);
+    await recargarTokens();
+    cerrarPopup();
+    setPulsado(false);
   };
-
-  useEffect(() => {
-    if (!visible) {
-      setPulsado(false);
-    }
-  }, [visible]);
 
   return (
     <Modal transparent visible={visible} animationType="fade">
