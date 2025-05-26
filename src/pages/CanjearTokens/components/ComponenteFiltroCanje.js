@@ -19,8 +19,9 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
 
   // categoria: 0 = no filtro, 1 = experiencias, 2 = servicios, 3 = otros
   // orden: 1 = novedades, 2 = precio Asc, 3 = precio Desc
+  const categorias = [1, 2, 3, 4];
   const [filtros, setFiltros] = useState({
-    categoria: [1, 2, 3, 4],
+    categoria: categorias,
     orden: 1,
     precioRango: [],
     canjeable: false,
@@ -119,9 +120,9 @@ const ComponenteFiltro = ({ data, dataTokens, ID_PERSONA, recargarTokens }) => {
 
   const reiniciarFiltros = () => {
     setFiltros({
-      categoria: [1, 2, 3, 4],
+      categoria: categorias,
       orden: 1,
-      precioRango: [0, 10],
+      precioRango: minMaxPrecio,
       canjeable: false,
     });
   };
