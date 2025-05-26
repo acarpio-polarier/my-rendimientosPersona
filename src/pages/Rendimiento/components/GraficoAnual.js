@@ -19,9 +19,7 @@ import DetalleRendimientoSelector from "./DetalleRendimientoSelector";
 import ModalRendimiento from "./ModalRendimiento";
 
 const GraficoAnual = () => {
-  // Estado para controlar la visibilidad del modal
   const [modalVisible, setModalVisible] = useState(false);
-
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [añoActual, setAñoActual] = useState(moment().year());
@@ -126,7 +124,7 @@ const GraficoAnual = () => {
     return midValue;
   };
 
-  const renderizarContindoGrafico = () => {
+  const renderizarContenidoGrafico = () => {
     if (cargando) {
       return (
         <View style={styles.noDataContainer}>
@@ -253,7 +251,7 @@ const GraficoAnual = () => {
       </View>
 
       {/* Gráfico  */}
-      <View>{renderizarContindoGrafico()}</View>
+      <View>{renderizarContenidoGrafico()}</View>
 
       {/* Modal para DetalleRendimientoSelector */}
       <ModalRendimiento
