@@ -6,29 +6,15 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
-  StatusBar,
-  Platform,
-  PanResponder,
   Animated,
 } from "react-native";
 import Modal from "react-native-modal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../../../styles/base";
-// import { BlurView } from "expo-blur"; // Importación correcta de BlurView
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const deviceWidth = Dimensions.get("window").width;
-/**
- * Modal personalizado reutilizable con blur, tamaño automático y gesto de swipe para cerrar
- * @param {boolean} isVisible - Controla la visibilidad del modal
- * @param {function} onClose - Función para cerrar el modal
- * @param {string} title - Título del modal (opcional)
- * @param {Object} children - Contenido del modal
- * @param {Object} containerStyle - Estilos adicionales para el contenedor del modal
- * @param {string} headerBackgroundColor - Color de fondo del encabezado
- * @param {string} headerTextColor - Color del texto del encabezado
- * @param {string} blurIntensity - Intensidad del efecto blur ('light', 'dark', o 'tint')
- */
+
 const ModalRendimiento = ({
   isVisible,
   onClose,
@@ -37,14 +23,9 @@ const ModalRendimiento = ({
   containerStyle,
   headerBackgroundColor = colors.primary,
   headerTextColor = "white",
-  // blurIntensity = "light",
 }) => {
-  // Creamos un valor animado para el deslizamiento
   const pan = useRef(new Animated.ValueXY()).current;
   const opacity = useRef(new Animated.Value(1)).current;
-
-  // Umbral para considerar un swipe como suficiente para cerrar
-  const SWIPE_THRESHOLD = 50;
 
   return (
     <Modal
