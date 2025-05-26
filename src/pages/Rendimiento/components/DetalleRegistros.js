@@ -4,7 +4,6 @@ import { DataTable } from "react-native-paper";
 import RendimientoUtils from "../../../helpers/RendimientoUtils";
 import { colors } from "../../../../styles/base";
 import { PERSONA_ID } from "../Index";
-import { fetchText } from "react-native-svg";
 
 const HEIGHT_HEADER = 48;
 const HEIGHT_ROW = 48;
